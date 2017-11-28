@@ -8,6 +8,7 @@ Table of Contents
     - [Table of Contents](#table-of-contents)
     - [Document Revisions](#document-revisions)
         - [Change History](#change-history)
+            - [1.0.1](#101)
             - [1.0.0](#100)
     - [Overview](#overview)
     - [International SISAPI](#international-sisapi)
@@ -16,6 +17,7 @@ Table of Contents
             - [PUT /api/v1/applicants/{number}/college-details](#put-apiv1applicantsnumbercollege-details)
             - [GET /api/v1/events/peek](#get-apiv1eventspeek)
             - [PUT /api/v1/events/{id}/ack](#put-apiv1eventsidack)
+            - [PUT /api/v1/offers/pay-offer](#put-apiv1offerspay-offer)
     - [Objects](#objects)
         - [Address](#address)
         - [Applicant](#applicant)
@@ -25,7 +27,9 @@ Table of Contents
         - [ApplicantProficiency](#applicantproficiency)
         - [ApplicantProficiencySubScore](#applicantproficiencysubscore)
         - [Application](#application)
+        - [BinaryDocument](#binarydocument)
         - [EmergencyContact](#emergencycontact)
+        - [OfferPaid](#offerpaid)
         - [Phone](#phone)
         - [Program](#program)
         - [ProgramSelection](#programselection)
@@ -81,9 +85,14 @@ Document Revisions
 
 | Version | Date         | Editor           |
 | ------- | ------------ | ---------------- |
+| 1.0.1   | Nov 28, 2017 | Jay Dobson       |
 | 1.0.0   | Nov 24, 2017 | Michael Aldworth |
 
 ### Change History ###
+
+#### 1.0.1 ####
+
+- Added information for Pay Offer endpoint
 
 #### 1.0.0 ####
 
@@ -134,6 +143,7 @@ limitation.
 | **Applicants**  | PUT    | Partner -> OCAS | Protected | [/api/v1/applicants/{number}/college-details](#put-apiv1applicantsnumbercollege-details) |
 | **Events**      | GET    | OCAS -> Partner | Protected | [/api/v1/events/peek](#get-apiv1eventspeek)                                              |
 |                 | PUT    | N/A             | Protected | [/api/v1/events/{id}/ack](#put-apiv1eventsidack)                                         |
+| **Offers**      | PUT    | Partner -> Ocas | Protected | [/api/v1/offers/pay-offer](#put-apiv1offerspay-offer)                                    |
 | **Diagnostics** | GET    | N/A             | Public    | /api/v1/diagnostics/servertime                                                           |
 |                 | GET    | N/A             | Public    | /api/v1/diagnostics/logging                                                              |
 |                 | GET    | N/A             | Public    | /api/v1/diagnostics/database                                                             |
@@ -257,6 +267,49 @@ the specified event.
 
    ```HTTP
    PUT /api/v1/events/{id}/ack HTTP/1.1
+   Host: <ocas-sis-api-environment>
+   Content-Type: application/json
+   Authorization: Bearer <token received from identity server>
+   Cache-Control: no-cache
+   ```
+
+**_Example Response:_**
+
+```HTTP
+200 (Success)
+```
+
+#### PUT /api/v1/offers/pay-offer ####
+
+| Url Query Parameters | Value                    |
+| -------------------- | ------------------------ |
+| model                | [offer paid](#offerpaid) |
+
+**_Example:_**
+
+```json
+{
+  "id": 25,
+  "data": {
+    "applicationNumber": "X1484937",
+    "applicationCycle": "2017",
+    "campusCode": "main",
+    "deliveryOption": "fulltime",
+    "programCode": "TSTA01",
+    "term": "fall",
+    "receipt": {
+      "data": "[base 64 encoded string]",
+      "filename": "filename.jpg",
+      "mimeType": "image/jpeg",
+      "length": 96041
+    }
+  }
+}
+```
+
+**_Example Request:_**
+   ```HTTP
+   PUT /api/v1/offers/pay-offer HTTP/1.1
    Host: <ocas-sis-api-environment>
    Content-Type: application/json
    Authorization: Bearer <token received from identity server>
@@ -435,6 +488,26 @@ Example: See [Appendix: Application Submitted](#appendix-application-submitted)
 
 Example: See [Appendix: Application Submitted](#appendix-application-submitted)
 
+### BinaryDocument ###
+
+| Property | Type                            |
+| -------- | ------------------------------- |
+| data     | _string_ Base 64 encoded string |
+| filename | _string_ (min 1, max 255)       |
+| mimetype | _string_ (min 1, max 255)       |
+| length   | _long_ File size in bytes       |
+
+**_Example:_**
+
+```JSON
+"receipt": {
+  "data": "[base 64 encoded string]",
+  "filename": "filename.jpg",
+  "mimeType": "image/jpeg",
+  "length": 96041
+}
+```
+
 ### EmergencyContact ###
 
 | Property      | Type                                     |
@@ -454,6 +527,32 @@ Example: See [Appendix: Application Submitted](#appendix-application-submitted)
   "email" : "beth@example.com",
   "relationship" : "Mother",
   "firstLanguage" : "en"
+}
+```
+
+### OfferPaid ###
+
+| Property          | Type                              |
+| ----------------- | --------------------------------- |
+| applicationNumber | _string_ (min 1, max 20)          |
+| applicationCycle  | _string_ (min 1, max 50)          |
+| campusCode        | _string_ (min 1, max 4)           |
+| deliveryOption    | _string_ (min 1, max 50)          |
+| programCode       | _string_ (min 1, max 10)          |
+| term              | _string_ (min 1, max 50)          |
+| receipt           | [BinaryDocument](#binarydocument) |
+
+**_Example:_**
+
+```JSON
+{
+  "applicationNumber" : "X12345",
+  "applicationCycle" : "2018" ,
+  "campusCode" : "main",
+  "deliveryOption" : "fulltime",
+  "programCode" : "tst100",
+  "term" : "fall",
+  "receipt" : {...}
 }
 ```
 
@@ -1001,17 +1100,17 @@ The Application Submitted object includes a variety of Applicant and Application
       "phones": [
         {
           "type": "home",
-          "number": "1-908-368-0301",
+          "number": "US+19083680301",
           "ext": null
         },
         {
           "type": "other",
-          "number": "1-525-922-8253",
+          "number": "US+15259228253",
           "ext": null
         },
         {
           "type": "other",
-          "number": "889-974-6991",
+          "number": "US+8899746991",
           "ext": null
         }
       ],
@@ -1022,7 +1121,7 @@ The Application Submitted object includes a variety of Applicant and Application
         "name": "Rozella Bayer",
         "phone": {
           "type": "home",
-          "number": "828.685.6966",
+          "number": "US+8286856966",
           "ext": null
         },
         "email": "Rozella51@mailinator.com",
