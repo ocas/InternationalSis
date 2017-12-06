@@ -8,6 +8,7 @@ Table of Contents
     - [Table of Contents](#table-of-contents)
     - [Document Revisions](#document-revisions)
         - [Change History](#change-history)
+            - [1.0.2](#102)
             - [1.0.1](#101)
             - [1.0.0](#100)
     - [Overview](#overview)
@@ -51,6 +52,7 @@ Table of Contents
         - [ProgramCredentialType](#programcredentialtype)
         - [SchoolType](#schooltype)
         - [SisInboundEventType](#sisinboundeventtype)
+        - [SisOutboundEventType](#sisoutboundeventtype)
         - [TermCode](#termcode)
         - [TestSubType](#testsubtype)
         - [TestType](#testtype)
@@ -67,28 +69,40 @@ Table of Contents
             - [Sender Client](#sender-client)
                 - [Sender Client Configuration](#sender-client-configuration)
         - [Service Installation](#service-installation)
-            - [Service Installation - Reciever Client](#service-installation---reciever-client)
+            - [Service Installation - Receiver Client](#service-installation---receiver-client)
             - [Service Installation - Sender Client](#service-installation---sender-client)
         - [Windows Event Log Monitoring](#windows-event-log-monitoring)
         - [Database Structure](#database-structure)
             - [SisInboundEvents Schema](#sisinboundevents-schema)
             - [SisOutboundEvents Schema](#sisoutboundevents-schema)
+        - [Error and Warning Codes](#error-and-warning-codes)
+            - [Error Codes](#error-codes)
+            - [Warning Codes](#warning-codes)
     - [Authentication and Authorization](#authentication-and-authorization)
-        - [How To Get a Bearer Token](#how-to-get-a-bearer-token)
+        - [How to Get a Bearer Token](#how-to-get-a-bearer-token)
     - [Appendix](#appendix)
         - [Appendix Application Submitted](#appendix-application-submitted)
             - [Application Submitted JSON](#application-submitted-json)
             - [Application Submitted XML](#application-submitted-xml)
+        - [Appendix Pay Offer](#appendix-pay-offer)
+            - [Pay Offer JSON](#pay-offer-json)
+            - [Pay Offer XML](#pay-offer-xml)
 
 Document Revisions
 ------------------
 
 | Version | Date         | Editor           |
 | ------- | ------------ | ---------------- |
+| 1.0.2   | Dec 6, 2017  | Jay Dobson       |
 | 1.0.1   | Nov 28, 2017 | Jay Dobson       |
 | 1.0.0   | Nov 24, 2017 | Michael Aldworth |
 
 ### Change History ###
+
+#### 1.0.2 ####
+
+- Added new response information for endpoints that previously only returned 200 OK
+- Added error and warning codes that SISAPI can return
 
 #### 1.0.1 ####
 
@@ -112,8 +126,7 @@ SISAPI. The SISAPI is secured with the OpenId Protocol. In order to receive data
 from the HTTP Endpoint, each call will need to be passed a Bearer Token in the
 Authorization Header. Please see the [Authentication and Authorization](#authentication-and-authorization)
 section to learn how to retrieve a Bearer Token. If you are using the OCAS Supplied
-[Sender Client](#sender-client) or [Receiver Client](#receiver-client), we have taken care of the heavy lifting
-of acquiring a Bearer Token.
+[Sender Client](#sender-client) or [Receiver Client](#receiver-client), we have taken care of the work of acquiring a Bearer Token for you.
 
 ### SIS Environments ###
 
@@ -129,14 +142,16 @@ Partner(s) can start to integrate with the EXT environment.
 ### Endpoints ###
 
 Accessing the Swagger URL mentioned in the previous section will present you with
-a user friendly grouping of REST Api Functionality
+a user friendly grouping of REST API Functionality:
 
 1. Applicants
 1. Diagnostics
 1. Events
 
-Table below lists the actions that can be made from each controller and their access
+The table below lists the actions that can be made from each controller and their access
 limitation.
+
+_Note that the SISAPI has a maximum request limit of 10MB._
 
 |                 | Method | Event Direction | Access    | Relative Path                                                                            |
 | --------------- | ------ | --------------- | --------- | ---------------------------------------------------------------------------------------- |
@@ -149,7 +164,7 @@ limitation.
 |                 | GET    | N/A             | Public    | /api/v1/diagnostics/database                                                             |
 |                 | GET    | N/A             | Protected | /api/v1/diagnostics/authorization                                                        |
 
-Accessing one of the public endpoints will get respective response back. But if
+Accessing one of the public endpoints will get its respective response back. If
 you access one of the Protected endpoints, you will get an 'Authorization denied'
 response.
 
@@ -164,15 +179,19 @@ section.
 
 You will notice that all events are transmitted to the Partner through the **Peek*
 endpoint. This is delibrate, as the payload will contain the event action type and
-payload. You can see [available events below](#sisinboundeventtype) (which must be toggled on individually
-through configuration by OCAS in order to start receiving them).
+payload. You can see [available events below](#sisinboundeventtype), which must be individually toggled on individually
+through configuration by OCAS in order to start receiving them.
 
 #### PUT /api/v1/applicants/{number}/college-details ####
 
-| Url Query Parameters | Value                                                 |
-| -------------------- | ----------------------------------------------------- |
-| number               | applicant number                                      |
-| model                | [applicant college details](#collegeapplicantdetails) |
+| Url Query Parameters | Value            |
+| -------------------- | ---------------- |
+| number               | applicant number |
+
+| Request Body | Value                                                           |
+| ------------ | --------------------------------------------------------------- |
+| model.id     | long (Unique for every event. Auto-incrementing ID recommended) |
+| model.data   | [applicant college details](#applicantcollegedetails)           |
 
 **_Example:_**
 
@@ -199,6 +218,21 @@ through configuration by OCAS in order to start receiving them).
 
 ```HTTP
 200 (Success)
+{
+  "operationId": "00000000-0000-0000-0000-000000000000",
+  "errors": [
+    {
+      "code": "string",
+      "message": "string"
+    }
+  ],
+  "warnings": [
+    {
+      "code": "string",
+      "message": "string"
+    }
+  ]
+}
 ```
 
 #### GET /api/v1/events/peek ####
@@ -252,7 +286,7 @@ Receive a list of all un-acked events (ordered by EventId).
 ]
 ```
 
-In this example, you can see we have 3 [SisInboundEvents](#sisinboundevent).
+In the above example, you can see we have 3 [SisInboundEvents](#sisinboundevent).
 
 #### PUT /api/v1/events/{id}/ack ####
 
@@ -277,13 +311,30 @@ the specified event.
 
 ```HTTP
 200 (Success)
+{
+  "operationId": "00000000-0000-0000-0000-000000000000",
+  "errors": [
+    {
+      "code": "string",
+      "message": "string"
+    }
+  ],
+  "warnings": [
+    {
+      "code": "string",
+      "message": "string"
+    }
+  ]
+}
 ```
 
 #### PUT /api/v1/offers/pay-offer ####
 
-| Url Query Parameters | Value                    |
-| -------------------- | ------------------------ |
-| model                | [offer paid](#offerpaid) |
+| Request Body | Value                                                           |
+| ------------ | --------------------------------------------------------------- |
+| model        | [SisInboundEvent](#SisInboundEvent)                             |
+| model.id     | long (Unique for every event. Auto-incrementing ID recommended) |
+| model.data   | [OfferPaid](#OfferPaid)                                         |
 
 **_Example:_**
 
@@ -308,6 +359,7 @@ the specified event.
 ```
 
 **_Example Request:_**
+
    ```HTTP
    PUT /api/v1/offers/pay-offer HTTP/1.1
    Host: <ocas-sis-api-environment>
@@ -320,6 +372,21 @@ the specified event.
 
 ```HTTP
 200 (Success)
+{
+  "operationId": "00000000-0000-0000-0000-000000000000",
+  "errors": [
+    {
+      "code": "string",
+      "message": "string"
+    }
+  ],
+  "warnings": [
+    {
+      "code": "string",
+      "message": "string"
+    }
+  ]
+}
 ```
 
 Objects
@@ -370,7 +437,7 @@ Objects
 | emails                    | Array[1..10] of strings (each email, min 5, max 128)              |
 | emergencyContact          | [EmergencyContact](#emergencycontact)                             |
 | credentials               | Array[1..10] of [Credential](#credential)                         |
-| proficiencies             | Array[0..10] of [Proficiency](#proficiency)                       |
+| proficiencies             | Array[0..10] of [ApplicantProficiency](#applicantproficiency)     |
 
 Example: See [Appendix: Application Submitted](#appendix-application-submitted)
 
@@ -660,7 +727,7 @@ Lookups
 
 ### ApplicationCycle ###
 
-4 Digit Year (eg. 2016, 2024)
+4-digit Year (e.g. 2016, 2024)
 
 [Db Export](lookups/ApplicationCycles.csv)
 
@@ -781,11 +848,18 @@ Lookups
 | -------------------- | --------------------------- |
 | ApplicationSubmitted | [Application](#application) |
 
+### SisOutboundEventType ###
+
+| Key                           | Data Object Type                                    |
+| ----------------------------- | --------------------------------------------------- |
+| UpdateApplicantCollegeDetails | [ApplicantCollegeDetails](#applicantcollegedetails) |
+| PayOffer                      | [OfferPaid](#offerpaid)                             |
+
 ### TermCode ###
 
-Each application cycle will have these 3 codes that correspond to
-to each year. So a code + year combo, would give us a unique way to
-represent a time an intake is being offered.
+Each application cycle will have the following 3 codes corresponding to
+to each year. A code + year combo gives us a unique way to
+represent the time an intake is being offered.
 
 | Code   |
 | ------ |
@@ -820,16 +894,16 @@ represent a time an intake is being offered.
 Sender and Receiver Clients
 ---------------------------
 
-OCAS has built two windows services (C# .NET Framework 4.6) which help facilitate
-the two way transportation between our SISAPI and the Colleges SIS systems. You don't
-need to use them, if you are comfortable following the documentation above.
+OCAS has built two Windows services (C# .NET Framework 4.6) to help facilitate
+the two-way transportation between our SISAPI and the College's SIS systems. You don't
+need to use them, if you are comfortable following the above documentation above.
 
 The following section outlines the various configuration options found in both the
-Reciever and Sender Clients.
+Receiver and Sender Clients.
 
 ### Database Connectivity ###
 
-The sender and reciever clients support Microsoft SQL Server and Oracle 11G and above.
+The sender and receiver clients support Microsoft SQL Server and Oracle 11G and above.
 
 | Property    | Default                    |
 | ----------- | -------------------------- |
@@ -843,7 +917,7 @@ Example Oracle Connection String
 
 ### Sleep Interval ###
 
-The following configuration will dictate how often to Sender and Reciever client
+The following configuration will dictate how often the Sender and Receiver client
 will poll for new events to process.
 
 | Property                      | Default       |
@@ -852,7 +926,7 @@ will poll for new events to process.
 
 ### Logging Configuration ###
 
-The Sender and Reciever clients leverage Serilog for event and error logging.
+The Sender and Receiver clients leverage Serilog for event and error logging.
 
 | Property              | Default     |
 | --------------------- | ----------- |
@@ -860,7 +934,7 @@ The Sender and Reciever clients leverage Serilog for event and error logging.
 
 #### serilog:using:RollingFileAlternate ####
 
-The rolling file feature creates application event logs within a series of rollig files.
+The rolling file feature creates application event logs within a series of rolling files.
 
 | Property                                                     | Default                          |
 | ------------------------------------------------------------ | -------------------------------- |
@@ -910,7 +984,7 @@ to obtain a username, password and secret.
 
 #### Receiver Client ####
 
-The reciever client will retrieve pending Sis Events from the OCAS Sis API
+The receiver client will retrieve pending SIS Events from the OCAS SIS API
 in the sequence they were generated. These events will be inserted into the
 SisInboundEvents table in the JSON (default) or XML format (if specified).
 
@@ -924,8 +998,8 @@ You can configure the output format by setting the following configuration prope
 
 #### Sender Client ####
 
-The sender client will read pending Sis Events sequentially from the source database.
-Data will always be transmitted as JSON to the OCAS Sis API. Data in XML format will be
+The sender client will read pending SIS Events sequentially from the source database.
+Data will always be transmitted as JSON to the OCAS SIS API. Data in XML format will be
 converted prior to transmission.
 
 ##### Sender Client Configuration #####
@@ -934,9 +1008,9 @@ No custom sender configurations.
 
 ### Service Installation ###
 
-The following commands will install the Reciever and Sender clients as Windows Services.
+The following commands will install the Receiver and Sender clients as Windows Services.
 
-#### Service Installation - Reciever Client ####
+#### Service Installation - Receiver Client ####
 
 `Ocas.Sis.International.ReceiverClient.Service.exe install -displayname:Ocas.Sis.Intl.ReceiverClient -servicename:Ocas.Sis.Intl.ReceiverClient --delayed`
 
@@ -946,7 +1020,7 @@ The following commands will install the Reciever and Sender clients as Windows S
 
 ### Windows Event Log Monitoring ###
 
-The following commands will allow the SIS Reciever and Sender applications to
+The following commands will allow the SIS Receiver and Sender applications to
 create logging entries within the Windows Event Viewer without administrative rights.
 
 ```POWERSHELL
@@ -956,7 +1030,7 @@ create logging entries within the Windows Event Viewer without administrative ri
 
 ### Database Structure ###
 
-The Sis Reciever and Sender applications each have an individual database table 
+The SIS Receiver and Sender applications each have an individual database table 
 required to write and read events respecfully.
 
 | Name              | Type    | Purpose                  |
@@ -966,7 +1040,7 @@ required to write and read events respecfully.
 
 #### SisInboundEvents Schema ####
 
-| Property    | Type           | Purpose                       |
+| Column Name | Column Type    | Purpose                       |
 | ----------- | -------------- | ----------------------------- |
 | id          | _bigint_       | Event Unique Primary Key      |
 | eventInfo   | _varchar(max)_ | Event Payload Data            |
@@ -975,30 +1049,63 @@ required to write and read events respecfully.
 
 #### SisOutboundEvents Schema ####
 
-| Property         | Type           | Purpose                         |
-| ---------------- | -------------- | ------------------------------- |
-| id               | _bigint_       | Event Unique Primary Key        |
-| status           | _varchar(50)_  | Event Status (Default: Pending) |
-| eventInfo        | _varchar(max)_ | Event Payload Data              |
-| eventFormat      | _varchar(5)_   | Event Format Type (json, xml)   |
-| createdDate      | _datetime2_    | Created Date                    |
-| lastModifiedDate | _datetime2_    | Last Modified Date              |
+| Column Name      | Column Type    | Purpose                             |
+| ---------------- | -------------- | ----------------------------------- |
+| id               | _bigint_       | Event Unique Primary Key            |
+| status           | _varchar(50)_  | Event Status (Default: Pending)     |
+| type             | _varchar(50)_  | [Event Type](#sisoutboundeventtype) |
+| eventInfo        | _varchar(max)_ | Event Payload Data                  |
+| eventFormat      | _varchar(5)_   | Event Format Type (json, xml)       |
+| createdDate      | _datetime2_    | Created Date                        |
+| lastModifiedDate | _datetime2_    | Last Modified Date                  |
+
+### Error and Warning Codes ###
+
+#### Error Codes ####
+
+Below is a table of error codes that may be returned from the SisApi
+
+| Code  | Description                               |
+| ----- | ----------------------------------------- |
+| E0001 | Unknown Middleware Exception              |
+| E0030 | Not Found Error                           |
+| E0056 | Invalid Feature Configuration             |
+| E0070 | Error In State Machine                    |
+| E0071 | Invalid state transition                  |
+| E0080 | Invalid Term Code                         |
+| E0081 | Invalid Program Code                      |
+| E0082 | Invalid Campus Code                       |
+| E0083 | Invalid Delivery Option Code              |
+| E0084 | Invalid Application Cycle                 |
+| E0086 | Duplicate Event Id Race Condition         |
+| E0085 | Duplicate Event Id With Different Payload |
+| E0090 | Ack Out of Order                          |
+| E0091 | Invalid Offer State Transition            |
+
+#### Warning Codes ####
+
+Below is a table of warning codes that may be returned from the SisApi
+
+| Code  | Description                                        |
+| ----- | -------------------------------------------------- |
+| W0010 | Duplicate Event Id and Payload Sent to API         |
+| W0110 | Attempt to Pay Offer In Revoked or Withdrawn State |
 
 Authentication and Authorization
 --------------------------------
 
 If you are using the Sender and Receiver Clients, you can skip this whole section.
-We've done the heavy lifting for you!
+We've done the work for you!
 
-You can get Bearer Token through making an HTTP POST to our OCAS Identity Server
+You can get a Bearer Token through making an HTTP POST to our OCAS Identity Server
 (OIDS). We will provide you the OIDS in a separate e-mail.
 
-### How To Get a Bearer Token ###
+### How to Get a Bearer Token ###
 
 If you've made it this far, you are acquiring the token on your own. Great! You will
 need to craft an HTTP POST as shown below in Step 1.
 
-1. OCAS will provide you with `<base64secret>, <username>, and <password>` which
+1. OCAS will provide you with `<base64secret>, <username>, and <password>`, which
 should be replaced in the urlencoded params.
 
    Example Request:
@@ -1020,12 +1127,12 @@ should be replaced in the urlencoded params.
    }
    ```
 
-1. In the response above 'access_token' is the actual Token needed to make further
-api call. Now as and when the token is generated that access_token is valid for
+1. In the above response, 'access_token' is the actual token needed to make further
+API calls. When the token is generated, that access_token is valid for
 1 hour (3600 seconds), which should be more than enough for any scheduled task or
 cronjob, consuming data. You will want to copy/store the value for **access_token**
-in a variable and then construct another HTTP Request with the word `Bearer <token_value>`
-in the Authorization Header, like so:
+in a variable, then construct another HTTP Request with the word `Bearer <token_value>`
+in the Authorization Header as follows:
    ```HTTP
    GET /api/v1/diagnostics/authorization HTTP/1.1
    Host: <OIS>.ca
@@ -1043,13 +1150,13 @@ in the Authorization Header, like so:
    ```
 
 You now have a token that you can use for any number of subsequent protected SIS
-endpoints calls. Just be cautious the token will last only for 1 hour. You need
-a new token to make any protected api call requests after an hour.
+endpoint calls. Remember that the token will last only for 1 hour and you will need
+a new token to make any protected API call requests after an hour.
 
 Appendix
 --------
 
-The appendix includes large models and examples too large for the above document.
+The appendix includes models and examples too large for the above document.
 
 ### Appendix Application Submitted ###
 
@@ -1432,5 +1539,51 @@ The Application Submitted object includes a variety of Applicant and Application
          </element>
       </selections>
    </data>
+</root>
+```
+
+### Appendix Pay Offer ###
+
+#### Pay Offer JSON ####
+
+```JSON
+{
+  "id": 25,
+  "data": {
+    "applicationNumber": "X1484937",
+    "applicationCycle": "2017",
+    "campusCode": "main",
+    "deliveryOption": "fulltime",
+    "programCode": "TSTA01",
+    "term": "fall",
+    "receipt": {
+      "data": "[base 64 encoded string]",
+      "filename": "filename.jpg",
+      "mimeType": "image/jpeg",
+      "length": 96041
+    }
+  }
+}
+```
+
+#### Pay Offer XML ####
+
+```XML
+<root>
+  <id>25</id>
+  <data>
+    <applicationNumber>X1484993</applicationNumber>
+    <applicationCycle>2018</applicationCycle>
+    <campusCode>C2</campusCode>
+    <deliveryOption>fulltime</deliveryOption>
+    <programCode>TST1D3</programCode>
+    <term>fall</term>
+    <receipt>
+      <data>[base 64 encoded string]</data>
+      <filename>filename.jpg</filename>
+      <mimeType>image/jpeg</mimeType>
+      <length>96041</length>
+    </receipt>
+  </data>
 </root>
 ```
