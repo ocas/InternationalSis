@@ -8,6 +8,7 @@ Table of Contents
     - [Table of Contents](#table-of-contents)
     - [Document Revisions](#document-revisions)
         - [Change History](#change-history)
+            - [1.0.3](#103)
             - [1.0.2](#102)
             - [1.0.1](#101)
             - [1.0.0](#100)
@@ -81,23 +82,33 @@ Table of Contents
     - [Authentication and Authorization](#authentication-and-authorization)
         - [How to Get a Bearer Token](#how-to-get-a-bearer-token)
     - [Appendix](#appendix)
-        - [Appendix Application Submitted](#appendix-application-submitted)
+        - [Appendix: Application](#appendix-application)
             - [Application Submitted JSON](#application-submitted-json)
             - [Application Submitted XML](#application-submitted-xml)
-        - [Appendix Pay Offer](#appendix-pay-offer)
-            - [Pay Offer JSON](#pay-offer-json)
-            - [Pay Offer XML](#pay-offer-xml)
+        - [Appendix: ApplicantCollegeDetails](#appendix-applicantcollegedetails)
+            - [ApplicantCollegeDetails JSON](#applicantcollegedetails-json)
+            - [ApplicantCollegeDetails XML](#applicantcollegedetails-xml)
+        - [Appendix: OfferPaid](#appendix-offerpaid)
+            - [OfferPaid JSON](#offerpaid-json)
+            - [OfferPaid XML](#offerpaid-xml)
 
 Document Revisions
 ------------------
 
 | Version | Date         | Editor           |
 | ------- | ------------ | ---------------- |
+| 1.0.3   | Dec 12, 2017 | Michael Aldworth |
 | 1.0.2   | Dec 6, 2017  | Jay Dobson       |
 | 1.0.1   | Nov 28, 2017 | Jay Dobson       |
 | 1.0.0   | Nov 24, 2017 | Michael Aldworth |
 
+
 ### Change History ###
+
+#### 1.0.3 ####
+
+- Updated expected XML output formats within Appendix
+- Added Application Screened event type
 
 #### 1.0.2 ####
 
@@ -262,7 +273,7 @@ Receive a list of all un-acked events (ordered by EventId).
     "eventInfo":
     {
       "action": "SomeEventTitle",
-      "data": { ... }
+      "data": { }
     }
   },
   // SisInboundEvent
@@ -271,7 +282,7 @@ Receive a list of all un-acked events (ordered by EventId).
     "eventInfo":
     {
       "action": "AnotherEventTitle",
-      "data": { ... }
+      "data": { }
     }
   },
   // SisInboundEvent
@@ -280,7 +291,7 @@ Receive a list of all un-acked events (ordered by EventId).
     "eventInfo":
     {
       "action": "CouldBeSameEventTitle",
-      "data": { ... }
+      "data": { }
     }
   }
 ]
@@ -439,7 +450,7 @@ Objects
 | credentials               | Array[1..10] of [Credential](#credential)                         |
 | proficiencies             | Array[0..10] of [ApplicantProficiency](#applicantproficiency)     |
 
-Example: See [Appendix: Application Submitted](#appendix-application-submitted)
+Example: See [Appendix: Application](#appendix-application)
 
 ### ApplicantCredential ###
 
@@ -553,7 +564,7 @@ Example: See [Appendix: Application Submitted](#appendix-application-submitted)
 | applicant  | [Applicant](#applicant)                        |
 | selections | Array of [ProgramSelection](#programselection) |
 
-Example: See [Appendix: Application Submitted](#appendix-application-submitted)
+Example: See [Appendix: Application](#appendix-application)
 
 ### BinaryDocument ###
 
@@ -567,7 +578,7 @@ Example: See [Appendix: Application Submitted](#appendix-application-submitted)
 **_Example:_**
 
 ```JSON
-"receipt": {
+{
   "data": "[base 64 encoded string]",
   "filename": "filename.jpg",
   "mimeType": "image/jpeg",
@@ -590,7 +601,7 @@ Example: See [Appendix: Application Submitted](#appendix-application-submitted)
 ```JSON
 {
   "name" : "Beth Smith",
-  "phone" : {...},
+  "phone" : {},
   "email" : "beth@example.com",
   "relationship" : "Mother",
   "firstLanguage" : "en"
@@ -619,7 +630,7 @@ Example: See [Appendix: Application Submitted](#appendix-application-submitted)
   "deliveryOption" : "fulltime",
   "programCode" : "tst100",
   "term" : "fall",
-  "receipt" : {...}
+  "receipt" : {}
 }
 ```
 
@@ -670,7 +681,7 @@ Example: See [Appendix: Application Submitted](#appendix-application-submitted)
 | campusPreference | _string_ (min 1, max 4) (college assigned Campus Code)                    |
 | choiceNumber     | _number_ (less than 0 = EAP/ESL Program, greater than 0 = Normal Program) |
 
-Example: See [Appendix: Application Submitted](#appendix-application-submitted)
+Example: See [Appendix: Application](#appendix-application)
 
 ### SisEvent ###
 
@@ -684,7 +695,7 @@ Example: See [Appendix: Application Submitted](#appendix-application-submitted)
 ```JSON
 {
   "action": "SomeEvent",
-  "data": { ... }         // Varies based on SisInboundEventType
+  "data": { }         // Varies based on SisInboundEventType
 }
 ```
 
@@ -698,7 +709,7 @@ Example: See [Appendix: Application Submitted](#appendix-application-submitted)
 ```JSON
 {
   "id": 0,
-  "eventInfo": { ... }
+  "eventInfo": { }
 }
 ```
 
@@ -847,6 +858,7 @@ Lookups
 | Key                  | Data Object Type            |
 | -------------------- | --------------------------- |
 | ApplicationSubmitted | [Application](#application) |
+| ApplicationScreened  | [Application](#application) |
 
 ### SisOutboundEventType ###
 
@@ -1158,9 +1170,14 @@ Appendix
 
 The appendix includes models and examples too large for the above document.
 
-### Appendix Application Submitted ###
+### Appendix: Application ###
 
-The Application Submitted object includes a variety of Applicant and Application data.
+Used by:
+- SisInboundEventType.ApplicationSubmitted
+- SisInboundEventType.ApplicationScreened
+
+The Application object includes a variety of Applicant and Application data.
+Note: Empty JSON collections are not represented within the XML.
 
 #### Application Submitted JSON ####
 
@@ -1356,234 +1373,231 @@ The Application Submitted object includes a variety of Applicant and Application
 
 ```XML
 <root>
-   <action>ApplicationSubmitted</action>
-   <data>
-      <applicant>
-         <canadianStatus>other</canadianStatus>
-         <casualNames />
-         <created>0001-01-01T00:00:00</created>
-         <credentials>
-            <element>
-               <completionDate>2016-04-30</completionDate>
-               <country>AI</country>
-               <credentialType null="true" />
-               <programName>illo</programName>
-               <schoolName>minus-sunt-ea</schoolName>
-               <schoolType>college</schoolType>
-               <status>Completed</status>
-            </element>
-            <element>
-               <completionDate>2017-02-19</completionDate>
-               <country>GS</country>
-               <credentialType>college-diploma</credentialType>
-               <programName>quis</programName>
-               <schoolName>praesentium-quae-est</schoolName>
-               <schoolType>college</schoolType>
-               <status>Completed</status>
-            </element>
-         </credentials>
-         <currentAddress>
-            <apartment>542</apartment>
-            <city>Port Melyssafurt</city>
-            <country>PK</country>
-            <postalCode>43194</postalCode>
-            <province null="true" />
-            <street>3724 Colt Port</street>
-         </currentAddress>
-         <dateOfBirth>1993-10-26</dateOfBirth>
-         <emails>
-            <element>Kaia.OKeefe@mailinator.com</element>
-         </emails>
-         <emergencyContact>
-            <email>Rozella51@mailinator.com</email>
-            <firstLanguage null="true" />
-            <name>Rozella Bayer</name>
-            <phone>
-               <ext null="true" />
-               <number>828.685.6966</number>
-               <type>home</type>
-            </phone>
-            <relationship>cumque</relationship>
-         </emergencyContact>
-         <fullLegalName>Kaia O'Keefe</fullLegalName>
-         <gender>other</gender>
-         <id>7af3adf7-8c1f-4ede-8169-1dbd178e29ba</id>
-         <legalName>
-            <firstName>Kaia</firstName>
-            <lastName>O'Keefe</lastName>
-            <middleNames />
-            <prefix null="true" />
-            <suffix null="true" />
-         </legalName>
-         <mailingAddress>
-            <apartment>2148</apartment>
-            <city>Johnton</city>
-            <country>YE</country>
-            <postalCode>35625-6412</postalCode>
-            <province null="true" />
-            <street>131 Gottlieb Squares</street>
-         </mailingAddress>
-         <number>X1185393</number>
-         <phones>
-            <element>
-               <ext null="true" />
-               <number>1-908-368-0301</number>
-               <type>home</type>
-            </element>
-            <element>
-               <ext null="true" />
-               <number>1-525-922-8253</number>
-               <type>other</type>
-            </element>
-            <element>
-               <ext null="true" />
-               <number>889-974-6991</number>
-               <type>other</type>
-            </element>
-         </phones>
-         <primaryCitizenshipCountry>AF</primaryCitizenshipCountry>
-         <proficiencies>
-            <element>
-               <completionDate>2017-01-28</completionDate>
-               <otherName null="true" />
-               <score>50</score>
-               <subScores>
-                  <element>
-                     <score>82</score>
-                     <type>writing</type>
-                  </element>
-                  <element>
-                     <score>36</score>
-                     <type>reading</type>
-                  </element>
-                  <element>
-                     <score>18</score>
-                     <type>speaking</type>
-                  </element>
-                  <element>
-                     <score>92</score>
-                     <type>listening</type>
-                  </element>
-               </subScores>
-               <type>melab</type>
-            </element>
-            <element>
-               <completionDate>2016-07-18</completionDate>
-               <otherName null="true" />
-               <score>75</score>
-               <subScores>
-                  <element>
-                     <score>56</score>
-                     <type>writing</type>
-                  </element>
-                  <element>
-                     <score>40</score>
-                     <type>reading</type>
-                  </element>
-                  <element>
-                     <score>28</score>
-                     <type>speaking</type>
-                  </element>
-                  <element>
-                     <score>69</score>
-                     <type>listening</type>
-                  </element>
-               </subScores>
-               <type>cael</type>
-            </element>
-            <element>
-               <completionDate>2017-04-19</completionDate>
-               <otherName null="true" />
-               <score>89</score>
-               <subScores />
-               <type>eap</type>
-            </element>
-         </proficiencies>
-         <version>2</version>
-      </applicant>
-      <created>2017-11-20T22:26:05.9616078Z</created>
-      <id>94c70fcc-41ce-e711-8733-e4b318b38df4</id>
-      <number>X1484933</number>
-      <selections>
-         <element>
-            <campusPreference null="true" />
-            <choiceNumber>-1</choiceNumber>
-            <program>
-               <code>TST1ESL2</code>
-               <credential>other</credential>
-               <internationalProgramType>Esl</internationalProgramType>
-               <title>ESL Program 2</title>
-            </program>
-            <term>
-               <applicationCycle>2017</applicationCycle>
-               <code>fall</code>
-               <endDate>2016-11-30</endDate>
-               <startDate>2016-08-01</startDate>
-            </term>
-         </element>
-         <element>
-            <campusPreference null="true" />
-            <choiceNumber>1</choiceNumber>
-            <program>
-               <code>TST1C3</code>
-               <credential>certificate</credential>
-               <internationalProgramType>Normal</internationalProgramType>
-               <title>Certificate 3</title>
-            </program>
-            <term>
-               <applicationCycle>2018</applicationCycle>
-               <code>spring</code>
-               <endDate>2018-07-31</endDate>
-               <startDate>2018-04-01</startDate>
-            </term>
-         </element>
-      </selections>
-   </data>
+  <action>ApplicationSubmitted</action>
+  <data>
+    <id>94c70fcc-41ce-e711-8733-e4b318b38df4</id>
+    <number>X1484933</number>
+    <applicant>
+      <id>7af3adf7-8c1f-4ede-8169-1dbd178e29ba</id>
+      <number>X1185393</number>
+      <version>2</version>
+      <created>0001-01-01T00:00:00</created>
+      <legalName>
+        <firstName>Kaia</firstName>
+        <lastName>O'Keefe</lastName>
+        <prefix />
+        <suffix />
+      </legalName>
+      <dateOfBirth>1993-10-26</dateOfBirth>
+      <canadianStatus>other</canadianStatus>
+      <primaryCitizenshipCountry>AF</primaryCitizenshipCountry>
+      <fullLegalName>Kaia O'Keefe</fullLegalName>
+      <gender>other</gender>
+      <mailingAddress>
+        <street>131 Gottlieb Squares</street>
+        <apartment>2148</apartment>
+        <city>Johnton</city>
+        <province />
+        <country>YE</country>
+        <postalCode>35625-6412</postalCode>
+      </mailingAddress>
+      <currentAddress>
+        <street>3724 Colt Port</street>
+        <apartment>542</apartment>
+        <city>Port Melyssafurt</city>
+        <province />
+        <country>PK</country>
+        <postalCode>43194</postalCode>
+      </currentAddress>
+      <phones>
+        <type>home</type>
+        <number>US+19083680301</number>
+        <ext />
+      </phones>
+      <phones>
+        <type>other</type>
+        <number>US+15259228253</number>
+        <ext />
+      </phones>
+      <phones>
+        <type>other</type>
+        <number>US+8899746991</number>
+        <ext />
+      </phones>
+      <emails>Kaia.OKeefe@mailinator.com</emails>
+      <emergencyContact>
+        <name>Rozella Bayer</name>
+        <phone>
+          <type>home</type>
+          <number>US+8286856966</number>
+          <ext />
+        </phone>
+        <email>Rozella51@mailinator.com</email>
+        <relationship>cumque</relationship>
+        <firstLanguage />
+      </emergencyContact>
+      <credentials>
+        <schoolType>college</schoolType>
+        <schoolName>minus-sunt-ea</schoolName>
+        <country>AI</country>
+        <programName>illo</programName>
+        <status>Completed</status>
+        <completionDate>2016-04-30</completionDate>
+        <credentialType />
+      </credentials>
+      <credentials>
+        <schoolType>college</schoolType>
+        <schoolName>praesentium-quae-est</schoolName>
+        <country>GS</country>
+        <programName>quis</programName>
+        <status>Completed</status>
+        <completionDate>2017-02-19</completionDate>
+        <credentialType>college-diploma</credentialType>
+      </credentials>
+      <proficiencies>
+        <type>melab</type>
+        <otherName />
+        <score>50</score>
+        <completionDate>2017-01-28</completionDate>
+        <subScores>
+          <type>writing</type>
+          <score>82</score>
+        </subScores>
+        <subScores>
+          <type>reading</type>
+          <score>36</score>
+        </subScores>
+        <subScores>
+          <type>speaking</type>
+          <score>18</score>
+        </subScores>
+        <subScores>
+          <type>listening</type>
+          <score>92</score>
+        </subScores>
+      </proficiencies>
+      <proficiencies>
+        <type>cael</type>
+        <otherName />
+        <score>75</score>
+        <completionDate>2016-07-18</completionDate>
+        <subScores>
+          <type>writing</type>
+          <score>56</score>
+        </subScores>
+        <subScores>
+          <type>reading</type>
+          <score>40</score>
+        </subScores>
+        <subScores>
+          <type>speaking</type>
+          <score>28</score>
+        </subScores>
+        <subScores>
+          <type>listening</type>
+          <score>69</score>
+        </subScores>
+      </proficiencies>
+      <proficiencies>
+        <type>eap</type>
+        <otherName />
+        <score>89</score>
+        <completionDate>2017-04-19</completionDate>
+      </proficiencies>
+    </applicant>
+    <selections>
+      <term>
+        <applicationCycle>2017</applicationCycle>
+        <code>fall</code>
+        <startDate>2016-08-01</startDate>
+        <endDate>2016-11-30</endDate>
+      </term>
+      <program>
+        <code>TST1ESL2</code>
+        <title>ESL Program 2</title>
+        <credential>other</credential>
+        <internationalProgramType>Esl</internationalProgramType>
+      </program>
+      <campusPreference />
+      <choiceNumber>-1</choiceNumber>
+    </selections>
+    <selections>
+      <term>
+        <applicationCycle>2018</applicationCycle>
+        <code>spring</code>
+        <startDate>2018-04-01</startDate>
+        <endDate>2018-07-31</endDate>
+      </term>
+      <program>
+        <code>TST1C3</code>
+        <title>Certificate 3</title>
+        <credential>certificate</credential>
+        <internationalProgramType>Normal</internationalProgramType>
+      </program>
+      <campusPreference />
+      <choiceNumber>1</choiceNumber>
+    </selections>
+    <created>2017-11-20T22:26:05.9616078Z</created>
+  </data>
 </root>
 ```
 
-### Appendix Pay Offer ###
+### Appendix: ApplicantCollegeDetails ###
 
-#### Pay Offer JSON ####
+#### ApplicantCollegeDetails JSON ####
 
 ```JSON
 {
-  "id": 25,
-  "data": {
-    "applicationNumber": "X1484937",
-    "applicationCycle": "2017",
-    "campusCode": "main",
-    "deliveryOption": "fulltime",
-    "programCode": "TSTA01",
-    "term": "fall",
-    "receipt": {
-      "data": "[base 64 encoded string]",
-      "filename": "filename.jpg",
-      "mimeType": "image/jpeg",
-      "length": 96041
-    }
+  "number": "X12345",
+  "studentId": "SID-1234"
+}
+```
+
+#### ApplicantCollegeDetails XML ####
+
+```XML
+<root>
+  <number>ApplicationScreened</number>
+  <studentId>ApplicationScreened</studentId>
+</root>
+```
+
+### Appendix: OfferPaid ###
+
+#### OfferPaid JSON ####
+
+```JSON
+{
+  "applicationNumber": "X1484937",
+  "applicationCycle": "2017",
+  "campusCode": "main",
+  "deliveryOption": "fulltime",
+  "programCode": "TSTA01",
+  "term": "fall",
+  "receipt": {
+    "data": "[base 64 encoded string]",
+    "filename": "filename.jpg",
+    "mimeType": "image/jpeg",
+    "length": 96041
   }
 }
 ```
 
-#### Pay Offer XML ####
+#### OfferPaid XML ####
 
 ```XML
 <root>
-  <id>25</id>
-  <data>
-    <applicationNumber>X1484993</applicationNumber>
-    <applicationCycle>2018</applicationCycle>
-    <campusCode>C2</campusCode>
-    <deliveryOption>fulltime</deliveryOption>
-    <programCode>TST1D3</programCode>
-    <term>fall</term>
-    <receipt>
-      <data>[base 64 encoded string]</data>
-      <filename>filename.jpg</filename>
-      <mimeType>image/jpeg</mimeType>
-      <length>96041</length>
-    </receipt>
-  </data>
+  <applicationNumber>X1484937</applicationNumber>
+  <applicationCycle>2017</applicationCycle>
+  <campusCode>main</campusCode>
+  <deliveryOption>fulltime</deliveryOption>
+  <programCode>TSTA01</programCode>
+  <term>fall</term>
+  <receipt>
+    <data>[base 64 encoded string]</data>
+    <filename>filename.jpg</filename>
+    <mimeType>image/jpeg</mimeType>
+    <length>96041</length>
+  </receipt>
 </root>
 ```
