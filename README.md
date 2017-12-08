@@ -8,6 +8,7 @@ Table of Contents
     - [Table of Contents](#table-of-contents)
     - [Document Revisions](#document-revisions)
         - [Change History](#change-history)
+            - [1.0.4](#104)
             - [1.0.3](#103)
             - [1.0.2](#102)
             - [1.0.1](#101)
@@ -97,13 +98,18 @@ Document Revisions
 
 | Version | Date         | Editor           |
 | ------- | ------------ | ---------------- |
-| 1.0.3   | Dec 12, 2017 | Michael Aldworth |
+| 1.0.4   | Dec 8, 2017 | Michael Aldworth |
+| 1.0.3   | Dec 7, 2017 | Michael Aldworth |
 | 1.0.2   | Dec 6, 2017  | Jay Dobson       |
 | 1.0.1   | Nov 28, 2017 | Jay Dobson       |
 | 1.0.0   | Nov 24, 2017 | Michael Aldworth |
 
 
 ### Change History ###
+
+#### 1.0.4 ####
+
+- Updated XML and JSON Appendix Sample with some middle names and casual names.
 
 #### 1.0.3 ####
 
@@ -1185,41 +1191,52 @@ Note: Empty JSON collections are not represented within the XML.
 {
   "action": "ApplicationSubmitted",
   "data": {
-    "id": "94c70fcc-41ce-e711-8733-e4b318b38df4",
-    "number": "X1484933",
+    "id": "85aee8dc-3bdc-e711-8737-e4b318b38df4",
+    "number": "X1485152",
     "applicant": {
-      "id": "7af3adf7-8c1f-4ede-8169-1dbd178e29ba",
-      "number": "X1185393",
+      "id": "7036e524-305c-4fb6-b45c-61a9f828f35c",
+      "number": "X1185682",
       "version": 2,
-      "created": "0001-01-01T00:00:00",
+      "created": "2017-12-08T17:19:02.3269001Z",
       "legalName": {
-        "firstName": "Kaia",
-        "middleNames": [],
-        "lastName": "O'Keefe",
+        "firstName": "Esperanza",
+        "middleNames": [
+          "Jon",
+          "Al"
+        ],
+        "lastName": "Medhurst",
         "prefix": null,
         "suffix": null
       },
-      "dateOfBirth": "1993-10-26",
-      "canadianStatus": "other",
-      "primaryCitizenshipCountry": "AF",
-      "fullLegalName": "Kaia O'Keefe",
-      "casualNames": [],
-      "gender": "other",
+      "dateOfBirth": "1908-03-02",
+      "canadianStatus": "none",
+      "primaryCitizenshipCountry": "ET",
+      "fullLegalName": "Esperanza Abe Lexus Jeromy Edmond Kristian Alan Henry Medhurst",
+      "casualNames": [
+        {
+          "firstName": "Lexus",
+          "middleNames": [],
+          "lastName": "Abe",
+          "prefix": null,
+          "suffix": null
+        }
+      ],
+      "gender": "female",
       "mailingAddress": {
-        "street": "131 Gottlieb Squares",
-        "apartment": "2148",
-        "city": "Johnton",
+        "street": "083 Ismael Lock",
+        "apartment": "4579",
+        "city": "Sybletown",
         "province": null,
-        "country": "YE",
-        "postalCode": "35625-6412"
+        "country": "BS",
+        "postalCode": "16178"
       },
       "currentAddress": {
-        "street": "3724 Colt Port",
-        "apartment": "542",
-        "city": "Port Melyssafurt",
+        "street": "35775 Jessica Street",
+        "apartment": "59129",
+        "city": "South Sandrine",
         "province": null,
-        "country": "PK",
-        "postalCode": "43194"
+        "country": "TW",
+        "postalCode": "97474"
       },
       "phones": [
         {
@@ -1228,104 +1245,75 @@ Note: Empty JSON collections are not represented within the XML.
           "ext": null
         },
         {
-          "type": "other",
+          "type": "mobile",
           "number": "US+15259228253",
-          "ext": null
-        },
-        {
-          "type": "other",
-          "number": "US+8899746991",
           "ext": null
         }
       ],
       "emails": [
-        "Kaia.OKeefe@mailinator.com"
+        "Esperanza77@mailinator.com",
+        "Esperanza_Test77@mailinator.com"
       ],
       "emergencyContact": {
-        "name": "Rozella Bayer",
+        "name": "Lina Streich",
         "phone": {
-          "type": "home",
-          "number": "US+8286856966",
+          "type": "other",
+          "number": "US+8899746991",
           "ext": null
         },
-        "email": "Rozella51@mailinator.com",
-        "relationship": "cumque",
-        "firstLanguage": null
+        "email": "Lina_Strom87@mailinator.com",
+        "relationship": "suscipit",
+        "firstLanguage": "gv"
       },
       "credentials": [
         {
-          "schoolType": "college",
-          "schoolName": "minus-sunt-ea",
-          "country": "AI",
-          "programName": "illo",
-          "status": "Completed",
-          "completionDate": "2016-04-30",
-          "credentialType": null
+          "schoolType": "university",
+          "schoolName": "quo-eaque-nemo",
+          "country": "VI",
+          "programName": "velit",
+          "status": "NotCompleted",
+          "completionDate": "2016-08-07",
+          "credentialType": "university-degree"
         },
         {
           "schoolType": "college",
-          "schoolName": "praesentium-quae-est",
-          "country": "GS",
-          "programName": "quis",
-          "status": "Completed",
-          "completionDate": "2017-02-19",
-          "credentialType": "college-diploma"
+          "schoolName": "sit-qui-omnis",
+          "country": "UZ",
+          "programName": null,
+          "status": "InProgress",
+          "completionDate": "2016-03-01",
+          "credentialType": "college-other"
+        },
+        {
+          "schoolType": "secondary",
+          "schoolName": "rerum-nihil-necessitatibus",
+          "country": "AD",
+          "programName": "fuga",
+          "status": "InProgress",
+          "completionDate": "2014-12-21",
+          "credentialType": "secondary-other"
         }
       ],
       "proficiencies": [
         {
-          "type": "melab",
+          "type": "eap",
           "otherName": null,
-          "score": "50",
-          "completionDate": "2017-01-28",
-          "subScores": [
-            {
-              "type": "writing",
-              "score": "82"
-            },
-            {
-              "type": "reading",
-              "score": "36"
-            },
-            {
-              "type": "speaking",
-              "score": "18"
-            },
-            {
-              "type": "listening",
-              "score": "92"
-            }
-          ]
+          "score": "64",
+          "completionDate": "2017-11-05",
+          "subScores": []
         },
         {
-          "type": "cael",
+          "type": "ielts",
           "otherName": null,
-          "score": "75",
-          "completionDate": "2016-07-18",
-          "subScores": [
-            {
-              "type": "writing",
-              "score": "56"
-            },
-            {
-              "type": "reading",
-              "score": "40"
-            },
-            {
-              "type": "speaking",
-              "score": "28"
-            },
-            {
-              "type": "listening",
-              "score": "69"
-            }
-          ]
+          "score": "71",
+          "completionDate": "2017-10-19",
+          "subScores": []
         },
         {
           "type": "eap",
           "otherName": null,
-          "score": "89",
-          "completionDate": "2017-04-19",
+          "score": "94",
+          "completionDate": "2015-02-05",
           "subScores": []
         }
       ]
@@ -1333,14 +1321,14 @@ Note: Empty JSON collections are not represented within the XML.
     "selections": [
       {
         "term": {
-          "applicationCycle": 2017,
+          "applicationCycle": 2019,
           "code": "fall",
-          "startDate": "2016-08-01",
-          "endDate": "2016-11-30"
+          "startDate": "2018-08-01",
+          "endDate": "2018-11-30"
         },
         "program": {
-          "code": "TST1ESL2",
-          "title": "ESL Program 2",
+          "code": "TST1ESL1",
+          "title": "ESL Program 1",
           "credential": "other",
           "internationalProgramType": "Esl"
         },
@@ -1349,22 +1337,38 @@ Note: Empty JSON collections are not represented within the XML.
       },
       {
         "term": {
-          "applicationCycle": 2018,
-          "code": "spring",
-          "startDate": "2018-04-01",
-          "endDate": "2018-07-31"
+          "applicationCycle": 2017,
+          "code": "fall",
+          "startDate": "2016-08-01",
+          "endDate": "2016-11-30"
         },
         "program": {
-          "code": "TST1C3",
-          "title": "Certificate 3",
-          "credential": "certificate",
+          "code": "TST1O2",
+          "title": "Other 2",
+          "credential": "other",
           "internationalProgramType": "Normal"
         },
         "campusPreference": null,
         "choiceNumber": 1
+      },
+      {
+        "term": {
+          "applicationCycle": 2019,
+          "code": "fall",
+          "startDate": "2018-08-01",
+          "endDate": "2018-11-30"
+        },
+        "program": {
+          "code": "TST1DG1",
+          "title": "Degree 1",
+          "credential": "degree",
+          "internationalProgramType": "Normal"
+        },
+        "campusPreference": null,
+        "choiceNumber": 2
       }
     ],
-    "created": "2017-11-20T22:26:05.9616078Z"
+    "created": "2017-12-08T17:19:02.3269001Z"
   }
 }
 ```
@@ -1375,39 +1379,47 @@ Note: Empty JSON collections are not represented within the XML.
 <root>
   <action>ApplicationSubmitted</action>
   <data>
-    <id>94c70fcc-41ce-e711-8733-e4b318b38df4</id>
-    <number>X1484933</number>
+    <id>85aee8dc-3bdc-e711-8737-e4b318b38df4</id>
+    <number>X1485152</number>
     <applicant>
-      <id>7af3adf7-8c1f-4ede-8169-1dbd178e29ba</id>
-      <number>X1185393</number>
+      <id>7036e524-305c-4fb6-b45c-61a9f828f35c</id>
+      <number>X1185682</number>
       <version>2</version>
-      <created>0001-01-01T00:00:00</created>
+      <created>2017-12-08T17:19:02.3269001Z</created>
       <legalName>
-        <firstName>Kaia</firstName>
-        <lastName>O'Keefe</lastName>
+        <firstName>Esperanza</firstName>
+        <middleNames>Jon</middleNames>
+        <middleNames>Al</middleNames>
+        <lastName>Medhurst</lastName>
         <prefix />
         <suffix />
       </legalName>
-      <dateOfBirth>1993-10-26</dateOfBirth>
-      <canadianStatus>other</canadianStatus>
-      <primaryCitizenshipCountry>AF</primaryCitizenshipCountry>
-      <fullLegalName>Kaia O'Keefe</fullLegalName>
-      <gender>other</gender>
+      <dateOfBirth>1908-03-02</dateOfBirth>
+      <canadianStatus>none</canadianStatus>
+      <primaryCitizenshipCountry>ET</primaryCitizenshipCountry>
+      <fullLegalName>Esperanza Abe Lexus Jeromy Edmond Kristian Alan Henry Medhurst</fullLegalName>
+      <casualNames>
+        <firstName>Lexus</firstName>
+        <lastName>Abe</lastName>
+        <prefix />
+        <suffix />
+      </casualNames>
+      <gender>female</gender>
       <mailingAddress>
-        <street>131 Gottlieb Squares</street>
-        <apartment>2148</apartment>
-        <city>Johnton</city>
+        <street>083 Ismael Lock</street>
+        <apartment>4579</apartment>
+        <city>Sybletown</city>
         <province />
-        <country>YE</country>
-        <postalCode>35625-6412</postalCode>
+        <country>BS</country>
+        <postalCode>16178</postalCode>
       </mailingAddress>
       <currentAddress>
-        <street>3724 Colt Port</street>
-        <apartment>542</apartment>
-        <city>Port Melyssafurt</city>
+        <street>35775 Jessica Street</street>
+        <apartment>59129</apartment>
+        <city>South Sandrine</city>
         <province />
-        <country>PK</country>
-        <postalCode>43194</postalCode>
+        <country>TW</country>
+        <postalCode>97474</postalCode>
       </currentAddress>
       <phones>
         <type>home</type>
@@ -1415,106 +1427,79 @@ Note: Empty JSON collections are not represented within the XML.
         <ext />
       </phones>
       <phones>
-        <type>other</type>
+        <type>mobile</type>
         <number>US+15259228253</number>
         <ext />
       </phones>
-      <phones>
-        <type>other</type>
-        <number>US+8899746991</number>
-        <ext />
-      </phones>
-      <emails>Kaia.OKeefe@mailinator.com</emails>
+      <emails>Esperanza77@mailinator.com</emails>
+      <emails>Esperanza_Test77@mailinator.com</emails>
       <emergencyContact>
-        <name>Rozella Bayer</name>
+        <name>Lina Streich</name>
         <phone>
-          <type>home</type>
-          <number>US+8286856966</number>
+          <type>other</type>
+          <number>US+8899746991</number>
           <ext />
         </phone>
-        <email>Rozella51@mailinator.com</email>
-        <relationship>cumque</relationship>
-        <firstLanguage />
+        <email>Lina_Strom87@mailinator.com</email>
+        <relationship>suscipit</relationship>
+        <firstLanguage>gv</firstLanguage>
       </emergencyContact>
       <credentials>
-        <schoolType>college</schoolType>
-        <schoolName>minus-sunt-ea</schoolName>
-        <country>AI</country>
-        <programName>illo</programName>
-        <status>Completed</status>
-        <completionDate>2016-04-30</completionDate>
-        <credentialType />
+        <schoolType>university</schoolType>
+        <schoolName>quo-eaque-nemo</schoolName>
+        <country>VI</country>
+        <programName>velit</programName>
+        <status>NotCompleted</status>
+        <completionDate>2016-08-07</completionDate>
+        <credentialType>university-degree</credentialType>
       </credentials>
       <credentials>
         <schoolType>college</schoolType>
-        <schoolName>praesentium-quae-est</schoolName>
-        <country>GS</country>
-        <programName>quis</programName>
-        <status>Completed</status>
-        <completionDate>2017-02-19</completionDate>
-        <credentialType>college-diploma</credentialType>
+        <schoolName>sit-qui-omnis</schoolName>
+        <country>UZ</country>
+        <programName />
+        <status>InProgress</status>
+        <completionDate>2016-03-01</completionDate>
+        <credentialType>college-other</credentialType>
+      </credentials>
+      <credentials>
+        <schoolType>secondary</schoolType>
+        <schoolName>rerum-nihil-necessitatibus</schoolName>
+        <country>AD</country>
+        <programName>fuga</programName>
+        <status>InProgress</status>
+        <completionDate>2014-12-21</completionDate>
+        <credentialType>secondary-other</credentialType>
       </credentials>
       <proficiencies>
-        <type>melab</type>
+        <type>eap</type>
         <otherName />
-        <score>50</score>
-        <completionDate>2017-01-28</completionDate>
-        <subScores>
-          <type>writing</type>
-          <score>82</score>
-        </subScores>
-        <subScores>
-          <type>reading</type>
-          <score>36</score>
-        </subScores>
-        <subScores>
-          <type>speaking</type>
-          <score>18</score>
-        </subScores>
-        <subScores>
-          <type>listening</type>
-          <score>92</score>
-        </subScores>
+        <score>64</score>
+        <completionDate>2017-11-05</completionDate>
       </proficiencies>
       <proficiencies>
-        <type>cael</type>
+        <type>ielts</type>
         <otherName />
-        <score>75</score>
-        <completionDate>2016-07-18</completionDate>
-        <subScores>
-          <type>writing</type>
-          <score>56</score>
-        </subScores>
-        <subScores>
-          <type>reading</type>
-          <score>40</score>
-        </subScores>
-        <subScores>
-          <type>speaking</type>
-          <score>28</score>
-        </subScores>
-        <subScores>
-          <type>listening</type>
-          <score>69</score>
-        </subScores>
+        <score>71</score>
+        <completionDate>2017-10-19</completionDate>
       </proficiencies>
       <proficiencies>
         <type>eap</type>
         <otherName />
-        <score>89</score>
-        <completionDate>2017-04-19</completionDate>
+        <score>94</score>
+        <completionDate>2015-02-05</completionDate>
       </proficiencies>
     </applicant>
     <selections>
       <term>
-        <applicationCycle>2017</applicationCycle>
+        <applicationCycle>2019</applicationCycle>
         <code>fall</code>
-        <startDate>2016-08-01</startDate>
-        <endDate>2016-11-30</endDate>
+        <startDate>2018-08-01</startDate>
+        <endDate>2018-11-30</endDate>
       </term>
       <program>
-        <code>TST1ESL2</code>
-        <title>ESL Program 2</title>
+        <code>TST1ESL1</code>
+        <title>ESL Program 1</title>
         <credential>other</credential>
         <internationalProgramType>Esl</internationalProgramType>
       </program>
@@ -1523,21 +1508,37 @@ Note: Empty JSON collections are not represented within the XML.
     </selections>
     <selections>
       <term>
-        <applicationCycle>2018</applicationCycle>
-        <code>spring</code>
-        <startDate>2018-04-01</startDate>
-        <endDate>2018-07-31</endDate>
+        <applicationCycle>2017</applicationCycle>
+        <code>fall</code>
+        <startDate>2016-08-01</startDate>
+        <endDate>2016-11-30</endDate>
       </term>
       <program>
-        <code>TST1C3</code>
-        <title>Certificate 3</title>
-        <credential>certificate</credential>
+        <code>TST1O2</code>
+        <title>Other 2</title>
+        <credential>other</credential>
         <internationalProgramType>Normal</internationalProgramType>
       </program>
       <campusPreference />
       <choiceNumber>1</choiceNumber>
     </selections>
-    <created>2017-11-20T22:26:05.9616078Z</created>
+    <selections>
+      <term>
+        <applicationCycle>2019</applicationCycle>
+        <code>fall</code>
+        <startDate>2018-08-01</startDate>
+        <endDate>2018-11-30</endDate>
+      </term>
+      <program>
+        <code>TST1DG1</code>
+        <title>Degree 1</title>
+        <credential>degree</credential>
+        <internationalProgramType>Normal</internationalProgramType>
+      </program>
+      <campusPreference />
+      <choiceNumber>2</choiceNumber>
+    </selections>
+    <created>2017-12-08T17:19:02.3269001Z</created>
   </data>
 </root>
 ```
