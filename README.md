@@ -8,6 +8,7 @@ Table of Contents
     - [Table of Contents](#table-of-contents)
     - [Document Revisions](#document-revisions)
         - [Change History](#change-history)
+            - [1.1.0](#110)
             - [1.0.4](#104)
             - [1.0.3](#103)
             - [1.0.2](#102)
@@ -18,6 +19,7 @@ Table of Contents
         - [SIS Environments](#sis-environments)
         - [Endpoints](#endpoints)
             - [PUT /api/v1/applicants/{number}/college-details](#put-apiv1applicantsnumbercollege-details)
+            - [POST /api/v1/events](#post-apiv1events)
             - [GET /api/v1/events/peek](#get-apiv1eventspeek)
             - [PUT /api/v1/events/{id}/ack](#put-apiv1eventsidack)
             - [PUT /api/v1/offers/pay-offer](#put-apiv1offerspay-offer)
@@ -32,6 +34,8 @@ Table of Contents
         - [Application](#application)
         - [BinaryDocument](#binarydocument)
         - [EmergencyContact](#emergencycontact)
+        - [NewOfferInfo](#newofferinfo)
+        - [OfferCondition](#offercondition)
         - [OfferPaid](#offerpaid)
         - [Phone](#phone)
         - [Program](#program)
@@ -45,11 +49,15 @@ Table of Contents
         - [Country and Provinces](#country-and-provinces)
         - [EducationCredentialStatus](#educationcredentialstatus)
         - [EducationCredentialType](#educationcredentialtype)
+        - [EntryLevelType](#entryleveltype)
         - [Gender](#gender)
+        - [IntakeDeliveryOption](#intakedeliveryoption)
         - [InternationalProgramType](#internationalprogramtype)
+        - [InternshipType](#internshiptype)
         - [Languages](#languages)
         - [NamePrefix](#nameprefix)
         - [NameSuffix](#namesuffix)
+        - [OfferConditionType](#offerconditiontype)
         - [PhoneType](#phonetype)
         - [ProgramCredentialType](#programcredentialtype)
         - [SchoolType](#schooltype)
@@ -89,6 +97,9 @@ Table of Contents
         - [Appendix: ApplicantCollegeDetails](#appendix-applicantcollegedetails)
             - [ApplicantCollegeDetails JSON](#applicantcollegedetails-json)
             - [ApplicantCollegeDetails XML](#applicantcollegedetails-xml)
+        - [Appendix: CreateOffer](#appendix-createoffer)
+            - [CreateOffer JSON](#createoffer-json)
+            - [CreateOffer XML](#createoffer-xml)
         - [Appendix: OfferPaid](#appendix-offerpaid)
             - [OfferPaid JSON](#offerpaid-json)
             - [OfferPaid XML](#offerpaid-xml)
@@ -98,14 +109,21 @@ Document Revisions
 
 | Version | Date         | Editor           |
 | ------- | ------------ | ---------------- |
-| 1.0.4   | Dec 8, 2017 | Michael Aldworth |
-| 1.0.3   | Dec 7, 2017 | Michael Aldworth |
+| 1.1.0   | Dec 12, 2017 | Kevin Schneider  |
+| 1.0.4   | Dec 8, 2017  | Michael Aldworth |
+| 1.0.3   | Dec 7, 2017  | Michael Aldworth |
 | 1.0.2   | Dec 6, 2017  | Jay Dobson       |
 | 1.0.1   | Nov 28, 2017 | Jay Dobson       |
 | 1.0.0   | Nov 24, 2017 | Michael Aldworth |
 
-
 ### Change History ###
+
+#### 1.1.0 ####
+
+- Added CreateOffer outbound event type
+- Added generic events SISAPI endpoint details
+- Deprecated SISAPI endpoint: [UpdateCollegeApplicantDetails](#put-apiv1applicantsnumbercollege-details)
+- Deprecated SISAPI endpoint: [PayOffer](#put-apiv1offerspay-offer)
 
 #### 1.0.4 ####
 
@@ -143,7 +161,8 @@ SISAPI. The SISAPI is secured with the OpenId Protocol. In order to receive data
 from the HTTP Endpoint, each call will need to be passed a Bearer Token in the
 Authorization Header. Please see the [Authentication and Authorization](#authentication-and-authorization)
 section to learn how to retrieve a Bearer Token. If you are using the OCAS Supplied
-[Sender Client](#sender-client) or [Receiver Client](#receiver-client), we have taken care of the work of acquiring a Bearer Token for you.
+[Sender Client](#sender-client) or [Receiver Client](#receiver-client),
+we have taken care of the work of acquiring a Bearer Token for you.
 
 ### SIS Environments ###
 
@@ -201,6 +220,9 @@ through configuration by OCAS in order to start receiving them.
 
 #### PUT /api/v1/applicants/{number}/college-details ####
 
+**_[DEPRECATED] - This endpoint has been replaced by the
+[POST /api/v1/events](#post-apiv1events) endpoint_**
+
 | Url Query Parameters | Value            |
 | -------------------- | ---------------- |
 | number               | applicant number |
@@ -230,6 +252,58 @@ through configuration by OCAS in order to start receiving them.
    Authorization: Bearer <token received from identity server>
    Cache-Control: no-cache
    ```
+
+**_Example Response:_**
+
+```HTTP
+200 (Success)
+{
+  "operationId": "00000000-0000-0000-0000-000000000000",
+  "errors": [
+    {
+      "code": "string",
+      "message": "string"
+    }
+  ],
+  "warnings": [
+    {
+      "code": "string",
+      "message": "string"
+    }
+  ]
+}
+```
+
+#### POST /api/v1/events ####
+
+Send an event to OCAS. The action and accompanying data describe
+the type of change to be reflected in OCAS International System.
+
+| Request Body | Value                                                                                  |
+| ------------ | -------------------------------------------------------------------------------------- |
+| id           | _long_ (Unique for every event. Auto-incrementing ID recommended)                      |
+| action       | _string_ ([SisOutboundEventType](#sisoutboundeventtype)) - Key                         |
+| data         | _variable_ (Refer to [SisOutboundEventType](#sisoutboundeventtype) - Data Object Type) |
+
+**_Example:_**
+
+```json
+{
+  "id": 18,
+  "action": "[action name goes here]",
+  "data": { ... }
+}
+```
+
+**_Example Request:_**
+
+```HTTP
+POST /api/v1/events HTTP/1.1
+Host: <ocas-sis-api-environment>
+Content-Type: application/json
+Authorization: Bearer <token received from identity server>
+Cache-Control: no-cache
+```
 
 **_Example Response:_**
 
@@ -347,6 +421,9 @@ the specified event.
 
 #### PUT /api/v1/offers/pay-offer ####
 
+**_[DEPRECATED] - This endpoint has been replaced by the
+[POST /api/v1/events](#post-apiv1events) endpoint_**
+
 | Request Body | Value                                                           |
 | ------------ | --------------------------------------------------------------- |
 | model        | [SisInboundEvent](#SisInboundEvent)                             |
@@ -462,13 +539,13 @@ Example: See [Appendix: Application](#appendix-application)
 
 | Property       | Type                                                              |
 | -------------- | ----------------------------------------------------------------- |
-| schoolType     | _string_      [Lookup](#schooltype)                               |
+| schoolType     | _string_      ([Lookup](#schooltype))                             |
 | schoolName     | _string_ (min 1, max 100)                                         |
 | country        | _string_ ISO3166-1 alpha-2 [see mappings](#country-and-provinces) |
 | programName    | _[nullable] string_ (min 1, max 80)                               |
-| status         | _string_ [Lookup](#educationcredentialstatus)                     |
+| status         | _string_ ([Lookup](#educationcredentialstatus))                   |
 | completionDate | _[nullable] string_ date string in format `yyyy-MM-dd`            |
-| credentialType | _[nullable] string_ [Lookup](#educationcredentialtype)            |
+| credentialType | _[nullable] string_ ([Lookup](#educationcredentialtype))          |
 
 **_Example:_**
 
@@ -491,8 +568,8 @@ Example: See [Appendix: Application](#appendix-application)
 | firstName   | _string_ (min 1, max 35)                             |
 | middleNames | Array[0..10] of _strings_ (each item, min 1, max 20) |
 | lastName    | _string_ (min 1, max 35)                             |
-| prefix      | _[nullable] string_ [Lookup](#nameprefix)            |
-| suffix      | _[nullable] string_ [Lookup](#namesuffix)            |
+| prefix      | _[nullable] string_ ([Lookup](#nameprefix))          |
+| suffix      | _[nullable] string_ ([Lookup](#namesuffix))          |
 
 **_Example:_**
 
@@ -526,7 +603,7 @@ Example: See [Appendix: Application](#appendix-application)
 
 | Property       | Type                                                                           |
 | -------------- | ------------------------------------------------------------------------------ |
-| type           | _string_      [Lookup](#testtype)                                              |
+| type           | _string_ ([Lookup](#testtype))                                                 |
 | otherName      | _[nullable] string_ (min 1, max 80)                                            |
 | score          | _[nullable] string_ (min 1, max 80)                                            |
 | completionDate | _[nullable] string_ date string in format `yyyy-MM-dd`                         |
@@ -548,7 +625,7 @@ Example: See [Appendix: Application](#appendix-application)
 
 | Property | Type                                 |
 | -------- | ------------------------------------ |
-| type     | _string_      [Lookup](#testsubtype) |
+| type     | _string_ ([Lookup](#testsubtype))    |
 | score    | _string_ (min 1, max 80)             |
 
 **_Example:_**
@@ -594,13 +671,13 @@ Example: See [Appendix: Application](#appendix-application)
 
 ### EmergencyContact ###
 
-| Property      | Type                                     |
-| ------------- | ---------------------------------------- |
-| name          | _string_ (min 1, max 100)                |
-| phone         | [Phone](#phone)                          |
-| email         | _string_ (min 5, max 128)                |
-| relationship  | _string_ (min 1, max 50)                 |
-| firstLanguage | _string_ [Lookup](#languages) ISO 6392-1 |
+| Property      | Type                                       |
+| ------------- | ------------------------------------------ |
+| name          | _string_ (min 1, max 100)                  |
+| phone         | [Phone](#phone)                            |
+| email         | _string_ (min 5, max 128)                  |
+| relationship  | _string_ (min 1, max 50)                   |
+| firstLanguage | _string_ ([Lookup](#languages)) ISO 6392-1 |
 
 **_Example:_**
 
@@ -614,17 +691,107 @@ Example: See [Appendix: Application](#appendix-application)
 }
 ```
 
+### NewOfferInfo ###
+
+| Property              | Type                                                             |
+| --------------------- | ---------------------------------------------------------------- |
+| applicationNumber     | _string_ (min 1, max 20)                                         |
+| applicationCycle      | _number_ ([Lookup](#applicationcycle))                           |
+| campusCode            | _string_ (min 1, max 4)                                          |
+| deliveryOption        | _string_ ([Lookup](#intakedeliveryoption))                       |
+| programCode           | _string_ (min 1, max 10)                                         |
+| term                  | _string_ ([Lookup](#termcode))                                   |
+| studentId             | _[nullable] string_ (min 1, max 30)                              |
+| isPreAdmit            | _boolean_                                                        |
+| entryLevelType        | _[nullable] string_ ([Lookup](#entryleveltype)) defaults to `01` |
+| isExchange            | _[nullable] boolean_                                             |
+| internshipType        | _[nullable] string_ ([Lookup](#internshiptype))                  |
+| internshipDescription | _[nullable] string_ (min 1, max 100)                             |
+| instructionHours      | _[nullable] decimal(18,1)_                                       |
+| expirationDate        | _[nullable] string_ date string in format `yyyy-MM-dd`           |
+| intakeExpectedEndDate | _[nullable] string_ date string in format `yyyy-MM-dd`           |
+| firstPaymentAmount    | _[nullable] decimal(18,2)_                                       |
+| firstPaymentDate      | _[nullable] string_ date string in format `yyyy-MM-dd`           |
+| secondPaymentAmount   | _[nullable] decimal(18,2)_                                       |
+| secondPaymentDate     | _[nullable] string_ date string in format `yyyy-MM-dd`           |
+| tuitionFees           | _[nullable] decimal(18,2)_                                       |
+| ancillaryFees         | _[nullable] decimal(18,2)_                                       |
+| conditions            | Array[0..5] of [OfferCondition](#offercondition)                 |
+| customOfferLetter     | [BinaryDocument](#binarydocument)                                |
+
+**_Example:_**
+
+```JSON
+{
+  "applicationNumber" : "X1484934",
+  "applicationCycle" : "2017",
+  "campusCode" : "C4",
+  "deliveryOption" : "fulltime",
+  "programCode" : "TST1DG5",
+  "term" : "spring",
+  "isPreAdmit" : false,
+  "isExchange" : true,
+  "internshipType" : "notavailable",
+  "instructionHours" : 5,
+  "expirationDate" : "2018-01-01",
+  "intakeExpectedEndDate" : "2018-12-01",
+  "firstPaymentAmount" : 100,
+  "firstPaymentDate" : "2018-01-01",
+  "secondPaymentAmount": 200,
+  "secondPaymentDate" : "2018-05-01",
+  "tuitionFees" : 50,
+  "ancillaryFees" : 50,
+  "conditions": [],
+  "customOfferLetter" : {}
+}
+```
+
+**_Notes:_**
+
+Many of the fields on the [NewOfferInfo](#newofferinfo) model can be left
+undefined. The values will then be drawn from the program catalogue
+within the OCAS International System.
+
+_Be warned, however, that if a value has not been configured in the OIS catalogue
+and is also left undefined as part of this event an error will be raised._
+
+These fields are as follows:
+
+- entryLevelType
+- isExchange
+- internshipType
+- internshipDescription
+- instructionHours
+- expirationDate
+- intakeExpectedEndDate
+- firstPaymentAmount
+- firstPaymentDate
+- secondPaymentAmount
+- secondPaymentDate
+- tuitionFees
+- ancillaryFees
+
+If a value is provided for `customOfferLetter` then that will be used,
+otherwise the OIS will generate an offer letter on your behalf.
+
+### OfferCondition ###
+
+| Property           | Type                                                             |
+| ------------------ | ---------------------------------------------------------------- |
+| offerConditionType | _string_ ([Lookup](#offerconditiontype))                         |
+| other              | _[nullable] string_ (min 1, max 255) set when type is `other`    |
+
 ### OfferPaid ###
 
-| Property          | Type                              |
-| ----------------- | --------------------------------- |
-| applicationNumber | _string_ (min 1, max 20)          |
-| applicationCycle  | _string_ (min 1, max 50)          |
-| campusCode        | _string_ (min 1, max 4)           |
-| deliveryOption    | _string_ (min 1, max 50)          |
-| programCode       | _string_ (min 1, max 10)          |
-| term              | _string_ (min 1, max 50)          |
-| receipt           | [BinaryDocument](#binarydocument) |
+| Property          | Type                                                   |
+| ----------------- | ------------------------------------------------------ |
+| applicationNumber | _string_ (min 1, max 20)                               |
+| applicationCycle  | _number_ ([Lookup](#applicationcycle))                 |
+| campusCode        | _string_ (min 1, max 4)                                |
+| deliveryOption    | _string_  _string_ ([Lookup](#intakedeliveryoption))   |
+| programCode       | _string_ (min 1, max 10)                               |
+| term              | _string_ ([Lookup](#termcode))                         |
+| receipt           | [BinaryDocument](#binarydocument)                      |
 
 **_Example:_**
 
@@ -644,7 +811,7 @@ Example: See [Appendix: Application](#appendix-application)
 
 | Property | Type                                                                        |
 | -------- | --------------------------------------------------------------------------- |
-| type     | _string_ [Lookup](#phonetype)                                               |
+| type     | _string_ ([Lookup](#phonetype))                                             |
 | number   | _string_ (min 1, max 20) follows format "\<iso3166-1 alpha-2\>-01234567890" |
 | ext      | _[nullable] string_ (min 1, max 5)                                          |
 
@@ -723,8 +890,8 @@ Example: See [Appendix: Application](#appendix-application)
 
 | Property         | Type                                                         |
 | ---------------- | ------------------------------------------------------------ |
-| applicationCycle | _number_ ([ApplicationCycleLookup](#applicationcyclelookup)) |
-| code             | _string_ ([Lookup](#termlookup))                             |
+| applicationCycle | _number_ ([Lookup](#applicationcycle))                       |
+| code             | _string_ ([Lookup](#termcode))                               |
 | startDate        | _string_ date string in format `yyyy-MM-dd`                  |
 | endDate          | _string_ date string in format `yyyy-MM-dd`                  |
 
@@ -785,6 +952,25 @@ Lookups
 | college-diploma   |
 | college-other     |
 
+### EntryLevelType ###
+
+| Code   |
+| ------ |
+| 01     |
+| 02     |
+| 03     |
+| 04     |
+| 05     |
+| 06     |
+| 07     |
+| 08     |
+| 09     |
+| 10     |
+| 11     |
+| 12     |
+| 20     |
+| 21     |
+
 ### Gender ###
 
 | Code   |
@@ -793,6 +979,13 @@ Lookups
 | female |
 | other  |
 
+### IntakeDeliveryOption ###
+
+| Code     |
+| -------- |
+| fulltime |
+| parttime |
+
 ### InternationalProgramType ###
 
 | Code   |
@@ -800,6 +993,14 @@ Lookups
 | Normal |
 | Esl    |
 | Eap    |
+
+### InternshipType ###
+
+| Code         |
+| ------------ |
+| required     |
+| optional     |
+| notavailable |
 
 ### Languages ###
 
@@ -831,6 +1032,21 @@ Lookups
 | viii |
 | ix   |
 | x    |
+
+### OfferConditionType ###
+
+| Code                   |
+| ---------------------- |
+| engproficiency         |
+| eapcomplete            |
+| eslcomplete            |
+| escpathway             |
+| highschoolcomplete     |
+| collegeprogramcomplete |
+| universitycomplete     |
+| resume                 |
+| portfolio              |
+| other                  |
 
 ### PhoneType ###
 
@@ -870,6 +1086,7 @@ Lookups
 
 | Key                           | Data Object Type                                    |
 | ----------------------------- | --------------------------------------------------- |
+| CreateOffer                   | [NewOfferInfo](#newofferinfo)                       |
 | UpdateApplicantCollegeDetails | [ApplicantCollegeDetails](#applicantcollegedetails) |
 | PayOffer                      | [OfferPaid](#offerpaid)                             |
 
@@ -1560,6 +1777,86 @@ Note: Empty JSON collections are not represented within the XML.
 <root>
   <number>X12345</number>
   <studentId>SID-1234</studentId>
+</root>
+```
+
+### Appendix: CreateOffer ###
+
+#### CreateOffer JSON ####
+
+```JSON
+{
+  "applicationNumber" : "X1484934",
+  "applicationCycle" : "2017",
+  "campusCode" : "C4",
+  "deliveryOption" : "fulltime",
+  "programCode" : "TST1DG5",
+  "term" : "spring",
+  "isPreAdmit" : false,
+  "isExchange" : true,
+  "internshipType" : "notavailable",
+  "instructionHours" : 5,
+  "expirationDate" : "2018-01-01",
+  "intakeExpectedEndDate" : "2018-12-01",
+  "firstPaymentAmount" : 100,
+  "firstPaymentDate" : "2018-01-01",
+  "secondPaymentAmount": 200,
+  "secondPaymentDate" : "2018-05-01",
+  "tuitionFees" : 50,
+  "ancillaryFees" : 50,
+  "conditions": [
+    {
+      "offerConditionType": "eslcomplete"
+    },
+    {
+      "offerConditionType": "other",
+      "other": "Must get straight A's"
+    }
+  ],
+  "customOfferLetter" : {
+    "data": "[base 64 encoded string]",
+    "filename": "filename.pdf",
+    "mimeType": "application/pdf",
+    "length": 96041
+  }
+}
+```
+
+#### CreateOffer XML ####
+
+```XML
+<root>
+  <applicationNumber>X1484934</applicationNumber>
+  <applicationCycle>2017</applicationCycle>
+  <campusCode>C4</campusCode>
+  <deliveryOption>fulltime</deliveryOption>
+  <programCode>TST1DG5</programCode>
+  <term>spring</term>
+  <isPreAdmit>false</isPreAdmit>
+  <isExchange>true</isExchange>
+  <internshipType>notavailable</internshipType>
+  <instructionHours>5</instructionHours>
+  <expirationDate>2018-01-01</expirationDate>
+  <intakeExpectedEndDate>2018-12-01</intakeExpectedEndDate>
+  <firstPaymentAmount>100</firstPaymentAmount>
+  <firstPaymentDate>2018-01-01</firstPaymentDate>
+  <secondPaymentAmount>200</secondPaymentAmount>
+  <secondPaymentDate>2018-05-01</secondPaymentDate>
+  <tuitionFees>50</tuitionFees>
+  <ancillaryFees>50</ancillaryFees>
+  <conditions>
+    <offerConditionType>eslcomplete</offerConditionType>
+  </conditions>
+  <conditions>
+    <offerConditionType>other</offerConditionType>
+    <other>Must get straight A's</other>
+  </conditions>
+  <customOfferLetter>
+    <data>[base 64 encoded string]</data>
+    <filename>filename.pdf</filename>
+    <mimeType>application/pdf</mimeType>
+    <length>96041</length>
+  </customOfferLetter>
 </root>
 ```
 
