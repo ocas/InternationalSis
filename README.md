@@ -1558,8 +1558,8 @@ Note: Empty JSON collections are not represented within the XML.
 
 ```XML
 <root>
-  <number>ApplicationScreened</number>
-  <studentId>ApplicationScreened</studentId>
+  <number>X12345</number>
+  <studentId>SID-1234</studentId>
 </root>
 ```
 
