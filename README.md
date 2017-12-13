@@ -8,6 +8,7 @@ Table of Contents
     - [Table of Contents](#table-of-contents)
     - [Document Revisions](#document-revisions)
         - [Change History](#change-history)
+            - [1.1.1](#111)
             - [1.1.0](#110)
             - [1.0.4](#104)
             - [1.0.3](#103)
@@ -109,6 +110,7 @@ Document Revisions
 
 | Version | Date         | Editor           |
 | ------- | ------------ | ---------------- |
+| 1.1.1   | Dec 13, 2017 | Jay Dobson       |
 | 1.1.0   | Dec 12, 2017 | Kevin Schneider  |
 | 1.0.4   | Dec 8, 2017  | Michael Aldworth |
 | 1.0.3   | Dec 7, 2017  | Michael Aldworth |
@@ -117,6 +119,10 @@ Document Revisions
 | 1.0.0   | Nov 24, 2017 | Michael Aldworth |
 
 ### Change History ###
+
+#### 1.1.1 ####
+
+- Updated error codes table to inclde 404.13 when maximum content length is exceeded
 
 #### 1.1.0 ####
 
@@ -623,10 +629,10 @@ Example: See [Appendix: Application](#appendix-application)
 
 ### ApplicantProficiencySubScore ###
 
-| Property | Type                                 |
-| -------- | ------------------------------------ |
-| type     | _string_ ([Lookup](#testsubtype))    |
-| score    | _string_ (min 1, max 80)             |
+| Property | Type                              |
+| -------- | --------------------------------- |
+| type     | _string_ ([Lookup](#testsubtype)) |
+| score    | _string_ (min 1, max 80)          |
 
 **_Example:_**
 
@@ -776,22 +782,22 @@ otherwise the OIS will generate an offer letter on your behalf.
 
 ### OfferCondition ###
 
-| Property           | Type                                                             |
-| ------------------ | ---------------------------------------------------------------- |
-| offerConditionType | _string_ ([Lookup](#offerconditiontype))                         |
-| other              | _[nullable] string_ (min 1, max 255) set when type is `other`    |
+| Property           | Type                                                          |
+| ------------------ | ------------------------------------------------------------- |
+| offerConditionType | _string_ ([Lookup](#offerconditiontype))                      |
+| other              | _[nullable] string_ (min 1, max 255) set when type is `other` |
 
 ### OfferPaid ###
 
-| Property          | Type                                                   |
-| ----------------- | ------------------------------------------------------ |
-| applicationNumber | _string_ (min 1, max 20)                               |
-| applicationCycle  | _number_ ([Lookup](#applicationcycle))                 |
-| campusCode        | _string_ (min 1, max 4)                                |
-| deliveryOption    | _string_  _string_ ([Lookup](#intakedeliveryoption))   |
-| programCode       | _string_ (min 1, max 10)                               |
-| term              | _string_ ([Lookup](#termcode))                         |
-| receipt           | [BinaryDocument](#binarydocument)                      |
+| Property          | Type                                                 |
+| ----------------- | ---------------------------------------------------- |
+| applicationNumber | _string_ (min 1, max 20)                             |
+| applicationCycle  | _number_ ([Lookup](#applicationcycle))               |
+| campusCode        | _string_ (min 1, max 4)                              |
+| deliveryOption    | _string_  _string_ ([Lookup](#intakedeliveryoption)) |
+| programCode       | _string_ (min 1, max 10)                             |
+| term              | _string_ ([Lookup](#termcode))                       |
+| receipt           | [BinaryDocument](#binarydocument)                    |
 
 **_Example:_**
 
@@ -888,12 +894,12 @@ Example: See [Appendix: Application](#appendix-application)
 
 ### Term ###
 
-| Property         | Type                                                         |
-| ---------------- | ------------------------------------------------------------ |
-| applicationCycle | _number_ ([Lookup](#applicationcycle))                       |
-| code             | _string_ ([Lookup](#termcode))                               |
-| startDate        | _string_ date string in format `yyyy-MM-dd`                  |
-| endDate          | _string_ date string in format `yyyy-MM-dd`                  |
+| Property         | Type                                        |
+| ---------------- | ------------------------------------------- |
+| applicationCycle | _number_ ([Lookup](#applicationcycle))      |
+| code             | _string_ ([Lookup](#termcode))              |
+| startDate        | _string_ date string in format `yyyy-MM-dd` |
+| endDate          | _string_ date string in format `yyyy-MM-dd` |
 
 **_Example:_**
 
@@ -954,22 +960,22 @@ Lookups
 
 ### EntryLevelType ###
 
-| Code   |
-| ------ |
-| 01     |
-| 02     |
-| 03     |
-| 04     |
-| 05     |
-| 06     |
-| 07     |
-| 08     |
-| 09     |
-| 10     |
-| 11     |
-| 12     |
-| 20     |
-| 21     |
+| Code |
+| ---- |
+| 01   |
+| 02   |
+| 03   |
+| 04   |
+| 05   |
+| 06   |
+| 07   |
+| 08   |
+| 09   |
+| 10   |
+| 11   |
+| 12   |
+| 20   |
+| 21   |
 
 ### Gender ###
 
@@ -1300,22 +1306,23 @@ required to write and read events respecfully.
 
 Below is a table of error codes that may be returned from the SisApi
 
-| Code  | Description                               |
-| ----- | ----------------------------------------- |
-| E0001 | Unknown Middleware Exception              |
-| E0030 | Not Found Error                           |
-| E0056 | Invalid Feature Configuration             |
-| E0070 | Error In State Machine                    |
-| E0071 | Invalid state transition                  |
-| E0080 | Invalid Term Code                         |
-| E0081 | Invalid Program Code                      |
-| E0082 | Invalid Campus Code                       |
-| E0083 | Invalid Delivery Option Code              |
-| E0084 | Invalid Application Cycle                 |
-| E0086 | Duplicate Event Id Race Condition         |
-| E0085 | Duplicate Event Id With Different Payload |
-| E0090 | Ack Out of Order                          |
-| E0091 | Invalid Offer State Transition            |
+| Code   | Description                               |
+| ------ | ----------------------------------------- |
+| 404.13 | Request content size too large            |
+| E0001  | Unknown Middleware Exception              |
+| E0030  | Not Found Error                           |
+| E0056  | Invalid Feature Configuration             |
+| E0070  | Error In State Machine                    |
+| E0071  | Invalid state transition                  |
+| E0080  | Invalid Term Code                         |
+| E0081  | Invalid Program Code                      |
+| E0082  | Invalid Campus Code                       |
+| E0083  | Invalid Delivery Option Code              |
+| E0084  | Invalid Application Cycle                 |
+| E0086  | Duplicate Event Id Race Condition         |
+| E0085  | Duplicate Event Id With Different Payload |
+| E0090  | Ack Out of Order                          |
+| E0091  | Invalid Offer State Transition            |
 
 #### Warning Codes ####
 
