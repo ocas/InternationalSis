@@ -8,6 +8,7 @@ Table of Contents
     - [Table of Contents](#table-of-contents)
     - [Document Revisions](#document-revisions)
         - [Change History](#change-history)
+            - [1.2.0](#120)
             - [1.1.1](#111)
             - [1.1.0](#110)
             - [1.0.4](#104)
@@ -32,15 +33,22 @@ Table of Contents
         - [ApplicantCollegeDetails](#applicantcollegedetails)
         - [ApplicantProficiency](#applicantproficiency)
         - [ApplicantProficiencySubScore](#applicantproficiencysubscore)
+        - [ApplicantSupportingDocument](#applicantsupportingdocument)
         - [Application](#application)
         - [BinaryDocument](#binarydocument)
+        - [DeclineProgramSelection](#declineprogramselection)
         - [EmergencyContact](#emergencycontact)
+        - [NewBinaryDocumentInfo](#newbinarydocumentinfo)
         - [NewOfferInfo](#newofferinfo)
         - [OfferCondition](#offercondition)
-        - [OfferPaid](#offerpaid)
+        - [OfferDeclined](#offerdeclined)
+        - [OfferVisaReceived](#offervisareceived)
+        - [OfferWithdrawn](#offerwithdrawn)
+        - [PayOffer](#payoffer)
         - [Phone](#phone)
         - [Program](#program)
         - [ProgramSelection](#programselection)
+        - [RevokeOffer](#revokeoffer)
         - [SisEvent](#sisevent)
         - [SisInboundEvent](#sisinboundevent)
         - [Term](#term)
@@ -59,14 +67,18 @@ Table of Contents
         - [NamePrefix](#nameprefix)
         - [NameSuffix](#namesuffix)
         - [OfferConditionType](#offerconditiontype)
+        - [OfferRevokeType](#offerrevoketype)
         - [PhoneType](#phonetype)
         - [ProgramCredentialType](#programcredentialtype)
+        - [ProgramDeclineReason](#programdeclinereason)
         - [SchoolType](#schooltype)
         - [SisInboundEventType](#sisinboundeventtype)
         - [SisOutboundEventType](#sisoutboundeventtype)
+        - [SupportingDocumentType](#supportingdocumenttype)
         - [TermCode](#termcode)
         - [TestSubType](#testsubtype)
         - [TestType](#testtype)
+        - [WithdrawType](#withdrawtype)
     - [Sender and Receiver Clients](#sender-and-receiver-clients)
         - [Database Connectivity](#database-connectivity)
         - [Sleep Interval](#sleep-interval)
@@ -101,15 +113,16 @@ Table of Contents
         - [Appendix: CreateOffer](#appendix-createoffer)
             - [CreateOffer JSON](#createoffer-json)
             - [CreateOffer XML](#createoffer-xml)
-        - [Appendix: OfferPaid](#appendix-offerpaid)
-            - [OfferPaid JSON](#offerpaid-json)
-            - [OfferPaid XML](#offerpaid-xml)
+        - [Appendix: PayOffer](#appendix-payoffer)
+            - [PayOffer JSON](#payoffer-json)
+            - [PayOffer XML](#payoffer-xml)
 
 Document Revisions
 ------------------
 
 | Version | Date         | Editor           |
 | ------- | ------------ | ---------------- |
+| 1.2.0   | Dec 18, 2017 | Michael Aldworth |
 | 1.1.1   | Dec 13, 2017 | Jay Dobson       |
 | 1.1.0   | Dec 12, 2017 | Kevin Schneider  |
 | 1.0.4   | Dec 8, 2017  | Michael Aldworth |
@@ -119,6 +132,15 @@ Document Revisions
 | 1.0.0   | Nov 24, 2017 | Michael Aldworth |
 
 ### Change History ###
+
+#### 1.2.0 ####
+
+- Added OfferDeclined, OfferVisaReceived and Offer Withdrawn inbound event types
+- Renamed OfferPaid to PayOffer (keep naming consistent, no effect on object)
+- Added ApplicantUpdated, DeclineProgramChoice and RevokeOffer outbound event types
+- Renamed BinaryDocument to NewBinaryDocumentInfo (again, to keep naming consistent)
+- Created BinaryDocument object, to represent binary document with embedded link
+- Add ApplicantSupportingDocument, which will have the supporting document type
 
 #### 1.1.1 ####
 
@@ -221,8 +243,9 @@ section.
 
 You will notice that all events are transmitted to the Partner through the **Peek*
 endpoint. This is delibrate, as the payload will contain the event action type and
-payload. You can see [available events below](#sisinboundeventtype), which must be individually toggled on individually
-through configuration by OCAS in order to start receiving them.
+payload. You can see [available events below](#sisinboundeventtype), which must
+be individually toggled on individually through configuration by OCAS in order to
+start receiving them.
 
 #### PUT /api/v1/applicants/{number}/college-details ####
 
@@ -297,7 +320,7 @@ the type of change to be reflected in OCAS International System.
 {
   "id": 18,
   "action": "[action name goes here]",
-  "data": { ... }
+  "data": { }
 }
 ```
 
@@ -434,7 +457,7 @@ the specified event.
 | ------------ | --------------------------------------------------------------- |
 | model        | [SisInboundEvent](#SisInboundEvent)                             |
 | model.id     | long (Unique for every event. Auto-incrementing ID recommended) |
-| model.data   | [OfferPaid](#OfferPaid)                                         |
+| model.data   | [PayOffer](#payoffer)                                           |
 
 **_Example:_**
 
@@ -518,40 +541,44 @@ Objects
 
 ### Applicant ###
 
-| Property                  | Type                                                              |
-| ------------------------- | ----------------------------------------------------------------- |
-| id                        | _string_ guid                                                     |
-| number                    | _string_ (min 1, max 20)                                          |
-| version                   | number (used for historical profile tracking)                     |
-| created                   | _string_ ISO 8601 Date Formatted String                           |
-| legalName                 | [ApplicantName](#applicantname)                                   |
-| dateOfBirth               | _string_ date string in format `yyyy-MM-dd`                       |
-| canadianStatus            | [CanadianStatus](#canadianstatus)                                 |
-| primaryCitizenshipCountry | _string_ ISO3166-1 alpha-2 [see mappings](#country-and-provinces) |
-| fullLegalName             | _string_ (min 1, max 450)                                         |
-| casualNames               | Array[0..10] of [ApplicantName](#applicantname)                   |
-| gender                    | _string_ [Gender](#gender)                                        |
-| mailingAddress            | [Address](#address)                                               |
-| currentAddress            | _[nullable]_ [Address](#address)                                  |
-| phones                    | Array[1..10] of [Phone](#phone)                                   |
-| emails                    | Array[1..10] of strings (each email, min 5, max 128)              |
-| emergencyContact          | [EmergencyContact](#emergencycontact)                             |
-| credentials               | Array[1..10] of [Credential](#credential)                         |
-| proficiencies             | Array[0..10] of [ApplicantProficiency](#applicantproficiency)     |
+| Property                  | Type                                                                        |
+| ------------------------- | --------------------------------------------------------------------------- |
+| id                        | _string_ guid                                                               |
+| number                    | _string_ (min 1, max 20)                                                    |
+| version                   | number (used for historical profile tracking)                               |
+| created                   | _string_ ISO 8601 Date Formatted String                                     |
+| legalName                 | [ApplicantName](#applicantname)                                             |
+| dateOfBirth               | _string_ date string in format `yyyy-MM-dd`                                 |
+| canadianStatus            | [CanadianStatus](#canadianstatus)                                           |
+| primaryCitizenshipCountry | _string_ ISO3166-1 alpha-2 [see mappings](#country-and-provinces)           |
+| fullLegalName             | _string_ (min 1, max 450)                                                   |
+| casualNames               | Array[0..10] of [ApplicantName](#applicantname)                             |
+| gender                    | _string_ [Gender](#gender)                                                  |
+| mailingAddress            | [Address](#address)                                                         |
+| currentAddress            | _[nullable]_ [Address](#address)                                            |
+| phones                    | Array[1..10] of [Phone](#phone)                                             |
+| emails                    | Array[1..10] of strings (each email, min 5, max 128)                        |
+| emergencyContact          | [EmergencyContact](#emergencycontact)                                       |
+| credentials               | Array[1..10] of [Credential](#credential)                                   |
+| proficiencies             | Array[0..10] of [ApplicantProficiency](#applicantproficiency)               |
+| identificationDocuments   | Array[1..10] of [ApplicantSupportingDocument](#applicantsupportingdocument) |
+| visaDocuments             | Array[0..10] of [ApplicantSupportingDocument](#applicantsupportingdocument) |
+| otherDocuments            | Array[0..10] of [ApplicantSupportingDocument](#applicantsupportingdocument) |
 
 Example: See [Appendix: Application](#appendix-application)
 
 ### ApplicantCredential ###
 
-| Property       | Type                                                              |
-| -------------- | ----------------------------------------------------------------- |
-| schoolType     | _string_      ([Lookup](#schooltype))                             |
-| schoolName     | _string_ (min 1, max 100)                                         |
-| country        | _string_ ISO3166-1 alpha-2 [see mappings](#country-and-provinces) |
-| programName    | _[nullable] string_ (min 1, max 80)                               |
-| status         | _string_ ([Lookup](#educationcredentialstatus))                   |
-| completionDate | _[nullable] string_ date string in format `yyyy-MM-dd`            |
-| credentialType | _[nullable] string_ ([Lookup](#educationcredentialtype))          |
+| Property            | Type                                                                        |
+| ------------------- | --------------------------------------------------------------------------- |
+| schoolType          | _string_      ([Lookup](#schooltype))                                       |
+| schoolName          | _string_ (min 1, max 100)                                                   |
+| country             | _string_ ISO3166-1 alpha-2 [see mappings](#country-and-provinces)           |
+| programName         | _[nullable] string_ (min 1, max 80)                                         |
+| status              | _string_ ([Lookup](#educationcredentialstatus))                             |
+| completionDate      | _[nullable] string_ date string in format `yyyy-MM-dd`                      |
+| credentialType      | _[nullable] string_ ([Lookup](#educationcredentialtype))                    |
+| supportingDocuments | Array[1..10] of [ApplicantSupportingDocument](#applicantsupportingdocument) |
 
 **_Example:_**
 
@@ -563,7 +590,8 @@ Example: See [Appendix: Application](#appendix-application)
   "programName": "Something",
   "status": "Completed",
   "completionDate": "2016-04-30",
-  "credentialType": null
+  "credentialType": null,
+  "supportingDocuments": [{}]
 }
 ```
 
@@ -607,13 +635,14 @@ Example: See [Appendix: Application](#appendix-application)
 
 ### ApplicantProficiency ###
 
-| Property       | Type                                                                           |
-| -------------- | ------------------------------------------------------------------------------ |
-| type           | _string_ ([Lookup](#testtype))                                                 |
-| otherName      | _[nullable] string_ (min 1, max 80)                                            |
-| score          | _[nullable] string_ (min 1, max 80)                                            |
-| completionDate | _[nullable] string_ date string in format `yyyy-MM-dd`                         |
-| subScores      | Array[0 or 4] of [ApplicantProficiencySubScore](#applicantproficiencysubscore) |
+| Property            | Type                                                                           |
+| ------------------- | ------------------------------------------------------------------------------ |
+| type                | _string_ ([Lookup](#testtype))                                                 |
+| otherName           | _[nullable] string_ (min 1, max 80)                                            |
+| score               | _[nullable] string_ (min 1, max 80)                                            |
+| completionDate      | _[nullable] string_ date string in format `yyyy-MM-dd`                         |
+| subScores           | Array[0 or 4] of [ApplicantProficiencySubScore](#applicantproficiencysubscore) |
+| supportingDocuments | Array[0..10] of [ApplicantSupportingDocument](#applicantsupportingdocument)    |
 
 **_Example:_**
 
@@ -623,7 +652,8 @@ Example: See [Appendix: Application](#appendix-application)
   "otherName": null,
   "score": "50",
   "completionDate": "2017-01-28",
-  "subScores": []
+  "subScores": [],
+  "supportingDocuments": []
 }
 ```
 
@@ -643,6 +673,24 @@ Example: See [Appendix: Application](#appendix-application)
 }
 ```
 
+### ApplicantSupportingDocument ###
+
+| Property        | Type                                                       |
+| --------------- | ---------------------------------------------------------- |
+| type            | _string_ (Code from [Lookup](#supportingdocumenttype))     |
+| category        | _string_ (Category from [Lookup](#supportingdocumenttype)) |
+| binaryDocuments | Array[1..10] of [BinaryDocument](#binarydocument)          |
+
+**_Example:_**
+
+```JSON
+{
+  "type" : "provisionalcertificate",
+  "category" : "credential-university",
+  "binaryDocuments": [{}]
+}
+```
+
 ### Application ###
 
 | Property   | Type                                           |
@@ -657,21 +705,44 @@ Example: See [Appendix: Application](#appendix-application)
 
 ### BinaryDocument ###
 
-| Property | Type                            |
-| -------- | ------------------------------- |
-| data     | _string_ Base 64 encoded string |
-| filename | _string_ (min 1, max 255)       |
-| mimetype | _string_ (min 1, max 255)       |
-| length   | _long_ File size in bytes       |
+| Property | Type                                    |
+| -------- | --------------------------------------- |
+| link     | _string_ Base 64 encoded string         |
+| name     | _string_ (min 1, max 255)               |
+| mimeType | _string_ (min 1, max 255)               |
+| addedOn  | _string_ ISO 8601 Date Formatted String |
 
 **_Example:_**
 
 ```JSON
 {
-  "data": "[base 64 encoded string]",
-  "filename": "filename.jpg",
+  "link": "https://someurltodownloadfile",
+  "name": "filename.jpg",
   "mimeType": "image/jpeg",
-  "length": 96041
+  "addedOn": "2017-12-08T17:19:02.3269001Z"
+}
+```
+
+### DeclineProgramSelection ###
+
+| Property           | Type                                       |
+| ------------------ | ------------------------------------------ |
+| applicationNumber  | _string_ (min 1, max 20)                   |
+| applicationCycle   | _number_ ([Lookup](#applicationcycle))     |
+| programCode        | _string_ (min 1, max 10)                   |
+| term               | _string_ ([Lookup](#termcode))             |
+| declineReasonCode  | _string_ ([Lookup](#programdeclinereason)) |
+| declineReasonOther | _[nullable] string_ (min 1, max 100)       |
+
+**_Example:_**
+
+```JSON
+{
+  "applicationNumber" : "X1484934",
+  "applicationCycle" : "2017",
+  "term" : "spring",
+  "programCode" : "TST1DG5",
+  "declineReasonCode" : "admissionrequirement"
 }
 ```
 
@@ -694,6 +765,26 @@ Example: See [Appendix: Application](#appendix-application)
   "email" : "beth@example.com",
   "relationship" : "Mother",
   "firstLanguage" : "en"
+}
+```
+
+### NewBinaryDocumentInfo ###
+
+| Property | Type                            |
+| -------- | ------------------------------- |
+| data     | _string_ Base 64 encoded string |
+| name     | _string_ (min 1, max 255)       |
+| mimeType | _string_ (min 1, max 255)       |
+| length   | _long_ File size in bytes       |
+
+**_Example:_**
+
+```JSON
+{
+  "data": "[base 64 encoded string]",
+  "name": "filename.jpg",
+  "mimeType": "image/jpeg",
+  "length": 96041
 }
 ```
 
@@ -723,7 +814,7 @@ Example: See [Appendix: Application](#appendix-application)
 | tuitionFees           | _[nullable] decimal(18,2)_                                       |
 | ancillaryFees         | _[nullable] decimal(18,2)_                                       |
 | conditions            | Array[0..5] of [OfferCondition](#offercondition)                 |
-| customOfferLetter     | [BinaryDocument](#binarydocument)                                |
+| customOfferLetter     | [NewBinaryDocumentInfo](#newbinarydocumentinfo)                  |
 
 **_Example:_**
 
@@ -787,7 +878,7 @@ otherwise the OIS will generate an offer letter on your behalf.
 | offerConditionType | _string_ ([Lookup](#offerconditiontype))                      |
 | other              | _[nullable] string_ (min 1, max 255) set when type is `other` |
 
-### OfferPaid ###
+### OfferDeclined ###
 
 | Property          | Type                                                 |
 | ----------------- | ---------------------------------------------------- |
@@ -797,7 +888,7 @@ otherwise the OIS will generate an offer letter on your behalf.
 | deliveryOption    | _string_  _string_ ([Lookup](#intakedeliveryoption)) |
 | programCode       | _string_ (min 1, max 10)                             |
 | term              | _string_ ([Lookup](#termcode))                       |
-| receipt           | [BinaryDocument](#binarydocument)                    |
+| timestamp         | _string_ ISO 8601 Date Formatted String              |
 
 **_Example:_**
 
@@ -807,7 +898,89 @@ otherwise the OIS will generate an offer letter on your behalf.
   "applicationCycle" : "2018" ,
   "campusCode" : "main",
   "deliveryOption" : "fulltime",
-  "programCode" : "tst100",
+  "programCode" : "TSTAD1",
+  "term" : "fall",
+  "timestamp" : "2017-12-08T17:19:02.3269001Z"
+}
+```
+
+### OfferVisaReceived ###
+
+| Property          | Type                                                 |
+| ----------------- | ---------------------------------------------------- |
+| applicationNumber | _string_ (min 1, max 20)                             |
+| applicationCycle  | _number_ ([Lookup](#applicationcycle))               |
+| campusCode        | _string_ (min 1, max 4)                              |
+| deliveryOption    | _string_  _string_ ([Lookup](#intakedeliveryoption)) |
+| programCode       | _string_ (min 1, max 10)                             |
+| term              | _string_ ([Lookup](#termcode))                       |
+| timestamp         | _string_ ISO 8601 Date Formatted String              |
+
+**_Example:_**
+
+```JSON
+{
+  "applicationNumber" : "X12345",
+  "applicationCycle" : "2018" ,
+  "campusCode" : "main",
+  "deliveryOption" : "fulltime",
+  "programCode" : "TSTAD1",
+  "term" : "fall",
+  "timestamp" : "2017-12-08T17:19:02.3269001Z"
+}
+```
+
+### OfferWithdrawn ###
+
+| Property          | Type                                                       |
+| ----------------- | ---------------------------------------------------------- |
+| applicationNumber | _string_ (min 1, max 20)                                   |
+| applicationCycle  | _number_ ([Lookup](#applicationcycle))                     |
+| campusCode        | _string_ (min 1, max 4)                                    |
+| deliveryOption    | _string_  _string_ ([Lookup](#intakedeliveryoption))       |
+| programCode       | _string_ (min 1, max 10)                                   |
+| term              | _string_ ([Lookup](#termcode))                             |
+| timestamp         | _string_ ISO 8601 Date Formatted String                    |
+| withdrawnType     | _string_ ([Lookup](#withdrawtype))                         |
+| otherReason       | _[null if withdrawnType != other] string_ (min 1, max 100) |
+
+**_Example:_**
+
+```JSON
+{
+  "applicationNumber" : "X12345",
+  "applicationCycle" : "2018" ,
+  "campusCode" : "main",
+  "deliveryOption" : "fulltime",
+  "programCode" : "TSTAD1",
+  "term" : "fall",
+  "timestamp" : "2017-12-08T17:19:02.3269001Z",
+  "withdrawnType" : "visadeclined",
+  "otherReason" : null
+}
+```
+
+### PayOffer ###
+
+| Property          | Type                                                 |
+| ----------------- | ---------------------------------------------------- |
+| applicationNumber | _string_ (min 1, max 20)                             |
+| applicationCycle  | _number_ ([Lookup](#applicationcycle))               |
+| campusCode        | _string_ (min 1, max 4)                              |
+| deliveryOption    | _string_  _string_ ([Lookup](#intakedeliveryoption)) |
+| programCode       | _string_ (min 1, max 10)                             |
+| term              | _string_ ([Lookup](#termcode))                       |
+| receipt           | [NewBinaryDocumentInfo](#newbinarydocumentinfo)      |
+
+**_Example:_**
+
+```JSON
+{
+  "applicationNumber" : "X12345",
+  "applicationCycle" : "2018" ,
+  "campusCode" : "main",
+  "deliveryOption" : "fulltime",
+  "programCode" : "TSTAD1",
   "term" : "fall",
   "receipt" : {}
 }
@@ -861,6 +1034,34 @@ otherwise the OIS will generate an offer letter on your behalf.
 | choiceNumber     | _number_ (less than 0 = EAP/ESL Program, greater than 0 = Normal Program) |
 
 Example: See [Appendix: Application](#appendix-application)
+
+### RevokeOffer ###
+
+| Property          | Type                                                 |
+| ----------------- | ---------------------------------------------------- |
+| applicationNumber | _string_ (min 1, max 20)                             |
+| applicationCycle  | _number_ ([Lookup](#applicationcycle))               |
+| campusCode        | _string_ (min 1, max 4)                              |
+| deliveryOption    | _string_  _string_ ([Lookup](#intakedeliveryoption)) |
+| programCode       | _string_ (min 1, max 10)                             |
+| term              | _string_ ([Lookup](#termcode))                       |
+| revokeReasonCode  | _string_ ([Lookup](#offerrevoketype))                |
+| revokeReasonOther | _[nullable] string_ (min 1, max 100)                 |
+
+**_Example:_**
+
+```JSON
+{
+  "applicationNumber" : "X12345",
+  "applicationCycle" : "2018" ,
+  "campusCode" : "main",
+  "deliveryOption" : "fulltime",
+  "programCode" : "TSTAD1",
+  "term" : "fall",
+  "revokeReasonCode" : "other",
+  "revokeReasonOther" : "something that isn't covered in the list of common responses"
+}
+```
 
 ### SisEvent ###
 
@@ -1054,6 +1255,16 @@ Lookups
 | portfolio              |
 | other                  |
 
+### OfferRevokeType ###
+
+| Code             |
+| ---------------- |
+| deadline         |
+| nopaymentnoseats |
+| noshow           |
+| novisa           |
+| other            |
+
 ### PhoneType ###
 
 | Code   |
@@ -1073,6 +1284,15 @@ Lookups
 | graduatecertificate |
 | other               |
 
+### ProgramDeclineReason ###
+
+| Code                 |
+| -------------------- |
+| admissionrequirement |
+| programcancelled     |
+| programsuspended     |
+| other                |
+
 ### SchoolType ###
 
 | Code       |
@@ -1083,18 +1303,51 @@ Lookups
 
 ### SisInboundEventType ###
 
-| Key                  | Data Object Type            |
-| -------------------- | --------------------------- |
-| ApplicationSubmitted | [Application](#application) |
-| ApplicationScreened  | [Application](#application) |
+| Key                  | Data Object Type                        |
+| -------------------- | --------------------------------------- |
+| ApplicantUpdated     | [Applicant](#applicant)                 |
+| ApplicationScreened  | [Application](#application)             |
+| ApplicationSubmitted | [Application](#application)             |
+| OfferDeclined        | [OfferDeclined](#offerdeclined)         |
+| OfferWithdrawn       | [OfferWithdrawn](#offerwithdrawn)       |
+| OfferVisaReceived    | [OfferVisaReceived](#offervisareceived) |
 
 ### SisOutboundEventType ###
 
 | Key                           | Data Object Type                                    |
 | ----------------------------- | --------------------------------------------------- |
 | CreateOffer                   | [NewOfferInfo](#newofferinfo)                       |
+| DeclineProgramSelection       | [DeclineProgramSelection](#declineprogramselection) |
+| PayOffer                      | [PayOffer](#payoffer)                               |
+| RevokeOffer                   | [RevokeOffer](#revokeoffer)                         |
 | UpdateApplicantCollegeDetails | [ApplicantCollegeDetails](#applicantcollegedetails) |
-| PayOffer                      | [OfferPaid](#offerpaid)                             |
+
+### SupportingDocumentType ###
+
+| Category              | Code                   |
+| --------------------- | ---------------------- |
+| credential-college    | diploma                |
+| credential-college    | proofofenrollment      |
+| credential-college    | provisionalcertificate |
+| credential-college    | transcript             |
+| credential-secondary  | diploma                |
+| credential-secondary  | incompletetranscript   |
+| credential-secondary  | transcript             |
+| credential-university | degree                 |
+| credential-university | provisionalcertificate |
+| credential-university | transcript             |
+| identification        | birthcertificate       |
+| identification        | citizenshippapers      |
+| identification        | conventionrefugee      |
+| identification        | passport               |
+| identification        | pr                     |
+| other                 | portfolio              |
+| other                 | resume                 |
+| proficiency           | testresults            |
+| visa                  | approvalletter         |
+| visa                  | coopworkpermit         |
+| visa                  | studypermit            |
+| visa                  | visitor                |
 
 ### TermCode ###
 
@@ -1131,6 +1384,14 @@ represent the time an intake is being offered.
 | plte      |
 | toefl     |
 | other     |
+
+### WithdrawType ###
+
+| Code         |
+| ------------ |
+| visadeclined |
+| transfer     |
+| other        |
 
 Sender and Receiver Clients
 ---------------------------
@@ -1184,7 +1445,7 @@ The rolling file feature creates application event logs within a series of rolli
 | serilog:write-to:RollingFileAlternate.retainedFileCountLimit | 50                               |
 
 serilog:write-to:RollingFileAlternate.outputTemplate
-`{Timestamp:yyyy-MM-dd HH:mm:ss.fff zzz} [{Level}] [{SourceContext}] [{CorrelationId}] {Message}{NewLine}{Exception}`
+`{Timestamp:yyyy-MM-dd HH:mm:ss.fff zzz} [{Level}] [{SourceContext}] {Message}{NewLine}{Exception}`
 
 #### serilog:using:EventLog ####
 
@@ -1198,7 +1459,7 @@ The event log feature creates application event logs within the Windows Event Vi
 | serilog:write-to:EventLog.restrictedToMinimumLevel | 3 (Error)              |
 
 serilog:write-to:EventLog.outputTemplate
-`{Timestamp:yyyy-MM-dd HH:mm:ss.fff zzz} [{Level}] [{SourceContext}] [{CorrelationId}] {Message}{NewLine}{Exception}`
+`{Timestamp:yyyy-MM-dd HH:mm:ss.fff zzz} [{Level}] [{SourceContext}] {Message}{NewLine}{Exception}`
 
 #### serilog:using:Console ####
 
@@ -1497,7 +1758,15 @@ Note: Empty JSON collections are not represented within the XML.
           "programName": "velit",
           "status": "NotCompleted",
           "completionDate": "2016-08-07",
-          "credentialType": "university-degree"
+          "credentialType": "university-degree",
+          "supportingDocuments": [
+            {
+              "link": "https://somelinktodocument",
+              "name": "my-university-proof.pdf",
+              "mimeType": "application/pdf",
+              "addedOn": "2017-12-08T16:19:02.3269001Z"
+            }
+          ]
         },
         {
           "schoolType": "college",
@@ -1506,7 +1775,15 @@ Note: Empty JSON collections are not represented within the XML.
           "programName": null,
           "status": "InProgress",
           "completionDate": "2016-03-01",
-          "credentialType": "college-other"
+          "credentialType": "college-other",
+          "supportingDocuments": [
+            {
+              "link": "https://somelinktodocument",
+              "name": "my-college-proof.pdf",
+              "mimeType": "application/pdf",
+              "addedOn": "2017-12-08T16:19:02.3269001Z"
+            }
+          ]
         },
         {
           "schoolType": "secondary",
@@ -1515,7 +1792,15 @@ Note: Empty JSON collections are not represented within the XML.
           "programName": "fuga",
           "status": "InProgress",
           "completionDate": "2014-12-21",
-          "credentialType": "secondary-other"
+          "credentialType": "secondary-other",
+          "supportingDocuments": [
+            {
+              "link": "https://somelinktodocument",
+              "name": "my-secondary-proof.pdf",
+              "mimeType": "application/pdf",
+              "addedOn": "2017-12-08T16:19:02.3269001Z"
+            }
+          ]
         }
       ],
       "proficiencies": [
@@ -1524,21 +1809,36 @@ Note: Empty JSON collections are not represented within the XML.
           "otherName": null,
           "score": "64",
           "completionDate": "2017-11-05",
-          "subScores": []
+          "subScores": [],
+          "supportingDocuments": []
         },
         {
           "type": "ielts",
           "otherName": null,
           "score": "71",
           "completionDate": "2017-10-19",
-          "subScores": []
+          "supportingDocuments": [
+            {
+              "link": "https://somelinktodocument",
+              "name": "my-testscore-pg1.pdf",
+              "mimeType": "application/pdf",
+              "addedOn": "2017-12-08T16:22:02.3269001Z"
+            },
+            {
+              "link": "https://somelinktodocument",
+              "name": "my-testscore-pg2.pdf",
+              "mimeType": "application/pdf",
+              "addedOn": "2017-12-08T16:22:32.3269001Z"
+            }
+          ]
         },
         {
           "type": "eap",
           "otherName": null,
           "score": "94",
           "completionDate": "2015-02-05",
-          "subScores": []
+          "subScores": [],
+          "supportingDocuments": []
         }
       ]
     },
@@ -1676,6 +1976,12 @@ Note: Empty JSON collections are not represented within the XML.
         <status>NotCompleted</status>
         <completionDate>2016-08-07</completionDate>
         <credentialType>university-degree</credentialType>
+        <supportingDocuments>
+          <link>https://somelinktodocument</link>
+          <name>my-university-proof.pdf</name>
+          <mimeType>application/pdf</mimeType>
+          <addedOn>2017-12-08T16:19:02.3269001Z</addedOn>
+        </supportingDocuments>
       </credentials>
       <credentials>
         <schoolType>college</schoolType>
@@ -1685,6 +1991,12 @@ Note: Empty JSON collections are not represented within the XML.
         <status>InProgress</status>
         <completionDate>2016-03-01</completionDate>
         <credentialType>college-other</credentialType>
+        <supportingDocuments>
+          <link>https://somelinktodocument</link>
+          <name>my-college-proof.pdf</name>
+          <mimeType>application/pdf</mimeType>
+          <addedOn>2017-12-08T16:20:02.3269001Z</addedOn>
+        </supportingDocuments>
       </credentials>
       <credentials>
         <schoolType>secondary</schoolType>
@@ -1694,6 +2006,12 @@ Note: Empty JSON collections are not represented within the XML.
         <status>InProgress</status>
         <completionDate>2014-12-21</completionDate>
         <credentialType>secondary-other</credentialType>
+        <supportingDocuments>
+          <link>https://somelinktodocument</link>
+          <name>my-secondary-proof.pdf</name>
+          <mimeType>application/pdf</mimeType>
+          <addedOn>2017-12-08T16:21:02.3269001Z</addedOn>
+        </supportingDocuments>
       </credentials>
       <proficiencies>
         <type>eap</type>
@@ -1706,6 +2024,18 @@ Note: Empty JSON collections are not represented within the XML.
         <otherName />
         <score>71</score>
         <completionDate>2017-10-19</completionDate>
+        <supportingDocuments>
+          <link>https://somelinktodocument</link>
+          <name>my-testscore-pg1.pdf</name>
+          <mimeType>application/pdf</mimeType>
+          <addedOn>2017-12-08T16:22:02.3269001Z</addedOn>
+        </supportingDocuments>
+        <supportingDocuments>
+          <link>https://somelinktodocument</link>
+          <name>my-testscore-pg2.pdf</name>
+          <mimeType>application/pdf</mimeType>
+          <addedOn>2017-12-08T16:22:32.3269001Z</addedOn>
+        </supportingDocuments>
       </proficiencies>
       <proficiencies>
         <type>eap</type>
@@ -1822,7 +2152,7 @@ Note: Empty JSON collections are not represented within the XML.
   ],
   "customOfferLetter" : {
     "data": "[base 64 encoded string]",
-    "filename": "filename.pdf",
+    "name": "filename.pdf",
     "mimeType": "application/pdf",
     "length": 96041
   }
@@ -1860,16 +2190,16 @@ Note: Empty JSON collections are not represented within the XML.
   </conditions>
   <customOfferLetter>
     <data>[base 64 encoded string]</data>
-    <filename>filename.pdf</filename>
+    <name>filename.pdf</name>
     <mimeType>application/pdf</mimeType>
     <length>96041</length>
   </customOfferLetter>
 </root>
 ```
 
-### Appendix: OfferPaid ###
+### Appendix: PayOffer ###
 
-#### OfferPaid JSON ####
+#### PayOffer JSON ####
 
 ```JSON
 {
@@ -1881,14 +2211,14 @@ Note: Empty JSON collections are not represented within the XML.
   "term": "fall",
   "receipt": {
     "data": "[base 64 encoded string]",
-    "filename": "filename.jpg",
+    "name": "filename.jpg",
     "mimeType": "image/jpeg",
     "length": 96041
   }
 }
 ```
 
-#### OfferPaid XML ####
+#### PayOffer XML ####
 
 ```XML
 <root>
@@ -1900,7 +2230,7 @@ Note: Empty JSON collections are not represented within the XML.
   <term>fall</term>
   <receipt>
     <data>[base 64 encoded string]</data>
-    <filename>filename.jpg</filename>
+    <name>filename.jpg</name>
     <mimeType>image/jpeg</mimeType>
     <length>96041</length>
   </receipt>
