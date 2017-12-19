@@ -8,6 +8,7 @@ Table of Contents
     - [Table of Contents](#table-of-contents)
     - [Document Revisions](#document-revisions)
         - [Change History](#change-history)
+            - [1.2.1](#121)
             - [1.2.0](#120)
             - [1.1.1](#111)
             - [1.1.0](#110)
@@ -116,12 +117,15 @@ Table of Contents
         - [Appendix: PayOffer](#appendix-payoffer)
             - [PayOffer JSON](#payoffer-json)
             - [PayOffer XML](#payoffer-xml)
+            - [RevokeOffer JSON](#revokeoffer-json)
+            - [RevokeOffer XML](#revokeoffer-xml)
 
 Document Revisions
 ------------------
 
 | Version | Date         | Editor           |
 | ------- | ------------ | ---------------- |
+| 1.2.1   | Dec 19, 2017 | Jay Dobson       |
 | 1.2.0   | Dec 18, 2017 | Michael Aldworth |
 | 1.1.1   | Dec 13, 2017 | Jay Dobson       |
 | 1.1.0   | Dec 12, 2017 | Kevin Schneider  |
@@ -132,6 +136,10 @@ Document Revisions
 | 1.0.0   | Nov 24, 2017 | Michael Aldworth |
 
 ### Change History ###
+
+#### 1.2.1 ####
+
+- Added RevokeOffer outbound event types
 
 #### 1.2.0 ####
 
@@ -954,7 +962,6 @@ otherwise the OIS will generate an offer letter on your behalf.
   "deliveryOption" : "fulltime",
   "programCode" : "TSTAD1",
   "term" : "fall",
-  "timestamp" : "2017-12-08T17:19:02.3269001Z",
   "withdrawnType" : "visadeclined",
   "otherReason" : null
 }
@@ -1045,8 +1052,8 @@ Example: See [Appendix: Application](#appendix-application)
 | deliveryOption    | _string_  _string_ ([Lookup](#intakedeliveryoption)) |
 | programCode       | _string_ (min 1, max 10)                             |
 | term              | _string_ ([Lookup](#termcode))                       |
-| revokeReasonCode  | _string_ ([Lookup](#offerrevoketype))                |
-| revokeReasonOther | _[nullable] string_ (min 1, max 100)                 |
+| revokeType        | _string_ ([Lookup](#offerrevoketype))                |
+| otherReason       | _[nullable] string_ (min 1, max 100)                 |
 
 **_Example:_**
 
@@ -1058,8 +1065,8 @@ Example: See [Appendix: Application](#appendix-application)
   "deliveryOption" : "fulltime",
   "programCode" : "TSTAD1",
   "term" : "fall",
-  "revokeReasonCode" : "other",
-  "revokeReasonOther" : "something that isn't covered in the list of common responses"
+  "revokeType" : "other",
+  "otherReason" : "something that isn't covered in the list of common responses"
 }
 ```
 
@@ -1262,6 +1269,7 @@ Lookups
 | deadline         |
 | nopaymentnoseats |
 | noshow           |
+| noseats          |
 | novisa           |
 | other            |
 
@@ -2234,5 +2242,35 @@ Note: Empty JSON collections are not represented within the XML.
     <mimeType>image/jpeg</mimeType>
     <length>96041</length>
   </receipt>
+</root>
+```
+
+#### RevokeOffer JSON ####
+
+```JSON
+{
+  "applicationNumber": "X1484937",
+  "applicationCycle": "2017",
+  "campusCode": "main",
+  "deliveryOption": "fulltime",
+  "programCode": "TSTA01",
+  "term": "fall",
+  "revokeType": "other",
+  "otherReason" : "something that isn't covered in the list of common responses"
+}
+```
+
+#### RevokeOffer XML ####
+
+```XML
+<root>
+  <applicationNumber>X1484937</applicationNumber>
+  <applicationCycle>2017</applicationCycle>
+  <campusCode>main</campusCode>
+  <deliveryOption>fulltime</deliveryOption>
+  <programCode>TSTA01</programCode>
+  <term>fall</term>
+  <revokeType>other</revokeType>
+  <otherReason>something that isn't covered in the list of common responses</otherReason>
 </root>
 ```
