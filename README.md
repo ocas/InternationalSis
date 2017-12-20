@@ -43,7 +43,7 @@ Table of Contents
         - [NewOfferInfo](#newofferinfo)
         - [OfferCondition](#offercondition)
         - [OfferDeclined](#offerdeclined)
-        - [OfferVisaReceived](#offervisareceived)
+        - [OfferPreRegistered](#offerpreregistered)
         - [OfferWithdrawn](#offerwithdrawn)
         - [PayOffer](#payoffer)
         - [Phone](#phone)
@@ -143,7 +143,7 @@ Document Revisions
 
 #### 1.2.0 ####
 
-- Added OfferDeclined, OfferVisaReceived and Offer Withdrawn inbound event types
+- Added OfferDeclined, OfferPreRegistered and Offer Withdrawn inbound event types
 - Renamed OfferPaid to PayOffer (keep naming consistent, no effect on object)
 - Added ApplicantUpdated, DeclineProgramChoice and RevokeOffer outbound event types
 - Renamed BinaryDocument to NewBinaryDocumentInfo (again, to keep naming consistent)
@@ -798,31 +798,32 @@ Example: See [Appendix: Application](#appendix-application)
 
 ### NewOfferInfo ###
 
-| Property              | Type                                                             |
-| --------------------- | ---------------------------------------------------------------- |
-| applicationNumber     | _string_ (min 1, max 20)                                         |
-| applicationCycle      | _number_ ([Lookup](#applicationcycle))                           |
-| campusCode            | _string_ (min 1, max 4)                                          |
-| deliveryOption        | _string_ ([Lookup](#intakedeliveryoption))                       |
-| programCode           | _string_ (min 1, max 10)                                         |
-| term                  | _string_ ([Lookup](#termcode))                                   |
-| studentId             | _[nullable] string_ (min 1, max 30)                              |
-| isPreAdmit            | _boolean_                                                        |
-| entryLevelType        | _[nullable] string_ ([Lookup](#entryleveltype)) defaults to `01` |
-| isExchange            | _[nullable] boolean_                                             |
-| internshipType        | _[nullable] string_ ([Lookup](#internshiptype))                  |
-| internshipDescription | _[nullable] string_ (min 1, max 100)                             |
-| instructionHours      | _[nullable] decimal(18,1)_                                       |
-| expirationDate        | _[nullable] string_ date string in format `yyyy-MM-dd`           |
-| intakeExpectedEndDate | _[nullable] string_ date string in format `yyyy-MM-dd`           |
-| firstPaymentAmount    | _[nullable] decimal(18,2)_                                       |
-| firstPaymentDate      | _[nullable] string_ date string in format `yyyy-MM-dd`           |
-| secondPaymentAmount   | _[nullable] decimal(18,2)_                                       |
-| secondPaymentDate     | _[nullable] string_ date string in format `yyyy-MM-dd`           |
-| tuitionFees           | _[nullable] decimal(18,2)_                                       |
-| ancillaryFees         | _[nullable] decimal(18,2)_                                       |
-| conditions            | Array[0..5] of [OfferCondition](#offercondition)                 |
-| customOfferLetter     | [NewBinaryDocumentInfo](#newbinarydocumentinfo)                  |
+| Property              | Type                                                                                  |
+| --------------------- | ------------------------------------------------------------------------------------- |
+| applicationNumber     | _string_ (min 1, max 20)                                                              |
+| applicationCycle      | _number_ ([Lookup](#applicationcycle))                                                |
+| campusCode            | _string_ (min 1, max 4)                                                               |
+| deliveryOption        | _string_ ([Lookup](#intakedeliveryoption))                                            |
+| programCode           | _string_ (min 1, max 10)                                                              |
+| term                  | _string_ ([Lookup](#termcode))                                                        |
+| studentId             | _[nullable] string_ (min 1, max 30)                                                   |
+| isPreAdmit            | _boolean_                                                                             |
+| entryLevelType        | _[nullable] string_ ([Lookup](#entryleveltype)) defaults to `01`                      |
+| isExchange            | _[nullable] boolean_                                                                  |
+| internshipType        | _[nullable] string_ ([Lookup](#internshiptype))                                       |
+| internshipLength      | _[nullable] decimal(18,1)_ ([required] if internshipType == `optional` or `required`) |
+| internshipDescription | _[nullable] string_ (min 1, max 100)                                                  |
+| instructionHours      | _[nullable] decimal(18,1)_                                                            |
+| expirationDate        | _[nullable] string_ date string in format `yyyy-MM-dd`                                |
+| intakeExpectedEndDate | _[nullable] string_ date string in format `yyyy-MM-dd`                                |
+| firstPaymentAmount    | _[nullable] decimal(18,2)_                                                            |
+| firstPaymentDate      | _[nullable] string_ date string in format `yyyy-MM-dd`                                |
+| secondPaymentAmount   | _[nullable] decimal(18,2)_                                                            |
+| secondPaymentDate     | _[nullable] string_ date string in format `yyyy-MM-dd`                                |
+| tuitionFees           | _[nullable] decimal(18,2)_                                                            |
+| ancillaryFees         | _[nullable] decimal(18,2)_                                                            |
+| conditions            | Array[0..5] of [OfferCondition](#offercondition)                                      |
+| customOfferLetter     | _[nullable]_ [NewBinaryDocumentInfo](#newbinarydocumentinfo)                          |
 
 **_Example:_**
 
@@ -912,7 +913,7 @@ otherwise the OIS will generate an offer letter on your behalf.
 }
 ```
 
-### OfferVisaReceived ###
+### OfferPreRegistered ###
 
 | Property          | Type                                                 |
 | ----------------- | ---------------------------------------------------- |
@@ -969,15 +970,15 @@ otherwise the OIS will generate an offer letter on your behalf.
 
 ### PayOffer ###
 
-| Property          | Type                                                 |
-| ----------------- | ---------------------------------------------------- |
-| applicationNumber | _string_ (min 1, max 20)                             |
-| applicationCycle  | _number_ ([Lookup](#applicationcycle))               |
-| campusCode        | _string_ (min 1, max 4)                              |
-| deliveryOption    | _string_  _string_ ([Lookup](#intakedeliveryoption)) |
-| programCode       | _string_ (min 1, max 10)                             |
-| term              | _string_ ([Lookup](#termcode))                       |
-| receipt           | [NewBinaryDocumentInfo](#newbinarydocumentinfo)      |
+| Property          | Type                                                         |
+| ----------------- | ------------------------------------------------------------ |
+| applicationNumber | _string_ (min 1, max 20)                                     |
+| applicationCycle  | _number_ ([Lookup](#applicationcycle))                       |
+| campusCode        | _string_ (min 1, max 4)                                      |
+| deliveryOption    | _string_  _string_ ([Lookup](#intakedeliveryoption))         |
+| programCode       | _string_ (min 1, max 10)                                     |
+| term              | _string_ ([Lookup](#termcode))                               |
+| receipt           | _[nullable]_ [NewBinaryDocumentInfo](#newbinarydocumentinfo) |
 
 **_Example:_**
 
@@ -1318,7 +1319,7 @@ Lookups
 | ApplicationSubmitted | [Application](#application)             |
 | OfferDeclined        | [OfferDeclined](#offerdeclined)         |
 | OfferWithdrawn       | [OfferWithdrawn](#offerwithdrawn)       |
-| OfferVisaReceived    | [OfferVisaReceived](#offervisareceived) |
+| OfferPreRegistered    | [OfferPreRegistered](#OfferPreRegistered) |
 
 ### SisOutboundEventType ###
 
