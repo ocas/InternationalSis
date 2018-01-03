@@ -747,7 +747,7 @@ Example: See [Appendix: Application](#appendix-application)
 ```JSON
 {
   "applicationNumber" : "X1484934",
-  "applicationCycle" : "2017",
+  "applicationCycle" : 2017,
   "term" : "spring",
   "programCode" : "TST1DG5",
   "declineReasonCode" : "admissionrequirement"
@@ -829,7 +829,7 @@ Example: See [Appendix: Application](#appendix-application)
 ```JSON
 {
   "applicationNumber" : "X1484934",
-  "applicationCycle" : "2017",
+  "applicationCycle" : 2017,
   "campusCode" : "C4",
   "deliveryOption" : "fulltime",
   "programCode" : "TST1DG5",
@@ -903,7 +903,7 @@ otherwise the OIS will generate an offer letter on your behalf.
 ```JSON
 {
   "applicationNumber" : "X12345",
-  "applicationCycle" : "2018" ,
+  "applicationCycle" : 2018,
   "campusCode" : "main",
   "deliveryOption" : "fulltime",
   "programCode" : "TSTAD1",
@@ -929,7 +929,7 @@ otherwise the OIS will generate an offer letter on your behalf.
 ```JSON
 {
   "applicationNumber" : "X12345",
-  "applicationCycle" : "2018" ,
+  "applicationCycle" : 2018,
   "campusCode" : "main",
   "deliveryOption" : "fulltime",
   "programCode" : "TSTAD1",
@@ -957,7 +957,7 @@ otherwise the OIS will generate an offer letter on your behalf.
 ```JSON
 {
   "applicationNumber" : "X12345",
-  "applicationCycle" : "2018" ,
+  "applicationCycle" : 2018,
   "campusCode" : "main",
   "deliveryOption" : "fulltime",
   "programCode" : "TSTAD1",
@@ -984,7 +984,7 @@ otherwise the OIS will generate an offer letter on your behalf.
 ```JSON
 {
   "applicationNumber" : "X12345",
-  "applicationCycle" : "2018" ,
+  "applicationCycle" : 2018,
   "campusCode" : "main",
   "deliveryOption" : "fulltime",
   "programCode" : "TSTAD1",
@@ -1060,7 +1060,7 @@ Example: See [Appendix: Application](#appendix-application)
 ```JSON
 {
   "applicationNumber" : "X12345",
-  "applicationCycle" : "2018" ,
+  "applicationCycle" : 2018,
   "campusCode" : "main",
   "deliveryOption" : "fulltime",
   "programCode" : "TSTAD1",
@@ -2132,7 +2132,7 @@ Note: Empty JSON collections are not represented within the XML.
 ```JSON
 {
   "applicationNumber" : "X1484934",
-  "applicationCycle" : "2017",
+  "applicationCycle" : 2017,
   "campusCode" : "C4",
   "deliveryOption" : "fulltime",
   "programCode" : "TST1DG5",
