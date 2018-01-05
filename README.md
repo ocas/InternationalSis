@@ -8,6 +8,7 @@ Table of Contents
     - [Table of Contents](#table-of-contents)
     - [Document Revisions](#document-revisions)
         - [Change History](#change-history)
+            - [1.3.0](#130)
             - [1.2.1](#121)
             - [1.2.0](#120)
             - [1.1.1](#111)
@@ -36,6 +37,7 @@ Table of Contents
         - [ApplicantProficiencySubScore](#applicantproficiencysubscore)
         - [ApplicantSupportingDocument](#applicantsupportingdocument)
         - [Application](#application)
+        - [ApplicationFull](#applicationfull)
         - [BinaryDocument](#binarydocument)
         - [DeclineProgramSelection](#declineprogramselection)
         - [EmergencyContact](#emergencycontact)
@@ -105,9 +107,12 @@ Table of Contents
     - [Authentication and Authorization](#authentication-and-authorization)
         - [How to Get a Bearer Token](#how-to-get-a-bearer-token)
     - [Appendix](#appendix)
+        - [Appendix: ApplicationFull](#appendix-applicationfull)
+            - [ApplicationFull Submitted JSON](#applicationfull-submitted-json)
+            - [ApplicationFull Submitted XML](#applicationfull-submitted-xml)
         - [Appendix: Application](#appendix-application)
             - [Application Submitted JSON](#application-submitted-json)
-            - [Application Submitted XML](#application-submitted-xml)
+            - [Application XML](#application-xml)
         - [Appendix: ApplicantCollegeDetails](#appendix-applicantcollegedetails)
             - [ApplicantCollegeDetails JSON](#applicantcollegedetails-json)
             - [ApplicantCollegeDetails XML](#applicantcollegedetails-xml)
@@ -125,6 +130,7 @@ Document Revisions
 
 | Version | Date         | Editor           |
 | ------- | ------------ | ---------------- |
+| 1.3.0   | Jan 5, 2018  | Michael Aldworth |
 | 1.2.1   | Dec 19, 2017 | Jay Dobson       |
 | 1.2.0   | Dec 18, 2017 | Michael Aldworth |
 | 1.1.1   | Dec 13, 2017 | Jay Dobson       |
@@ -137,15 +143,27 @@ Document Revisions
 
 ### Change History ###
 
+#### 1.3.0 ####
+
+- Added ProgramSelectionsUpdated inbound event type
+- Renamed ApplicantUpdated inbound event type to ApplicantProfileUpdated
+- Renamed Application object to ApplicationFull. This object includes the
+applicant object, and now the Application object only contains details about
+the application.
+- Added submitted and screened properties to Application and ApplicationFull
+objects.
+- Added updated property to Applicant object.
+
 #### 1.2.1 ####
 
-- Added RevokeOffer outbound event types
+- Added RevokeOffer outbound event type
 
 #### 1.2.0 ####
 
-- Added OfferDeclined, OfferPreRegistered and Offer Withdrawn inbound event types
+- Added ApplicantUpdated, OfferDeclined, OfferPreRegistered and Offer Withdrawn
+inbound event types
 - Renamed OfferPaid to PayOffer (keep naming consistent, no effect on object)
-- Added ApplicantUpdated, DeclineProgramChoice and RevokeOffer outbound event types
+- Added DeclineProgramChoice and RevokeOffer outbound event types
 - Renamed BinaryDocument to NewBinaryDocumentInfo (again, to keep naming consistent)
 - Created BinaryDocument object, to represent binary document with embedded link
 - Add ApplicantSupportingDocument, which will have the supporting document type
@@ -168,7 +186,7 @@ Document Revisions
 #### 1.0.3 ####
 
 - Updated expected XML output formats within Appendix
-- Added Application Screened event type
+- Added ApplicationFull Screened event type
 
 #### 1.0.2 ####
 
@@ -555,6 +573,7 @@ Objects
 | number                    | _string_ (min 1, max 20)                                                    |
 | version                   | number (used for historical profile tracking)                               |
 | created                   | _string_ ISO 8601 Date Formatted String                                     |
+| updated                   | _string_ ISO 8601 Date Formatted String                                     |
 | legalName                 | [ApplicantName](#applicantname)                                             |
 | dateOfBirth               | _string_ date string in format `yyyy-MM-dd`                                 |
 | canadianStatus            | [CanadianStatus](#canadianstatus)                                           |
@@ -567,13 +586,13 @@ Objects
 | phones                    | Array[1..10] of [Phone](#phone)                                             |
 | emails                    | Array[1..10] of strings (each email, min 5, max 128)                        |
 | emergencyContact          | [EmergencyContact](#emergencycontact)                                       |
-| credentials               | Array[1..10] of [Credential](#credential)                                   |
+| credentials               | Array[1..10] of [ApplicantCredential](#applicantcredential)                 |
 | proficiencies             | Array[0..10] of [ApplicantProficiency](#applicantproficiency)               |
 | identificationDocuments   | Array[1..10] of [ApplicantSupportingDocument](#applicantsupportingdocument) |
 | visaDocuments             | Array[0..10] of [ApplicantSupportingDocument](#applicantsupportingdocument) |
 | otherDocuments            | Array[0..10] of [ApplicantSupportingDocument](#applicantsupportingdocument) |
 
-Example: See [Appendix: Application](#appendix-application)
+Example: See [Appendix: ApplicationFull](#appendix-applicationfull)
 
 ### ApplicantCredential ###
 
@@ -701,33 +720,53 @@ Example: See [Appendix: Application](#appendix-application)
 
 ### Application ###
 
-| Property   | Type                                           |
-| ---------- | ---------------------------------------------- |
-| id         | _string_ guid                                  |
-| number     | _string_ (min 1, max 20)                       |
-| created    | _string_ ISO 8601 Date Formatted String        |
-| applicant  | [Applicant](#applicant)                        |
-| selections | Array of [ProgramSelection](#programselection) |
+| Property   | Type                                               |
+| ---------- | -------------------------------------------------- |
+| id         | _string_ guid                                      |
+| number     | _string_ (min 1, max 20)                           |
+| created    | _string_ ISO 8601 Date Formatted String            |
+| updated    | _string_ ISO 8601 Date Formatted String            |
+| submitted  | _string_ ISO 8601 Date Formatted String            |
+| screened   | _[nullable] string_ ISO 8601 Date Formatted String |
+| selections | Array of [ProgramSelection](#programselection)     |
 
 Example: See [Appendix: Application](#appendix-application)
 
+### ApplicationFull ###
+
+| Property   | Type                                               |
+| ---------- | -------------------------------------------------- |
+| id         | _string_ guid                                      |
+| number     | _string_ (min 1, max 20)                           |
+| applicant  | [Applicant](#applicant)                            |
+| selections | Array of [ProgramSelection](#programselection)     |
+| screened   | _[nullable] string_ ISO 8601 Date Formatted String |
+| submitted  | _string_ ISO 8601 Date Formatted String            |
+| created    | _string_ ISO 8601 Date Formatted String            |
+
+Example: See [Appendix: ApplicationFull](#appendix-applicationfull)
+
 ### BinaryDocument ###
 
-| Property | Type                                    |
-| -------- | --------------------------------------- |
-| link     | _string_ Base 64 encoded string         |
-| name     | _string_ (min 1, max 255)               |
-| mimeType | _string_ (min 1, max 255)               |
-| addedOn  | _string_ ISO 8601 Date Formatted String |
+| Property   | Type                                    |
+| ---------- | --------------------------------------- |
+| id         | _string_ guid                           |
+| link       | _string_ Base 64 encoded string         |
+| name       | _string_ (min 1, max 255)               |
+| mimeType   | _string_ (min 1, max 255)               |
+| uploaded   | _string_ ISO 8601 Date Formatted String |
+| uploadedBy | _string_ identity server name of user   |
 
 **_Example:_**
 
 ```JSON
 {
+  "id": "00000000-0000-0000-0000-000000000000",
   "link": "https://someurltodownloadfile",
   "name": "filename.jpg",
   "mimeType": "image/jpeg",
-  "addedOn": "2017-12-08T17:19:02.3269001Z"
+  "uploaded": "2017-12-08T17:19:02.3269001Z",
+  "uploadedBy": "Jane Smith"
 }
 ```
 
@@ -1041,7 +1080,7 @@ otherwise the OIS will generate an offer letter on your behalf.
 | campusPreference | _string_ (min 1, max 4) (college assigned Campus Code)                    |
 | choiceNumber     | _number_ (less than 0 = EAP/ESL Program, greater than 0 = Normal Program) |
 
-Example: See [Appendix: Application](#appendix-application)
+Example: See [Appendix: ApplicationFull](#appendix-applicationfull)
 
 ### RevokeOffer ###
 
@@ -1312,14 +1351,15 @@ Lookups
 
 ### SisInboundEventType ###
 
-| Key                  | Data Object Type                        |
-| -------------------- | --------------------------------------- |
-| ApplicantUpdated     | [Applicant](#applicant)                 |
-| ApplicationScreened  | [Application](#application)             |
-| ApplicationSubmitted | [Application](#application)             |
-| OfferDeclined        | [OfferDeclined](#offerdeclined)         |
-| OfferWithdrawn       | [OfferWithdrawn](#offerwithdrawn)       |
-| OfferPreRegistered    | [OfferPreRegistered](#OfferPreRegistered) |
+| Key                      | Data Object Type                          |
+| ------------------------ | ----------------------------------------- |
+| ApplicantProfileUpdated  | [Applicant](#applicant)                   |
+| ApplicationScreened      | [ApplicationFull](#applicationfull)       |
+| ApplicationSubmitted     | [ApplicationFull](#applicationfull)       |
+| OfferDeclined            | [OfferDeclined](#offerdeclined)           |
+| OfferWithdrawn           | [OfferWithdrawn](#offerwithdrawn)         |
+| OfferPreRegistered       | [OfferPreRegistered](#OfferPreRegistered) |
+| ProgramSelectionsUpdated | [Application](#application)               |
 
 ### SisOutboundEventType ###
 
@@ -1463,7 +1503,7 @@ The event log feature creates application event logs within the Windows Event Vi
 | Property                                           | Default                |
 | -------------------------------------------------- | ---------------------- |
 | serilog:write-to:EventLog.source                   | ocas-sis-intl-receiver |
-| serilog:write-to:EventLog.logName                  | Application            |
+| serilog:write-to:EventLog.logName                  | ApplicationFull        |
 | serilog:write-to:EventLog.manageEventSource        | false                  |
 | serilog:write-to:EventLog.restrictedToMinimumLevel | 3 (Error)              |
 
@@ -1535,8 +1575,8 @@ The following commands will allow the SIS Receiver and Sender applications to
 create logging entries within the Windows Event Viewer without administrative rights.
 
 ```POWERSHELL
-> [System.Diagnostics.EventLog]::CreateEventSource("ocas-sis-intl-receiver", "Application")
-> [System.Diagnostics.EventLog]::CreateEventSource("ocas-sis-intl-sender", "Application")
+> [System.Diagnostics.EventLog]::CreateEventSource("ocas-sis-intl-receiver", "ApplicationFull")
+> [System.Diagnostics.EventLog]::CreateEventSource("ocas-sis-intl-sender", "ApplicationFull")
 ```
 
 ### Database Structure ###
@@ -1588,7 +1628,7 @@ Below is a table of error codes that may be returned from the SisApi
 | E0081  | Invalid Program Code                      |
 | E0082  | Invalid Campus Code                       |
 | E0083  | Invalid Delivery Option Code              |
-| E0084  | Invalid Application Cycle                 |
+| E0084  | Invalid ApplicationFull Cycle             |
 | E0086  | Duplicate Event Id Race Condition         |
 | E0085  | Duplicate Event Id With Different Payload |
 | E0090  | Ack Out of Order                          |
@@ -1670,16 +1710,16 @@ Appendix
 
 The appendix includes models and examples too large for the above document.
 
-### Appendix: Application ###
+### Appendix: ApplicationFull ###
 
 Used by:
 - SisInboundEventType.ApplicationSubmitted
 - SisInboundEventType.ApplicationScreened
 
-The Application object includes a variety of Applicant and Application data.
+The ApplicationFull object includes a variety of Applicant and Application data.
 Note: Empty JSON collections are not represented within the XML.
 
-#### Application Submitted JSON ####
+#### ApplicationFull Submitted JSON ####
 
 ```JSON
 {
@@ -1901,12 +1941,14 @@ Note: Empty JSON collections are not represented within the XML.
         "choiceNumber": 2
       }
     ],
+    "screened": null,
+    "submitted": "2017-12-09T11:19:46.6378594Z",
     "created": "2017-12-08T17:19:02.3269001Z"
   }
 }
 ```
 
-#### Application Submitted XML ####
+#### ApplicationFull Submitted XML ####
 
 ```XML
 <root>
@@ -2101,6 +2143,139 @@ Note: Empty JSON collections are not represented within the XML.
       <campusPreference />
       <choiceNumber>2</choiceNumber>
     </selections>
+    <submitted>2017-12-09T11:19:46.6378594Z</submitted>
+    <created>2017-12-08T17:19:02.3269001Z</created>
+  </data>
+</root>
+```
+
+### Appendix: Application ###
+
+Used by:
+- SisInboundEventType.ProgramSelectionsUpdated
+
+#### Application Submitted JSON ####
+
+```JSON
+{
+  "action": "ProgramSelectionsUpdated",
+  "data": {
+    "id": "85aee8dc-3bdc-e711-8737-e4b318b38df4",
+    "number": "X1485152",
+    "selections": [
+      {
+        "term": {
+          "applicationCycle": 2019,
+          "code": "fall",
+          "startDate": "2018-08-01",
+          "endDate": "2018-11-30"
+        },
+        "program": {
+          "code": "TST1ESL1",
+          "title": "ESL Program 1",
+          "credential": "other",
+          "internationalProgramType": "Esl"
+        },
+        "campusPreference": null,
+        "choiceNumber": -1
+      },
+      {
+        "term": {
+          "applicationCycle": 2017,
+          "code": "fall",
+          "startDate": "2016-08-01",
+          "endDate": "2016-11-30"
+        },
+        "program": {
+          "code": "TST1O2",
+          "title": "Other 2",
+          "credential": "other",
+          "internationalProgramType": "Normal"
+        },
+        "campusPreference": null,
+        "choiceNumber": 1
+      },
+      {
+        "term": {
+          "applicationCycle": 2019,
+          "code": "fall",
+          "startDate": "2018-08-01",
+          "endDate": "2018-11-30"
+        },
+        "program": {
+          "code": "TST1DG1",
+          "title": "Degree 1",
+          "credential": "degree",
+          "internationalProgramType": "Normal"
+        },
+        "campusPreference": null,
+        "choiceNumber": 2
+      }
+    ],
+    "screened": null,
+    "submitted": "2017-12-09T11:19:46.6378594Z",
+    "created": "2017-12-08T17:19:02.3269001Z"
+  }
+}
+```
+
+#### Application XML ####
+
+```XML
+<root>
+  <action>ApplicationSubmitted</action>
+  <data>
+    <id>85aee8dc-3bdc-e711-8737-e4b318b38df4</id>
+    <number>X1485152</number>
+    <selections>
+      <term>
+        <applicationCycle>2019</applicationCycle>
+        <code>fall</code>
+        <startDate>2018-08-01</startDate>
+        <endDate>2018-11-30</endDate>
+      </term>
+      <program>
+        <code>TST1ESL1</code>
+        <title>ESL Program 1</title>
+        <credential>other</credential>
+        <internationalProgramType>Esl</internationalProgramType>
+      </program>
+      <campusPreference />
+      <choiceNumber>-1</choiceNumber>
+    </selections>
+    <selections>
+      <term>
+        <applicationCycle>2017</applicationCycle>
+        <code>fall</code>
+        <startDate>2016-08-01</startDate>
+        <endDate>2016-11-30</endDate>
+      </term>
+      <program>
+        <code>TST1O2</code>
+        <title>Other 2</title>
+        <credential>other</credential>
+        <internationalProgramType>Normal</internationalProgramType>
+      </program>
+      <campusPreference />
+      <choiceNumber>1</choiceNumber>
+    </selections>
+    <selections>
+      <term>
+        <applicationCycle>2019</applicationCycle>
+        <code>fall</code>
+        <startDate>2018-08-01</startDate>
+        <endDate>2018-11-30</endDate>
+      </term>
+      <program>
+        <code>TST1DG1</code>
+        <title>Degree 1</title>
+        <credential>degree</credential>
+        <internationalProgramType>Normal</internationalProgramType>
+      </program>
+      <campusPreference />
+      <choiceNumber>2</choiceNumber>
+    </selections>
+    <submitted>2017-12-09T11:19:46.6378594Z</submitted>
     <created>2017-12-08T17:19:02.3269001Z</created>
   </data>
 </root>
