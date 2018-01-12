@@ -8,6 +8,7 @@ Table of Contents
     - [Table of Contents](#table-of-contents)
     - [Document Revisions](#document-revisions)
         - [Change History](#change-history)
+            - [1.3.1](#131)
             - [1.3.0](#130)
             - [1.2.1](#121)
             - [1.2.0](#120)
@@ -29,6 +30,7 @@ Table of Contents
             - [PUT /api/v1/offers/pay-offer](#put-apiv1offerspay-offer)
     - [Objects](#objects)
         - [Address](#address)
+        - [Agency](#agency)
         - [Applicant](#applicant)
         - [ApplicantCredential](#applicantcredential)
         - [ApplicantName](#applicantname)
@@ -130,18 +132,23 @@ Document Revisions
 
 | Version | Date         | Editor           |
 | ------- | ------------ | ---------------- |
-| 1.3.0   | Jan 5, 2018  | Michael Aldworth |
+| 1.3.1   | Jan 10, 2018 | Michael Aldworth |
+| 1.3.0   | Jan 05, 2018 | Michael Aldworth |
 | 1.2.1   | Dec 19, 2017 | Jay Dobson       |
 | 1.2.0   | Dec 18, 2017 | Michael Aldworth |
 | 1.1.1   | Dec 13, 2017 | Jay Dobson       |
 | 1.1.0   | Dec 12, 2017 | Kevin Schneider  |
-| 1.0.4   | Dec 8, 2017  | Michael Aldworth |
-| 1.0.3   | Dec 7, 2017  | Michael Aldworth |
-| 1.0.2   | Dec 6, 2017  | Jay Dobson       |
+| 1.0.4   | Dec 08, 2017 | Michael Aldworth |
+| 1.0.3   | Dec 07, 2017 | Michael Aldworth |
+| 1.0.2   | Dec 06, 2017 | Jay Dobson       |
 | 1.0.1   | Nov 28, 2017 | Jay Dobson       |
 | 1.0.0   | Nov 24, 2017 | Michael Aldworth |
 
 ### Change History ###
+
+#### 1.3.1 ####
+
+- Added agency property to Application object.
 
 #### 1.3.0 ####
 
@@ -565,6 +572,22 @@ Objects
 }
 ```
 
+### Agency ###
+
+| Property       | Type                                                             |
+| -------------- | ---------------------------------------------------------------- |
+| name           | _string_ (min 1, max 255)                                        |
+| sisIdentifier  | _string_ (min 1, max 100)                                        |
+
+**_Example:_**
+
+```JSON
+{
+  "name": "Agency Test",
+  "sisIdentifier": "ABC123"
+}
+```
+
 ### Applicant ###
 
 | Property                  | Type                                                                        |
@@ -738,6 +761,7 @@ Example: See [Appendix: Application](#appendix-application)
 | ---------- | -------------------------------------------------- |
 | id         | _string_ guid                                      |
 | number     | _string_ (min 1, max 20)                           |
+| agency     | [Agency](#agency)                                  |
 | applicant  | [Applicant](#applicant)                            |
 | selections | Array of [ProgramSelection](#programselection)     |
 | screened   | _[nullable] string_ ISO 8601 Date Formatted String |
@@ -1628,7 +1652,7 @@ Below is a table of error codes that may be returned from the SisApi
 | E0081  | Invalid Program Code                      |
 | E0082  | Invalid Campus Code                       |
 | E0083  | Invalid Delivery Option Code              |
-| E0084  | Invalid ApplicationFull Cycle             |
+| E0084  | Invalid Application Cycle             |
 | E0086  | Duplicate Event Id Race Condition         |
 | E0085  | Duplicate Event Id With Different Payload |
 | E0090  | Ack Out of Order                          |
@@ -1727,6 +1751,10 @@ Note: Empty JSON collections are not represented within the XML.
   "data": {
     "id": "85aee8dc-3bdc-e711-8737-e4b318b38df4",
     "number": "X1485152",
+    "agency": {
+      "name": "Agency Test",
+      "sisIdentifier": "ABC123"
+    },
     "applicant": {
       "id": "7036e524-305c-4fb6-b45c-61a9f828f35c",
       "number": "X1185682",
@@ -1956,6 +1984,10 @@ Note: Empty JSON collections are not represented within the XML.
   <data>
     <id>85aee8dc-3bdc-e711-8737-e4b318b38df4</id>
     <number>X1485152</number>
+    <agency>
+      <name>Agency Test</name>
+      <sisIdentifier>ABC123</sisIdentifier>
+    </agency>
     <applicant>
       <id>7036e524-305c-4fb6-b45c-61a9f828f35c</id>
       <number>X1185682</number>
