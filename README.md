@@ -8,6 +8,7 @@ Table of Contents
     - [Table of Contents](#table-of-contents)
     - [Document Revisions](#document-revisions)
         - [Change History](#change-history)
+            - [1.4.0](#140)
             - [1.3.1](#131)
             - [1.3.0](#130)
             - [1.2.1](#121)
@@ -132,6 +133,7 @@ Document Revisions
 
 | Version | Date         | Editor           |
 | ------- | ------------ | ---------------- |
+| 1.4.0   | Jan 18, 2018 | Michael Aldworth |
 | 1.3.1   | Jan 10, 2018 | Michael Aldworth |
 | 1.3.0   | Jan 05, 2018 | Michael Aldworth |
 | 1.2.1   | Dec 19, 2017 | Jay Dobson       |
@@ -145,6 +147,25 @@ Document Revisions
 | 1.0.0   | Nov 24, 2017 | Michael Aldworth |
 
 ### Change History ###
+
+#### 1.4.0 ####
+
+- Updated Sender/Receiver Clients to v2.0.0 (existing clients will continue to work
+but it is recommended to upgrade to v2.0.0 as soon as possible, making sure to take
+note of the possible breaking changes in the following 3 bullets)
+  - Improvements with Sender/Receiver Clients XML Serialization/Deserialization
+  to nest arrays into \<item\> elements. Examples in Appendix are updated to reflect
+  this change.
+  - Receiver Client version v1.1.0 and earlier were improperly converting json into
+  an xml string with leading and trailing quotes. The data was correct, but we
+  eliminated the leading and trailing quotations.
+  - Receiver Client version v2.0.0 had update to `SisInboundEvents.Insert.sql` in
+  both Oracle and MsSql. So if you have customized table names or values in this
+  file, you will need to make sure you merge those changes with our updated file.
+  Otherwise you can ignore this.
+- Fixed Appendix example for BinaryDocument. Had old "addedOn", changed to "uploaded"
+and also added "uploadedBy" property to example.
+- Added "Parent Event" column to the [inbound events table](#sisinboundeventtype).
 
 #### 1.3.1 ####
 
@@ -574,10 +595,10 @@ Objects
 
 ### Agency ###
 
-| Property       | Type                                                             |
-| -------------- | ---------------------------------------------------------------- |
-| name           | _string_ (min 1, max 255)                                        |
-| sisIdentifier  | _string_ (min 1, max 100)                                        |
+| Property      | Type                      |
+| ------------- | ------------------------- |
+| name          | _string_ (min 1, max 255) |
+| sisIdentifier | _[nullable] string_ (min 1, max 100) |
 
 **_Example:_**
 
@@ -1101,7 +1122,7 @@ otherwise the OIS will generate an offer letter on your behalf.
 | ---------------- | ------------------------------------------------------------------------- |
 | term             | [Term](#termcode)                                                         |
 | program          | [Program](#program)                                                       |
-| campusPreference | _string_ (min 1, max 4) (college assigned Campus Code)                    |
+| campusPreference | _[nullable] string_ (min 1, max 4) (college assigned Campus Code)                    |
 | choiceNumber     | _number_ (less than 0 = EAP/ESL Program, greater than 0 = Normal Program) |
 
 Example: See [Appendix: ApplicationFull](#appendix-applicationfull)
@@ -1375,15 +1396,25 @@ Lookups
 
 ### SisInboundEventType ###
 
-| Key                      | Data Object Type                          |
-| ------------------------ | ----------------------------------------- |
-| ApplicantProfileUpdated  | [Applicant](#applicant)                   |
-| ApplicationScreened      | [ApplicationFull](#applicationfull)       |
-| ApplicationSubmitted     | [ApplicationFull](#applicationfull)       |
-| OfferDeclined            | [OfferDeclined](#offerdeclined)           |
-| OfferWithdrawn           | [OfferWithdrawn](#offerwithdrawn)         |
-| OfferPreRegistered       | [OfferPreRegistered](#OfferPreRegistered) |
-| ProgramSelectionsUpdated | [Application](#application)               |
+| Key                      | Data Object Type                          | Parent Event(s)                             |
+| ------------------------ | ----------------------------------------- | ------------------------------------------- |
+| ApplicantProfileUpdated  | [Applicant](#applicant)                   | ApplicationScreened or ApplicationSubmitted |
+| ApplicationScreened      | [ApplicationFull](#applicationfull)       |                                             |
+| ApplicationSubmitted     | [ApplicationFull](#applicationfull)       |                                             |
+| OfferDeclined            | [OfferDeclined](#offerdeclined)           |                                             |
+| OfferWithdrawn           | [OfferWithdrawn](#offerwithdrawn)         |                                             |
+| OfferPreRegistered       | [OfferPreRegistered](#OfferPreRegistered) |                                             |
+| ProgramSelectionsUpdated | [Application](#application)               | ApplicationScreened or ApplicationSubmitted |
+
+_*Special Note for Parent Event(s):*_ These two events are dependent on being subscribed
+to the parent event. This means you have to be subscribed to at least one of the
+parent events. These events also behave slightly different depending on which parent
+event you are subscribed to.
+
+E.g. If you are subsribed to the ApplicationScreened, then you will not receive any
+ApplicantProfileUpdates or ProgramSelectionUpdates until the application has had
+it's screened flag marked. This eliminates unnecessary notifications for events that
+you might receive during the screening process.
 
 ### SisOutboundEventType ###
 
@@ -1599,8 +1630,8 @@ The following commands will allow the SIS Receiver and Sender applications to
 create logging entries within the Windows Event Viewer without administrative rights.
 
 ```POWERSHELL
-> [System.Diagnostics.EventLog]::CreateEventSource("ocas-sis-intl-receiver", "ApplicationFull")
-> [System.Diagnostics.EventLog]::CreateEventSource("ocas-sis-intl-sender", "ApplicationFull")
+> [System.Diagnostics.EventLog]::CreateEventSource("ocas-sis-intl-receiver", "Application")
+> [System.Diagnostics.EventLog]::CreateEventSource("ocas-sis-intl-sender", "Application")
 ```
 
 ### Database Structure ###
@@ -1652,7 +1683,7 @@ Below is a table of error codes that may be returned from the SisApi
 | E0081  | Invalid Program Code                      |
 | E0082  | Invalid Campus Code                       |
 | E0083  | Invalid Delivery Option Code              |
-| E0084  | Invalid Application Cycle             |
+| E0084  | Invalid Application Cycle                 |
 | E0086  | Duplicate Event Id Race Condition         |
 | E0085  | Duplicate Event Id With Different Payload |
 | E0090  | Ack Out of Order                          |
@@ -1841,7 +1872,8 @@ Note: Empty JSON collections are not represented within the XML.
               "link": "https://somelinktodocument",
               "name": "my-university-proof.pdf",
               "mimeType": "application/pdf",
-              "addedOn": "2017-12-08T16:19:02.3269001Z"
+              "uploaded": "2017-12-08T16:19:02.3269001Z",
+              "uploadedBy": "Beth Smith"
             }
           ]
         },
@@ -1858,7 +1890,8 @@ Note: Empty JSON collections are not represented within the XML.
               "link": "https://somelinktodocument",
               "name": "my-college-proof.pdf",
               "mimeType": "application/pdf",
-              "addedOn": "2017-12-08T16:19:02.3269001Z"
+              "uploaded": "2017-12-08T16:19:02.3269001Z",
+              "uploadedBy": "Beth Smith"
             }
           ]
         },
@@ -1875,7 +1908,8 @@ Note: Empty JSON collections are not represented within the XML.
               "link": "https://somelinktodocument",
               "name": "my-secondary-proof.pdf",
               "mimeType": "application/pdf",
-              "addedOn": "2017-12-08T16:19:02.3269001Z"
+              "uploaded": "2017-12-08T16:19:02.3269001Z",
+              "uploadedBy": "Beth Smith"
             }
           ]
         }
@@ -1899,13 +1933,15 @@ Note: Empty JSON collections are not represented within the XML.
               "link": "https://somelinktodocument",
               "name": "my-testscore-pg1.pdf",
               "mimeType": "application/pdf",
-              "addedOn": "2017-12-08T16:22:02.3269001Z"
+              "uploaded": "2017-12-08T16:22:02.3269001Z",
+              "uploadedBy": "Beth Smith"
             },
             {
               "link": "https://somelinktodocument",
               "name": "my-testscore-pg2.pdf",
               "mimeType": "application/pdf",
-              "addedOn": "2017-12-08T16:22:32.3269001Z"
+              "uploaded": "2017-12-08T16:22:32.3269001Z",
+              "uploadedBy": "Beth Smith"
             }
           ]
         },
@@ -1995,8 +2031,10 @@ Note: Empty JSON collections are not represented within the XML.
       <created>2017-12-08T17:19:02.3269001Z</created>
       <legalName>
         <firstName>Esperanza</firstName>
-        <middleNames>Jon</middleNames>
-        <middleNames>Al</middleNames>
+        <middleNames>
+          <item>Jon</item>
+          <item>Al</item>
+        </middleNames>
         <lastName>Medhurst</lastName>
         <prefix />
         <suffix />
@@ -2006,10 +2044,13 @@ Note: Empty JSON collections are not represented within the XML.
       <primaryCitizenshipCountry>ET</primaryCitizenshipCountry>
       <fullLegalName>Esperanza Abe Lexus Jeromy Edmond Kristian Alan Henry Medhurst</fullLegalName>
       <casualNames>
-        <firstName>Lexus</firstName>
-        <lastName>Abe</lastName>
-        <prefix />
-        <suffix />
+        <item>
+          <firstName>Lexus</firstName>
+          <middleNames />
+          <lastName>Abe</lastName>
+          <prefix />
+          <suffix />
+        </item>
       </casualNames>
       <gender>female</gender>
       <mailingAddress>
@@ -2029,17 +2070,21 @@ Note: Empty JSON collections are not represented within the XML.
         <postalCode>97474</postalCode>
       </currentAddress>
       <phones>
-        <type>home</type>
-        <number>US+19083680301</number>
-        <ext />
+        <item>
+          <type>home</type>
+          <number>US+19083680301</number>
+          <ext />
+        </item>
+        <item>
+          <type>mobile</type>
+          <number>US+15259228253</number>
+          <ext />
+        </item>
       </phones>
-      <phones>
-        <type>mobile</type>
-        <number>US+15259228253</number>
-        <ext />
-      </phones>
-      <emails>Esperanza77@mailinator.com</emails>
-      <emails>Esperanza_Test77@mailinator.com</emails>
+      <emails>
+        <item>Esperanza77@mailinator.com</item>
+        <item>Esperanza_Test77@mailinator.com</item>
+      </emails>
       <emergencyContact>
         <name>Lina Streich</name>
         <phone>
@@ -2052,129 +2097,153 @@ Note: Empty JSON collections are not represented within the XML.
         <firstLanguage>gv</firstLanguage>
       </emergencyContact>
       <credentials>
-        <schoolType>university</schoolType>
-        <schoolName>quo-eaque-nemo</schoolName>
-        <country>VI</country>
-        <programName>velit</programName>
-        <status>NotCompleted</status>
-        <completionDate>2016-08-07</completionDate>
-        <credentialType>university-degree</credentialType>
-        <supportingDocuments>
-          <link>https://somelinktodocument</link>
-          <name>my-university-proof.pdf</name>
-          <mimeType>application/pdf</mimeType>
-          <addedOn>2017-12-08T16:19:02.3269001Z</addedOn>
-        </supportingDocuments>
-      </credentials>
-      <credentials>
-        <schoolType>college</schoolType>
-        <schoolName>sit-qui-omnis</schoolName>
-        <country>UZ</country>
-        <programName />
-        <status>InProgress</status>
-        <completionDate>2016-03-01</completionDate>
-        <credentialType>college-other</credentialType>
-        <supportingDocuments>
-          <link>https://somelinktodocument</link>
-          <name>my-college-proof.pdf</name>
-          <mimeType>application/pdf</mimeType>
-          <addedOn>2017-12-08T16:20:02.3269001Z</addedOn>
-        </supportingDocuments>
-      </credentials>
-      <credentials>
-        <schoolType>secondary</schoolType>
-        <schoolName>rerum-nihil-necessitatibus</schoolName>
-        <country>AD</country>
-        <programName>fuga</programName>
-        <status>InProgress</status>
-        <completionDate>2014-12-21</completionDate>
-        <credentialType>secondary-other</credentialType>
-        <supportingDocuments>
-          <link>https://somelinktodocument</link>
-          <name>my-secondary-proof.pdf</name>
-          <mimeType>application/pdf</mimeType>
-          <addedOn>2017-12-08T16:21:02.3269001Z</addedOn>
-        </supportingDocuments>
+        <item>
+          <schoolType>university</schoolType>
+          <schoolName>quo-eaque-nemo</schoolName>
+          <country>VI</country>
+          <programName>velit</programName>
+          <status>NotCompleted</status>
+          <completionDate>2016-08-07</completionDate>
+          <credentialType>university-degree</credentialType>
+          <supportingDocuments>
+            <item>
+              <link>https://somelinktodocument</link>
+              <name>my-university-proof.pdf</name>
+              <mimeType>application/pdf</mimeType>
+              <uploaded>2017-12-08T16:19:02.3269001Z</uploaded>
+              <uploadedBy>Beth Smith</uploaded>
+            </item>
+          </supportingDocuments>
+        </item>
+        <item>
+          <schoolType>college</schoolType>
+          <schoolName>sit-qui-omnis</schoolName>
+          <country>UZ</country>
+          <programName />
+          <status>InProgress</status>
+          <completionDate>2016-03-01</completionDate>
+          <credentialType>college-other</credentialType>
+          <supportingDocuments>
+            <item>
+              <link>https://somelinktodocument</link>
+              <name>my-college-proof.pdf</name>
+              <mimeType>application/pdf</mimeType>
+              <uploaded>2017-12-08T16:19:02.3269001Z</uploaded>
+              <uploadedBy>Beth Smith</uploaded>
+            </item>
+          </supportingDocuments>
+        </item>
+        <item>
+          <schoolType>secondary</schoolType>
+          <schoolName>rerum-nihil-necessitatibus</schoolName>
+          <country>AD</country>
+          <programName>fuga</programName>
+          <status>InProgress</status>
+          <completionDate>2014-12-21</completionDate>
+          <credentialType>secondary-other</credentialType>
+          <supportingDocuments>
+            <item>
+              <link>https://somelinktodocument</link>
+              <name>my-secondary-proof.pdf</name>
+              <mimeType>application/pdf</mimeType>
+              <uploaded>2017-12-08T16:19:02.3269001Z</uploaded>
+              <uploadedBy>Beth Smith</uploaded>
+            </item>
+          </supportingDocuments>
+        </item>
       </credentials>
       <proficiencies>
-        <type>eap</type>
-        <otherName />
-        <score>64</score>
-        <completionDate>2017-11-05</completionDate>
-      </proficiencies>
-      <proficiencies>
-        <type>ielts</type>
-        <otherName />
-        <score>71</score>
-        <completionDate>2017-10-19</completionDate>
-        <supportingDocuments>
-          <link>https://somelinktodocument</link>
-          <name>my-testscore-pg1.pdf</name>
-          <mimeType>application/pdf</mimeType>
-          <addedOn>2017-12-08T16:22:02.3269001Z</addedOn>
-        </supportingDocuments>
-        <supportingDocuments>
-          <link>https://somelinktodocument</link>
-          <name>my-testscore-pg2.pdf</name>
-          <mimeType>application/pdf</mimeType>
-          <addedOn>2017-12-08T16:22:32.3269001Z</addedOn>
-        </supportingDocuments>
-      </proficiencies>
-      <proficiencies>
-        <type>eap</type>
-        <otherName />
-        <score>94</score>
-        <completionDate>2015-02-05</completionDate>
+        <item>
+          <type>eap</type>
+          <otherName />
+          <score>64</score>
+          <completionDate>2017-11-05</completionDate>
+          <subScores />
+          <supportingDocuments />
+        </item>
+        <item>
+          <type>ielts</type>
+          <otherName />
+          <score>71</score>
+          <completionDate>2017-10-19</completionDate>
+          <supportingDocuments>
+            <item>
+              <link>https://somelinktodocument</link>
+              <name>my-testscore-pg1.pdf</name>
+              <mimeType>application/pdf</mimeType>
+              <uploaded>2017-12-08T16:22:02.3269001Z</uploaded>
+              <uploadedBy>Beth Smith</uploaded>
+            </item>
+            <item>
+              <link>https://somelinktodocument</link>
+              <name>my-testscore-pg2.pdf</name>
+              <mimeType>application/pdf</mimeType>
+              <uploaded>2017-12-08T16:22:32.3269001Z</uploaded>
+              <uploadedBy>Beth Smith</uploaded>
+            </item>
+          </supportingDocuments>
+        </item>
+        <item>
+          <type>eap</type>
+          <otherName />
+          <score>94</score>
+          <completionDate>2015-02-05</completionDate>
+          <subScores />
+          <supportingDocuments />
+        </item>
       </proficiencies>
     </applicant>
     <selections>
-      <term>
-        <applicationCycle>2019</applicationCycle>
-        <code>fall</code>
-        <startDate>2018-08-01</startDate>
-        <endDate>2018-11-30</endDate>
-      </term>
-      <program>
-        <code>TST1ESL1</code>
-        <title>ESL Program 1</title>
-        <credential>other</credential>
-        <internationalProgramType>Esl</internationalProgramType>
-      </program>
-      <campusPreference />
-      <choiceNumber>-1</choiceNumber>
+      <item>
+        <term>
+          <applicationCycle>2019</applicationCycle>
+          <code>fall</code>
+          <startDate>2018-08-01</startDate>
+          <endDate>2018-11-30</endDate>
+        </term>
+        <program>
+          <code>TST1ESL1</code>
+          <title>ESL Program 1</title>
+          <credential>other</credential>
+          <internationalProgramType>Esl</internationalProgramType>
+        </program>
+        <campusPreference />
+        <choiceNumber>-1</choiceNumber>
+      </item>
+      <item>
+        <term>
+          <applicationCycle>2017</applicationCycle>
+          <code>fall</code>
+          <startDate>2016-08-01</startDate>
+          <endDate>2016-11-30</endDate>
+        </term>
+        <program>
+          <code>TST1O2</code>
+          <title>Other 2</title>
+          <credential>other</credential>
+          <internationalProgramType>Normal</internationalProgramType>
+        </program>
+        <campusPreference />
+        <choiceNumber>1</choiceNumber>
+      </item>
+      <item>
+        <term>
+          <applicationCycle>2019</applicationCycle>
+          <code>fall</code>
+          <startDate>2018-08-01</startDate>
+          <endDate>2018-11-30</endDate>
+        </term>
+        <program>
+          <code>TST1DG1</code>
+          <title>Degree 1</title>
+          <credential>degree</credential>
+          <internationalProgramType>Normal</internationalProgramType>
+        </program>
+        <campusPreference />
+        <choiceNumber>2</choiceNumber>
+      </item>
     </selections>
-    <selections>
-      <term>
-        <applicationCycle>2017</applicationCycle>
-        <code>fall</code>
-        <startDate>2016-08-01</startDate>
-        <endDate>2016-11-30</endDate>
-      </term>
-      <program>
-        <code>TST1O2</code>
-        <title>Other 2</title>
-        <credential>other</credential>
-        <internationalProgramType>Normal</internationalProgramType>
-      </program>
-      <campusPreference />
-      <choiceNumber>1</choiceNumber>
-    </selections>
-    <selections>
-      <term>
-        <applicationCycle>2019</applicationCycle>
-        <code>fall</code>
-        <startDate>2018-08-01</startDate>
-        <endDate>2018-11-30</endDate>
-      </term>
-      <program>
-        <code>TST1DG1</code>
-        <title>Degree 1</title>
-        <credential>degree</credential>
-        <internationalProgramType>Normal</internationalProgramType>
-      </program>
-      <campusPreference />
-      <choiceNumber>2</choiceNumber>
-    </selections>
+    <screened />
     <submitted>2017-12-09T11:19:46.6378594Z</submitted>
     <created>2017-12-08T17:19:02.3269001Z</created>
   </data>
@@ -2255,58 +2324,61 @@ Used by:
 
 ```XML
 <root>
-  <action>ApplicationSubmitted</action>
+  <action>ProgramSelectionsUpdated</action>
   <data>
     <id>85aee8dc-3bdc-e711-8737-e4b318b38df4</id>
     <number>X1485152</number>
     <selections>
-      <term>
-        <applicationCycle>2019</applicationCycle>
-        <code>fall</code>
-        <startDate>2018-08-01</startDate>
-        <endDate>2018-11-30</endDate>
-      </term>
-      <program>
-        <code>TST1ESL1</code>
-        <title>ESL Program 1</title>
-        <credential>other</credential>
-        <internationalProgramType>Esl</internationalProgramType>
-      </program>
-      <campusPreference />
-      <choiceNumber>-1</choiceNumber>
+      <item>
+        <term>
+          <applicationCycle>2019</applicationCycle>
+          <code>fall</code>
+          <startDate>2018-08-01</startDate>
+          <endDate>2018-11-30</endDate>
+        </term>
+        <program>
+          <code>TST1ESL1</code>
+          <title>ESL Program 1</title>
+          <credential>other</credential>
+          <internationalProgramType>Esl</internationalProgramType>
+        </program>
+        <campusPreference />
+        <choiceNumber>-1</choiceNumber>
+      </item>
+      <item>
+        <term>
+          <applicationCycle>2017</applicationCycle>
+          <code>fall</code>
+          <startDate>2016-08-01</startDate>
+          <endDate>2016-11-30</endDate>
+        </term>
+        <program>
+          <code>TST1O2</code>
+          <title>Other 2</title>
+          <credential>other</credential>
+          <internationalProgramType>Normal</internationalProgramType>
+        </program>
+        <campusPreference />
+        <choiceNumber>1</choiceNumber>
+      </item>
+      <item>
+        <term>
+          <applicationCycle>2019</applicationCycle>
+          <code>fall</code>
+          <startDate>2018-08-01</startDate>
+          <endDate>2018-11-30</endDate>
+        </term>
+        <program>
+          <code>TST1DG1</code>
+          <title>Degree 1</title>
+          <credential>degree</credential>
+          <internationalProgramType>Normal</internationalProgramType>
+        </program>
+        <campusPreference />
+        <choiceNumber>2</choiceNumber>
+      </item>
     </selections>
-    <selections>
-      <term>
-        <applicationCycle>2017</applicationCycle>
-        <code>fall</code>
-        <startDate>2016-08-01</startDate>
-        <endDate>2016-11-30</endDate>
-      </term>
-      <program>
-        <code>TST1O2</code>
-        <title>Other 2</title>
-        <credential>other</credential>
-        <internationalProgramType>Normal</internationalProgramType>
-      </program>
-      <campusPreference />
-      <choiceNumber>1</choiceNumber>
-    </selections>
-    <selections>
-      <term>
-        <applicationCycle>2019</applicationCycle>
-        <code>fall</code>
-        <startDate>2018-08-01</startDate>
-        <endDate>2018-11-30</endDate>
-      </term>
-      <program>
-        <code>TST1DG1</code>
-        <title>Degree 1</title>
-        <credential>degree</credential>
-        <internationalProgramType>Normal</internationalProgramType>
-      </program>
-      <campusPreference />
-      <choiceNumber>2</choiceNumber>
-    </selections>
+    <screened />
     <submitted>2017-12-09T11:19:46.6378594Z</submitted>
     <created>2017-12-08T17:19:02.3269001Z</created>
   </data>
@@ -2398,11 +2470,13 @@ Used by:
   <tuitionFees>50</tuitionFees>
   <ancillaryFees>50</ancillaryFees>
   <conditions>
-    <offerConditionType>eslcomplete</offerConditionType>
-  </conditions>
-  <conditions>
-    <offerConditionType>other</offerConditionType>
-    <other>Must get straight A's</other>
+    <item>
+      <offerConditionType>eslcomplete</offerConditionType>
+    </item>
+    <item>
+      <offerConditionType>other</offerConditionType>
+      <other>Must get straight A's</other>
+    </item>
   </conditions>
   <customOfferLetter>
     <data>[base 64 encoded string]</data>
