@@ -5,134 +5,137 @@ Table of Contents
 -----------------
 
 - [OCAS International SIS Integration Guide](#ocas-international-sis-integration-guide)
-    - [Table of Contents](#table-of-contents)
-    - [Document Revisions](#document-revisions)
-        - [Change History](#change-history)
-            - [1.4.0](#140)
-            - [1.3.1](#131)
-            - [1.3.0](#130)
-            - [1.2.1](#121)
-            - [1.2.0](#120)
-            - [1.1.1](#111)
-            - [1.1.0](#110)
-            - [1.0.4](#104)
-            - [1.0.3](#103)
-            - [1.0.2](#102)
-            - [1.0.1](#101)
-            - [1.0.0](#100)
-    - [Overview](#overview)
-    - [International SISAPI](#international-sisapi)
-        - [SIS Environments](#sis-environments)
-        - [Endpoints](#endpoints)
-            - [PUT /api/v1/applicants/{number}/college-details](#put-apiv1applicantsnumbercollege-details)
-            - [POST /api/v1/events](#post-apiv1events)
-            - [GET /api/v1/events/peek](#get-apiv1eventspeek)
-            - [PUT /api/v1/events/{id}/ack](#put-apiv1eventsidack)
-            - [PUT /api/v1/offers/pay-offer](#put-apiv1offerspay-offer)
-    - [Objects](#objects)
-        - [Address](#address)
-        - [Agency](#agency)
-        - [Applicant](#applicant)
-        - [ApplicantCredential](#applicantcredential)
-        - [ApplicantName](#applicantname)
-        - [ApplicantCollegeDetails](#applicantcollegedetails)
-        - [ApplicantProficiency](#applicantproficiency)
-        - [ApplicantProficiencySubScore](#applicantproficiencysubscore)
-        - [ApplicantSupportingDocument](#applicantsupportingdocument)
-        - [Application](#application)
-        - [ApplicationFull](#applicationfull)
-        - [BinaryDocument](#binarydocument)
-        - [DeclineProgramSelection](#declineprogramselection)
-        - [EmergencyContact](#emergencycontact)
-        - [NewBinaryDocumentInfo](#newbinarydocumentinfo)
-        - [NewOfferInfo](#newofferinfo)
-        - [OfferCondition](#offercondition)
-        - [OfferDeclined](#offerdeclined)
-        - [OfferPreRegistered](#offerpreregistered)
-        - [OfferWithdrawn](#offerwithdrawn)
-        - [PayOffer](#payoffer)
-        - [Phone](#phone)
-        - [Program](#program)
-        - [ProgramSelection](#programselection)
-        - [RevokeOffer](#revokeoffer)
-        - [SisEvent](#sisevent)
-        - [SisInboundEvent](#sisinboundevent)
-        - [Term](#term)
-    - [Lookups](#lookups)
-        - [ApplicationCycle](#applicationcycle)
-        - [CanadianStatus](#canadianstatus)
-        - [Country and Provinces](#country-and-provinces)
-        - [EducationCredentialStatus](#educationcredentialstatus)
-        - [EducationCredentialType](#educationcredentialtype)
-        - [EntryLevelType](#entryleveltype)
-        - [Gender](#gender)
-        - [IntakeDeliveryOption](#intakedeliveryoption)
-        - [InternationalProgramType](#internationalprogramtype)
-        - [InternshipType](#internshiptype)
-        - [Languages](#languages)
-        - [NamePrefix](#nameprefix)
-        - [NameSuffix](#namesuffix)
-        - [OfferConditionType](#offerconditiontype)
-        - [OfferRevokeType](#offerrevoketype)
-        - [PhoneType](#phonetype)
-        - [ProgramCredentialType](#programcredentialtype)
-        - [ProgramDeclineReason](#programdeclinereason)
-        - [SchoolType](#schooltype)
-        - [SisInboundEventType](#sisinboundeventtype)
-        - [SisOutboundEventType](#sisoutboundeventtype)
-        - [SupportingDocumentType](#supportingdocumenttype)
-        - [TermCode](#termcode)
-        - [TestSubType](#testsubtype)
-        - [TestType](#testtype)
-        - [WithdrawType](#withdrawtype)
-    - [Sender and Receiver Clients](#sender-and-receiver-clients)
-        - [Database Connectivity](#database-connectivity)
-        - [Sleep Interval](#sleep-interval)
-        - [Logging Configuration](#logging-configuration)
-            - [serilog:using:RollingFileAlternate](#serilogusingrollingfilealternate)
-            - [serilog:using:EventLog](#serilogusingeventlog)
-            - [serilog:using:Console](#serilogusingconsole)
-        - [Identity Configuration](#identity-configuration)
-            - [Receiver Client](#receiver-client)
-                - [Receiver Client Configuration](#receiver-client-configuration)
-            - [Sender Client](#sender-client)
-                - [Sender Client Configuration](#sender-client-configuration)
-        - [Service Installation](#service-installation)
-            - [Service Installation - Receiver Client](#service-installation---receiver-client)
-            - [Service Installation - Sender Client](#service-installation---sender-client)
-        - [Windows Event Log Monitoring](#windows-event-log-monitoring)
-        - [Database Structure](#database-structure)
-            - [SisInboundEvents Schema](#sisinboundevents-schema)
-            - [SisOutboundEvents Schema](#sisoutboundevents-schema)
-        - [Error and Warning Codes](#error-and-warning-codes)
-            - [Error Codes](#error-codes)
-            - [Warning Codes](#warning-codes)
-    - [Authentication and Authorization](#authentication-and-authorization)
-        - [How to Get a Bearer Token](#how-to-get-a-bearer-token)
-    - [Appendix](#appendix)
-        - [Appendix: ApplicationFull](#appendix-applicationfull)
-            - [ApplicationFull Submitted JSON](#applicationfull-submitted-json)
-            - [ApplicationFull Submitted XML](#applicationfull-submitted-xml)
-        - [Appendix: Application](#appendix-application)
-            - [Application Submitted JSON](#application-submitted-json)
-            - [Application XML](#application-xml)
-        - [Appendix: ApplicantCollegeDetails](#appendix-applicantcollegedetails)
-            - [ApplicantCollegeDetails JSON](#applicantcollegedetails-json)
-            - [ApplicantCollegeDetails XML](#applicantcollegedetails-xml)
-        - [Appendix: CreateOffer](#appendix-createoffer)
-            - [CreateOffer JSON](#createoffer-json)
-            - [CreateOffer XML](#createoffer-xml)
-        - [Appendix: PayOffer](#appendix-payoffer)
-            - [PayOffer JSON](#payoffer-json)
-            - [PayOffer XML](#payoffer-xml)
-            - [RevokeOffer JSON](#revokeoffer-json)
-            - [RevokeOffer XML](#revokeoffer-xml)
+  - [Table of Contents](#table-of-contents)
+  - [Document Revisions](#document-revisions)
+    - [Change History](#change-history)
+      - [1.5.0](#150)
+      - [1.4.0](#140)
+      - [1.3.1](#131)
+      - [1.3.0](#130)
+      - [1.2.1](#121)
+      - [1.2.0](#120)
+      - [1.1.1](#111)
+      - [1.1.0](#110)
+      - [1.0.4](#104)
+      - [1.0.3](#103)
+      - [1.0.2](#102)
+      - [1.0.1](#101)
+      - [1.0.0](#100)
+  - [Overview](#overview)
+  - [International SISAPI](#international-sisapi)
+    - [SIS Environments](#sis-environments)
+    - [Endpoints](#endpoints)
+      - [PUT /api/v1/applicants/{number}/college-details](#put-apiv1applicantsnumbercollege-details)
+      - [POST /api/v1/events](#post-apiv1events)
+      - [GET /api/v1/events/peek](#get-apiv1eventspeek)
+      - [PUT /api/v1/events/{id}/ack](#put-apiv1eventsidack)
+      - [PUT /api/v1/offers/pay-offer](#put-apiv1offerspay-offer)
+  - [Objects](#objects)
+    - [Address](#address)
+    - [Agency](#agency)
+    - [Applicant](#applicant)
+    - [ApplicantCredential](#applicantcredential)
+    - [ApplicantName](#applicantname)
+    - [ApplicantCollegeDetails](#applicantcollegedetails)
+    - [ApplicantProficiency](#applicantproficiency)
+    - [ApplicantProficiencySubScore](#applicantproficiencysubscore)
+    - [ApplicantSupportingDocument](#applicantsupportingdocument)
+    - [Application](#application)
+    - [ApplicationFull](#applicationfull)
+    - [BinaryDocument](#binarydocument)
+    - [DeclineProgramSelection](#declineprogramselection)
+    - [EmergencyContact](#emergencycontact)
+    - [NewBinaryDocumentInfo](#newbinarydocumentinfo)
+    - [NewOfferInfo](#newofferinfo)
+    - [OfferCondition](#offercondition)
+    - [OfferDeclined](#offerdeclined)
+    - [OfferPreRegistered](#offerpreregistered)
+    - [OfferWithdrawn](#offerwithdrawn)
+    - [PayOffer](#payoffer)
+    - [Phone](#phone)
+    - [Program](#program)
+    - [ProgramSelection](#programselection)
+    - [RevokeOffer](#revokeoffer)
+    - [SisEvent](#sisevent)
+    - [SisInboundEvent](#sisinboundevent)
+    - [Term](#term)
+    - [UpdateOffer](#updateoffer)
+  - [Lookups](#lookups)
+    - [ApplicationCycle](#applicationcycle)
+    - [CanadianStatus](#canadianstatus)
+    - [Country and Provinces](#country-and-provinces)
+    - [EducationCredentialStatus](#educationcredentialstatus)
+    - [EducationCredentialType](#educationcredentialtype)
+    - [EntryLevelType](#entryleveltype)
+    - [Gender](#gender)
+    - [IntakeDeliveryOption](#intakedeliveryoption)
+    - [InternationalProgramType](#internationalprogramtype)
+    - [InternshipType](#internshiptype)
+    - [Languages](#languages)
+    - [NamePrefix](#nameprefix)
+    - [NameSuffix](#namesuffix)
+    - [OfferConditionType](#offerconditiontype)
+    - [OfferRevokeType](#offerrevoketype)
+    - [PhoneType](#phonetype)
+    - [ProgramCredentialType](#programcredentialtype)
+    - [ProgramDeclineReason](#programdeclinereason)
+    - [SchoolType](#schooltype)
+    - [SisInboundEventType](#sisinboundeventtype)
+    - [SisOutboundEventType](#sisoutboundeventtype)
+    - [SupportingDocumentType](#supportingdocumenttype)
+    - [TermCode](#termcode)
+    - [TestSubType](#testsubtype)
+    - [TestType](#testtype)
+    - [WithdrawType](#withdrawtype)
+  - [Sender and Receiver Clients](#sender-and-receiver-clients)
+    - [Database Connectivity](#database-connectivity)
+    - [Sleep Interval](#sleep-interval)
+    - [Logging Configuration](#logging-configuration)
+      - [serilog:using:RollingFileAlternate](#serilogusingrollingfilealternate)
+      - [serilog:using:EventLog](#serilogusingeventlog)
+      - [serilog:using:Console](#serilogusingconsole)
+    - [Identity Configuration](#identity-configuration)
+      - [Receiver Client](#receiver-client)
+        - [Receiver Client Configuration](#receiver-client-configuration)
+      - [Sender Client](#sender-client)
+        - [Sender Client Configuration](#sender-client-configuration)
+    - [Service Installation](#service-installation)
+      - [Service Installation - Receiver Client](#service-installation---receiver-client)
+      - [Service Installation - Sender Client](#service-installation---sender-client)
+    - [Windows Event Log Monitoring](#windows-event-log-monitoring)
+    - [Database Structure](#database-structure)
+      - [SisInboundEvents Schema](#sisinboundevents-schema)
+      - [SisOutboundEvents Schema](#sisoutboundevents-schema)
+    - [Error and Warning Codes](#error-and-warning-codes)
+      - [Error Codes](#error-codes)
+      - [Warning Codes](#warning-codes)
+  - [Authentication and Authorization](#authentication-and-authorization)
+    - [How to Get a Bearer Token](#how-to-get-a-bearer-token)
+  - [Appendix](#appendix)
+    - [Appendix: ApplicationFull](#appendix-applicationfull)
+      - [ApplicationFull Submitted JSON](#applicationfull-submitted-json)
+      - [ApplicationFull Submitted XML](#applicationfull-submitted-xml)
+    - [Appendix: Application](#appendix-application)
+      - [Application Submitted JSON](#application-submitted-json)
+      - [Application XML](#application-xml)
+    - [Appendix: ApplicantCollegeDetails](#appendix-applicantcollegedetails)
+      - [ApplicantCollegeDetails JSON](#applicantcollegedetails-json)
+      - [ApplicantCollegeDetails XML](#applicantcollegedetails-xml)
+    - [Appendix: CreateOffer](#appendix-createoffer)
+      - [CreateOffer JSON](#createoffer-json)
+      - [CreateOffer XML](#createoffer-xml)
+    - [Appendix: PayOffer](#appendix-payoffer)
+      - [PayOffer JSON](#payoffer-json)
+      - [PayOffer XML](#payoffer-xml)
+      - [RevokeOffer JSON](#revokeoffer-json)
+      - [RevokeOffer XML](#revokeoffer-xml)
 
 Document Revisions
 ------------------
 
 | Version | Date         | Editor           |
 | ------- | ------------ | ---------------- |
+| 1.5.0   | Jan 26, 2018 | Michael Aldworth |
 | 1.4.0   | Jan 18, 2018 | Michael Aldworth |
 | 1.3.1   | Jan 10, 2018 | Michael Aldworth |
 | 1.3.0   | Jan 05, 2018 | Michael Aldworth |
@@ -147,6 +150,13 @@ Document Revisions
 | 1.0.0   | Nov 24, 2017 | Michael Aldworth |
 
 ### Change History ###
+
+#### 1.5.0 ####
+
+- Updated Offer Term to StartDate
+- Add New Outbound Event *UpdateOffer*
+- Updated CampusPreference field on programSelection to be PreferredCampusCode
+- Added Nuget Package for Sis Models
 
 #### 1.4.0 ####
 
@@ -520,11 +530,10 @@ the specified event.
   "id": 25,
   "data": {
     "applicationNumber": "X1484937",
-    "applicationCycle": "2017",
     "campusCode": "main",
     "deliveryOption": "fulltime",
     "programCode": "TSTA01",
-    "term": "fall",
+    "startDate": "2018-03-22",
     "receipt": {
       "data": "[base 64 encoded string]",
       "filename": "filename.jpg",
@@ -569,6 +578,14 @@ the specified event.
 Objects
 -------
 
+If you are developing in .NET you are in luck! OCAS has provided a nuget package
+with all of the Class Objects mentioned below. This will let you serialize and
+deserialize easily (we recommend using Newtonsoft.Json).
+
+**Nuget Package: [Ocas.International.Sis.Core](https://www.nuget.org/packages/Ocas.International.Sis.Core/)**
+
+`Install-Package Ocas.International.Sis.Core`
+
 ### Address ###
 
 | Property   | Type                                                                 |
@@ -595,9 +612,9 @@ Objects
 
 ### Agency ###
 
-| Property      | Type                      |
-| ------------- | ------------------------- |
-| name          | _string_ (min 1, max 255) |
+| Property      | Type                                 |
+| ------------- | ------------------------------------ |
+| name          | _string_ (min 1, max 255)            |
 | sisIdentifier | _[nullable] string_ (min 1, max 100) |
 
 **_Example:_**
@@ -885,11 +902,10 @@ Example: See [Appendix: ApplicationFull](#appendix-applicationfull)
 | Property              | Type                                                                                  |
 | --------------------- | ------------------------------------------------------------------------------------- |
 | applicationNumber     | _string_ (min 1, max 20)                                                              |
-| applicationCycle      | _number_ ([Lookup](#applicationcycle))                                                |
 | campusCode            | _string_ (min 1, max 4)                                                               |
 | deliveryOption        | _string_ ([Lookup](#intakedeliveryoption))                                            |
 | programCode           | _string_ (min 1, max 10)                                                              |
-| term                  | _string_ ([Lookup](#termcode))                                                        |
+| startDate             | _string_ date string in format `yyyy-MM-dd'                                           |
 | studentId             | _[nullable] string_ (min 1, max 30)                                                   |
 | isPreAdmit            | _boolean_                                                                             |
 | entryLevelType        | _[nullable] string_ ([Lookup](#entryleveltype)) defaults to `01`                      |
@@ -914,11 +930,10 @@ Example: See [Appendix: ApplicationFull](#appendix-applicationfull)
 ```JSON
 {
   "applicationNumber" : "X1484934",
-  "applicationCycle" : 2017,
   "campusCode" : "C4",
   "deliveryOption" : "fulltime",
   "programCode" : "TST1DG5",
-  "term" : "spring",
+  "startDate" : "2018-01-01",
   "isPreAdmit" : false,
   "isExchange" : true,
   "internshipType" : "notavailable",
@@ -976,11 +991,10 @@ otherwise the OIS will generate an offer letter on your behalf.
 | Property          | Type                                                 |
 | ----------------- | ---------------------------------------------------- |
 | applicationNumber | _string_ (min 1, max 20)                             |
-| applicationCycle  | _number_ ([Lookup](#applicationcycle))               |
 | campusCode        | _string_ (min 1, max 4)                              |
 | deliveryOption    | _string_  _string_ ([Lookup](#intakedeliveryoption)) |
 | programCode       | _string_ (min 1, max 10)                             |
-| term              | _string_ ([Lookup](#termcode))                       |
+| startDate         | _string_ date string in format `yyyy-MM-dd'          |
 | timestamp         | _string_ ISO 8601 Date Formatted String              |
 
 **_Example:_**
@@ -988,11 +1002,10 @@ otherwise the OIS will generate an offer letter on your behalf.
 ```JSON
 {
   "applicationNumber" : "X12345",
-  "applicationCycle" : 2018,
   "campusCode" : "main",
   "deliveryOption" : "fulltime",
   "programCode" : "TSTAD1",
-  "term" : "fall",
+  "startDate" : "2017-01-20",
   "timestamp" : "2017-12-08T17:19:02.3269001Z"
 }
 ```
@@ -1002,11 +1015,10 @@ otherwise the OIS will generate an offer letter on your behalf.
 | Property          | Type                                                 |
 | ----------------- | ---------------------------------------------------- |
 | applicationNumber | _string_ (min 1, max 20)                             |
-| applicationCycle  | _number_ ([Lookup](#applicationcycle))               |
 | campusCode        | _string_ (min 1, max 4)                              |
 | deliveryOption    | _string_  _string_ ([Lookup](#intakedeliveryoption)) |
 | programCode       | _string_ (min 1, max 10)                             |
-| term              | _string_ ([Lookup](#termcode))                       |
+| startDate         | _string_ date string in format `yyyy-MM-dd'          |
 | timestamp         | _string_ ISO 8601 Date Formatted String              |
 
 **_Example:_**
@@ -1014,11 +1026,10 @@ otherwise the OIS will generate an offer letter on your behalf.
 ```JSON
 {
   "applicationNumber" : "X12345",
-  "applicationCycle" : 2018,
   "campusCode" : "main",
   "deliveryOption" : "fulltime",
   "programCode" : "TSTAD1",
-  "term" : "fall",
+  "startDate" : "2017-01-20",
   "timestamp" : "2017-12-08T17:19:02.3269001Z"
 }
 ```
@@ -1028,11 +1039,10 @@ otherwise the OIS will generate an offer letter on your behalf.
 | Property          | Type                                                       |
 | ----------------- | ---------------------------------------------------------- |
 | applicationNumber | _string_ (min 1, max 20)                                   |
-| applicationCycle  | _number_ ([Lookup](#applicationcycle))                     |
 | campusCode        | _string_ (min 1, max 4)                                    |
 | deliveryOption    | _string_  _string_ ([Lookup](#intakedeliveryoption))       |
 | programCode       | _string_ (min 1, max 10)                                   |
-| term              | _string_ ([Lookup](#termcode))                             |
+| startDate         | _string_ date string in format `yyyy-MM-dd'                |
 | timestamp         | _string_ ISO 8601 Date Formatted String                    |
 | withdrawnType     | _string_ ([Lookup](#withdrawtype))                         |
 | otherReason       | _[null if withdrawnType != other] string_ (min 1, max 100) |
@@ -1042,11 +1052,10 @@ otherwise the OIS will generate an offer letter on your behalf.
 ```JSON
 {
   "applicationNumber" : "X12345",
-  "applicationCycle" : 2018,
   "campusCode" : "main",
   "deliveryOption" : "fulltime",
   "programCode" : "TSTAD1",
-  "term" : "fall",
+  "startDate" : "2018-01-20",
   "withdrawnType" : "visadeclined",
   "otherReason" : null
 }
@@ -1057,11 +1066,10 @@ otherwise the OIS will generate an offer letter on your behalf.
 | Property          | Type                                                         |
 | ----------------- | ------------------------------------------------------------ |
 | applicationNumber | _string_ (min 1, max 20)                                     |
-| applicationCycle  | _number_ ([Lookup](#applicationcycle))                       |
 | campusCode        | _string_ (min 1, max 4)                                      |
 | deliveryOption    | _string_  _string_ ([Lookup](#intakedeliveryoption))         |
 | programCode       | _string_ (min 1, max 10)                                     |
-| term              | _string_ ([Lookup](#termcode))                               |
+| startDate         | _string_ date string in format `yyyy-MM-dd'                  |
 | receipt           | _[nullable]_ [NewBinaryDocumentInfo](#newbinarydocumentinfo) |
 
 **_Example:_**
@@ -1069,11 +1077,10 @@ otherwise the OIS will generate an offer letter on your behalf.
 ```JSON
 {
   "applicationNumber" : "X12345",
-  "applicationCycle" : 2018,
   "campusCode" : "main",
   "deliveryOption" : "fulltime",
   "programCode" : "TSTAD1",
-  "term" : "fall",
+  "startDate" : "2018-01-20",
   "receipt" : {}
 }
 ```
@@ -1118,12 +1125,12 @@ otherwise the OIS will generate an offer letter on your behalf.
 
 ### ProgramSelection ###
 
-| Property         | Type                                                                      |
-| ---------------- | ------------------------------------------------------------------------- |
-| term             | [Term](#termcode)                                                         |
-| program          | [Program](#program)                                                       |
-| campusPreference | _[nullable] string_ (min 1, max 4) (college assigned Campus Code)                    |
-| choiceNumber     | _number_ (less than 0 = EAP/ESL Program, greater than 0 = Normal Program) |
+| Property            | Type                                                                      |
+| ------------------- | ------------------------------------------------------------------------- |
+| term                | [Term](#termcode)                                                         |
+| program             | [Program](#program)                                                       |
+| preferredCampusCode | _[nullable] string_ (min 1, max 4) (college assigned Campus Code)         |
+| choiceNumber        | _number_ (less than 0 = EAP/ESL Program, greater than 0 = Normal Program) |
 
 Example: See [Appendix: ApplicationFull](#appendix-applicationfull)
 
@@ -1132,11 +1139,10 @@ Example: See [Appendix: ApplicationFull](#appendix-applicationfull)
 | Property          | Type                                                 |
 | ----------------- | ---------------------------------------------------- |
 | applicationNumber | _string_ (min 1, max 20)                             |
-| applicationCycle  | _number_ ([Lookup](#applicationcycle))               |
 | campusCode        | _string_ (min 1, max 4)                              |
 | deliveryOption    | _string_  _string_ ([Lookup](#intakedeliveryoption)) |
 | programCode       | _string_ (min 1, max 10)                             |
-| term              | _string_ ([Lookup](#termcode))                       |
+| startDate         | _string_ date string in format `yyyy-MM-dd'          |
 | revokeType        | _string_ ([Lookup](#offerrevoketype))                |
 | otherReason       | _[nullable] string_ (min 1, max 100)                 |
 
@@ -1145,11 +1151,10 @@ Example: See [Appendix: ApplicationFull](#appendix-applicationfull)
 ```JSON
 {
   "applicationNumber" : "X12345",
-  "applicationCycle" : 2018,
   "campusCode" : "main",
   "deliveryOption" : "fulltime",
   "programCode" : "TSTAD1",
-  "term" : "fall",
+  "startDate" : "2018-01-20",
   "revokeType" : "other",
   "otherReason" : "something that isn't covered in the list of common responses"
 }
@@ -1204,6 +1209,75 @@ Example: See [Appendix: ApplicationFull](#appendix-applicationfull)
   "endDate":"2019-11-30"
 }
 ```
+
+### UpdateOffer ###
+
+| Property              | Type                                                                                  |
+| --------------------- | ------------------------------------------------------------------------------------- |
+| applicationNumber     | _string_ (min 1, max 20)                                                              |
+| campusCode            | _string_ (min 1, max 4)                                                               |
+| deliveryOption        | _string_ ([Lookup](#intakedeliveryoption))                                            |
+| programCode           | _string_ (min 1, max 10)                                                              |
+| startDate             | _string_ date string in format `yyyy-MM-dd'                                           |
+| studentId             | _[nullable] string_ (min 1, max 30)                                                   |
+| isPreAdmit            | _boolean_                                                                             |
+| entryLevelType        | _[nullable] string_ ([Lookup](#entryleveltype)) defaults to `01`                      |
+| isExchange            | _[nullable] boolean_                                                                  |
+| internshipType        | _[nullable] string_ ([Lookup](#internshiptype))                                       |
+| internshipLength      | _[nullable] decimal(18,1)_ ([required] if internshipType == `optional` or `required`) |
+| internshipDescription | _[nullable] string_ (min 1, max 100)                                                  |
+| instructionHours      | _[nullable] decimal(18,1)_                                                            |
+| expirationDate        | _[nullable] string_ date string in format `yyyy-MM-dd`                                |
+| intakeExpectedEndDate | _[nullable] string_ date string in format `yyyy-MM-dd`                                |
+| firstPaymentAmount    | _[nullable] decimal(18,2)_                                                            |
+| firstPaymentDate      | _[nullable] string_ date string in format `yyyy-MM-dd`                                |
+| secondPaymentAmount   | _[nullable] decimal(18,2)_                                                            |
+| secondPaymentDate     | _[nullable] string_ date string in format `yyyy-MM-dd`                                |
+| tuitionFees           | _[nullable] decimal(18,2)_                                                            |
+| ancillaryFees         | _[nullable] decimal(18,2)_                                                            |
+| conditions            | Array[0..5] of [OfferCondition](#offercondition)                                      |
+| customOfferLetter     | _[nullable]_ [NewBinaryDocumentInfo](#newbinarydocumentinfo)                          |
+
+**_Example:_**
+
+```JSON
+{
+  "applicationNumber" : "X1484934",
+  "campusCode" : "C4",
+  "deliveryOption" : "fulltime",
+  "programCode" : "TST1DG5",
+  "startDate" : "2018-01-01",
+  "isPreAdmit" : false,
+  "isExchange" : true,
+  "internshipType" : "notavailable",
+  "instructionHours" : 5,
+  "expirationDate" : "2018-01-01",
+  "intakeExpectedEndDate" : "2018-12-01",
+  "firstPaymentAmount" : 100,
+  "firstPaymentDate" : "2018-01-01",
+  "secondPaymentAmount": 200,
+  "secondPaymentDate" : "2018-05-01",
+  "tuitionFees" : 50,
+  "ancillaryFees" : 50,
+  "conditions": [],
+  "customOfferLetter" : {}
+}
+```
+
+**_Notes:_**
+
+Many of the fields on the [UpdateOffer](#updateoffer) model can be left
+undefined. The values will then be drawn from the already existing offer
+within the OCAS International System.
+
+_Note: Offer Conditions will always be reset each update. So if a previous
+offer had condition A, B and C, and then you want to update only the offer
+expiration date, you will need to provide condition A, B and C again. If
+you don't provide conditions, it will mean they have been lifted (removed)
+from the offer._
+
+If a value is provided for `customOfferLetter` then that will be used,
+otherwise the OIS will generate an offer letter on your behalf.
 
 Lookups
 -------
@@ -1421,6 +1495,7 @@ you might receive during the screening process.
 | Key                           | Data Object Type                                    |
 | ----------------------------- | --------------------------------------------------- |
 | CreateOffer                   | [NewOfferInfo](#newofferinfo)                       |
+| UpdateOffer                   | [UpdateOffer](#updateoffer)                         |
 | DeclineProgramSelection       | [DeclineProgramSelection](#declineprogramselection) |
 | PayOffer                      | [PayOffer](#payoffer)                               |
 | RevokeOffer                   | [RevokeOffer](#revokeoffer)                         |
@@ -1969,7 +2044,7 @@ Note: Empty JSON collections are not represented within the XML.
           "credential": "other",
           "internationalProgramType": "Esl"
         },
-        "campusPreference": null,
+        "preferredCampusCode": null,
         "choiceNumber": -1
       },
       {
@@ -1985,7 +2060,7 @@ Note: Empty JSON collections are not represented within the XML.
           "credential": "other",
           "internationalProgramType": "Normal"
         },
-        "campusPreference": null,
+        "preferredCampusCode": null,
         "choiceNumber": 1
       },
       {
@@ -2001,7 +2076,7 @@ Note: Empty JSON collections are not represented within the XML.
           "credential": "degree",
           "internationalProgramType": "Normal"
         },
-        "campusPreference": null,
+        "preferredCampusCode": null,
         "choiceNumber": 2
       }
     ],
@@ -2207,7 +2282,7 @@ Note: Empty JSON collections are not represented within the XML.
           <credential>other</credential>
           <internationalProgramType>Esl</internationalProgramType>
         </program>
-        <campusPreference />
+        <preferredCampusCode />
         <choiceNumber>-1</choiceNumber>
       </item>
       <item>
@@ -2223,7 +2298,7 @@ Note: Empty JSON collections are not represented within the XML.
           <credential>other</credential>
           <internationalProgramType>Normal</internationalProgramType>
         </program>
-        <campusPreference />
+        <preferredCampusCode />
         <choiceNumber>1</choiceNumber>
       </item>
       <item>
@@ -2239,7 +2314,7 @@ Note: Empty JSON collections are not represented within the XML.
           <credential>degree</credential>
           <internationalProgramType>Normal</internationalProgramType>
         </program>
-        <campusPreference />
+        <preferredCampusCode />
         <choiceNumber>2</choiceNumber>
       </item>
     </selections>
@@ -2277,7 +2352,7 @@ Used by:
           "credential": "other",
           "internationalProgramType": "Esl"
         },
-        "campusPreference": null,
+        "preferredCampusCode": null,
         "choiceNumber": -1
       },
       {
@@ -2293,7 +2368,7 @@ Used by:
           "credential": "other",
           "internationalProgramType": "Normal"
         },
-        "campusPreference": null,
+        "preferredCampusCode": null,
         "choiceNumber": 1
       },
       {
@@ -2309,7 +2384,7 @@ Used by:
           "credential": "degree",
           "internationalProgramType": "Normal"
         },
-        "campusPreference": null,
+        "preferredCampusCode": null,
         "choiceNumber": 2
       }
     ],
@@ -2342,7 +2417,7 @@ Used by:
           <credential>other</credential>
           <internationalProgramType>Esl</internationalProgramType>
         </program>
-        <campusPreference />
+        <preferredCampusCode />
         <choiceNumber>-1</choiceNumber>
       </item>
       <item>
@@ -2358,7 +2433,7 @@ Used by:
           <credential>other</credential>
           <internationalProgramType>Normal</internationalProgramType>
         </program>
-        <campusPreference />
+        <preferredCampusCode />
         <choiceNumber>1</choiceNumber>
       </item>
       <item>
@@ -2374,7 +2449,7 @@ Used by:
           <credential>degree</credential>
           <internationalProgramType>Normal</internationalProgramType>
         </program>
-        <campusPreference />
+        <preferredCampusCode />
         <choiceNumber>2</choiceNumber>
       </item>
     </selections>
@@ -2412,11 +2487,10 @@ Used by:
 ```JSON
 {
   "applicationNumber" : "X1484934",
-  "applicationCycle" : 2017,
   "campusCode" : "C4",
   "deliveryOption" : "fulltime",
   "programCode" : "TST1DG5",
-  "term" : "spring",
+  "startDate" : "2018-06-25",
   "isPreAdmit" : false,
   "isExchange" : true,
   "internshipType" : "notavailable",
@@ -2452,11 +2526,10 @@ Used by:
 ```XML
 <root>
   <applicationNumber>X1484934</applicationNumber>
-  <applicationCycle>2017</applicationCycle>
   <campusCode>C4</campusCode>
   <deliveryOption>fulltime</deliveryOption>
   <programCode>TST1DG5</programCode>
-  <term>spring</term>
+  <startDate>2018-06-25</startDate>
   <isPreAdmit>false</isPreAdmit>
   <isExchange>true</isExchange>
   <internshipType>notavailable</internshipType>
@@ -2494,11 +2567,10 @@ Used by:
 ```JSON
 {
   "applicationNumber": "X1484937",
-  "applicationCycle": "2017",
   "campusCode": "main",
   "deliveryOption": "fulltime",
   "programCode": "TSTA01",
-  "term": "fall",
+  "startDate": "2018-11-14",
   "receipt": {
     "data": "[base 64 encoded string]",
     "name": "filename.jpg",
@@ -2513,11 +2585,10 @@ Used by:
 ```XML
 <root>
   <applicationNumber>X1484937</applicationNumber>
-  <applicationCycle>2017</applicationCycle>
   <campusCode>main</campusCode>
   <deliveryOption>fulltime</deliveryOption>
   <programCode>TSTA01</programCode>
-  <term>fall</term>
+  <startDate>2018-11-14</startDate>
   <receipt>
     <data>[base 64 encoded string]</data>
     <name>filename.jpg</name>
@@ -2532,11 +2603,10 @@ Used by:
 ```JSON
 {
   "applicationNumber": "X1484937",
-  "applicationCycle": "2017",
   "campusCode": "main",
   "deliveryOption": "fulltime",
   "programCode": "TSTA01",
-  "term": "fall",
+  "startDate": "2018-08-17",
   "revokeType": "other",
   "otherReason" : "something that isn't covered in the list of common responses"
 }
@@ -2547,11 +2617,10 @@ Used by:
 ```XML
 <root>
   <applicationNumber>X1484937</applicationNumber>
-  <applicationCycle>2017</applicationCycle>
   <campusCode>main</campusCode>
   <deliveryOption>fulltime</deliveryOption>
   <programCode>TSTA01</programCode>
-  <term>fall</term>
+  <startDate>2018-08-17</startDate>
   <revokeType>other</revokeType>
   <otherReason>something that isn't covered in the list of common responses</otherReason>
 </root>
