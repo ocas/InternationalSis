@@ -8,6 +8,7 @@ Table of Contents
   - [Table of Contents](#table-of-contents)
   - [Document Revisions](#document-revisions)
     - [Change History](#change-history)
+      - [1.5.1](#151)
       - [1.5.0](#150)
       - [1.4.0](#140)
       - [1.3.1](#131)
@@ -135,6 +136,7 @@ Document Revisions
 
 | Version | Date         | Editor           |
 | ------- | ------------ | ---------------- |
+| 1.5.1   | Jan 30, 2018 | Jay Dobson       |
 | 1.5.0   | Jan 26, 2018 | Michael Aldworth |
 | 1.4.0   | Jan 18, 2018 | Michael Aldworth |
 | 1.3.1   | Jan 10, 2018 | Michael Aldworth |
@@ -150,6 +152,11 @@ Document Revisions
 | 1.0.0   | Nov 24, 2017 | Michael Aldworth |
 
 ### Change History ###
+
+#### 1.5.1 ####
+
+- Fixed bad Term link in ProgramSelection section
+- Added updated field to ApplicationFull object
 
 #### 1.5.0 ####
 
@@ -586,6 +593,24 @@ deserialize easily (we recommend using Newtonsoft.Json).
 
 `Install-Package Ocas.International.Sis.Core`
 
+**_JSON Serialization/Deserialization_**
+
+We recommend using [Newtonsoft.Json](https://www.nuget.org/packages/Newtonsoft.Json)
+package for serializing and deserializing to the objects. And when using Newtonsoft,
+we recommend setting the default converter settings as follows:
+
+```csharp
+// This only needs to be set once in your startup code
+JsonConvert.DefaultSettings = () => new JsonSerializerSettings
+{
+    Formatting = Formatting.None,
+    ContractResolver = new CamelCasePropertyNamesContractResolver(),
+    DateTimeZoneHandling = DateTimeZoneHandling.Utc
+};
+```
+
+And now to Deserialize or Serialize, please look at the example in [JsonConvert section](https://www.newtonsoft.com/json/help/html/SerializingJSON.htm)
+
 ### Address ###
 
 | Property   | Type                                                                 |
@@ -805,6 +830,7 @@ Example: See [Appendix: Application](#appendix-application)
 | screened   | _[nullable] string_ ISO 8601 Date Formatted String |
 | submitted  | _string_ ISO 8601 Date Formatted String            |
 | created    | _string_ ISO 8601 Date Formatted String            |
+| updated    | _string_ ISO 8601 Date Formatted String            |
 
 Example: See [Appendix: ApplicationFull](#appendix-applicationfull)
 
@@ -1127,7 +1153,7 @@ otherwise the OIS will generate an offer letter on your behalf.
 
 | Property            | Type                                                                      |
 | ------------------- | ------------------------------------------------------------------------- |
-| term                | [Term](#termcode)                                                         |
+| term                | [Term](#term)                                                             |
 | program             | [Program](#program)                                                       |
 | preferredCampusCode | _[nullable] string_ (min 1, max 4) (college assigned Campus Code)         |
 | choiceNumber        | _number_ (less than 0 = EAP/ESL Program, greater than 0 = Normal Program) |
@@ -2082,7 +2108,8 @@ Note: Empty JSON collections are not represented within the XML.
     ],
     "screened": null,
     "submitted": "2017-12-09T11:19:46.6378594Z",
-    "created": "2017-12-08T17:19:02.3269001Z"
+    "created": "2017-12-08T17:19:02.3269001Z",
+    "updated": "2017-12-10T11:19:46.6378594Z"
   }
 }
 ```
@@ -2321,6 +2348,7 @@ Note: Empty JSON collections are not represented within the XML.
     <screened />
     <submitted>2017-12-09T11:19:46.6378594Z</submitted>
     <created>2017-12-08T17:19:02.3269001Z</created>
+    <updated>2017-12-10T11:19:46.6378594Z</updated>
   </data>
 </root>
 ```
