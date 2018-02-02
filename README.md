@@ -8,6 +8,7 @@ Table of Contents
   - [Table of Contents](#table-of-contents)
   - [Document Revisions](#document-revisions)
     - [Change History](#change-history)
+      - [1.5.2](#152)
       - [1.5.1](#151)
       - [1.5.0](#150)
       - [1.4.0](#140)
@@ -136,6 +137,7 @@ Document Revisions
 
 | Version | Date         | Editor           |
 | ------- | ------------ | ---------------- |
+| 1.5.2   | Feb 02, 2018 | Kevin Schneider  |
 | 1.5.1   | Jan 30, 2018 | Jay Dobson       |
 | 1.5.0   | Jan 26, 2018 | Michael Aldworth |
 | 1.4.0   | Jan 18, 2018 | Michael Aldworth |
@@ -152,6 +154,10 @@ Document Revisions
 | 1.0.0   | Nov 24, 2017 | Michael Aldworth |
 
 ### Change History ###
+
+#### 1.5.2 ####
+
+- Add financial aid fields NewOfferInfo and UpdateOffer objects
 
 #### 1.5.1 ####
 
@@ -925,31 +931,33 @@ Example: See [Appendix: ApplicationFull](#appendix-applicationfull)
 
 ### NewOfferInfo ###
 
-| Property              | Type                                                                                  |
-| --------------------- | ------------------------------------------------------------------------------------- |
-| applicationNumber     | _string_ (min 1, max 20)                                                              |
-| campusCode            | _string_ (min 1, max 4)                                                               |
-| deliveryOption        | _string_ ([Lookup](#intakedeliveryoption))                                            |
-| programCode           | _string_ (min 1, max 10)                                                              |
-| startDate             | _string_ date string in format `yyyy-MM-dd'                                           |
-| studentId             | _[nullable] string_ (min 1, max 30)                                                   |
-| isPreAdmit            | _boolean_                                                                             |
-| entryLevelType        | _[nullable] string_ ([Lookup](#entryleveltype)) defaults to `01`                      |
-| isExchange            | _[nullable] boolean_                                                                  |
-| internshipType        | _[nullable] string_ ([Lookup](#internshiptype))                                       |
-| internshipLength      | _[nullable] decimal(18,1)_ ([required] if internshipType == `optional` or `required`) |
-| internshipDescription | _[nullable] string_ (min 1, max 100)                                                  |
-| instructionHours      | _[nullable] decimal(18,1)_                                                            |
-| expirationDate        | _[nullable] string_ date string in format `yyyy-MM-dd`                                |
-| intakeExpectedEndDate | _[nullable] string_ date string in format `yyyy-MM-dd`                                |
-| firstPaymentAmount    | _[nullable] decimal(18,2)_                                                            |
-| firstPaymentDate      | _[nullable] string_ date string in format `yyyy-MM-dd`                                |
-| secondPaymentAmount   | _[nullable] decimal(18,2)_                                                            |
-| secondPaymentDate     | _[nullable] string_ date string in format `yyyy-MM-dd`                                |
-| tuitionFees           | _[nullable] decimal(18,2)_                                                            |
-| ancillaryFees         | _[nullable] decimal(18,2)_                                                            |
-| conditions            | Array[0..5] of [OfferCondition](#offercondition)                                      |
-| customOfferLetter     | _[nullable]_ [NewBinaryDocumentInfo](#newbinarydocumentinfo)                          |
+| Property                | Type                                                                                  |
+| ----------------------- | ------------------------------------------------------------------------------------- |
+| applicationNumber       | _string_ (min 1, max 20)                                                              |
+| campusCode              | _string_ (min 1, max 4)                                                               |
+| deliveryOption          | _string_ ([Lookup](#intakedeliveryoption))                                            |
+| programCode             | _string_ (min 1, max 10)                                                              |
+| startDate               | _string_ date string in format `yyyy-MM-dd'                                           |
+| studentId               | _[nullable] string_ (min 1, max 30)                                                   |
+| isPreAdmit              | _boolean_                                                                             |
+| entryLevelType          | _[nullable] string_ ([Lookup](#entryleveltype)) defaults to `01`                      |
+| isExchange              | _[nullable] boolean_                                                                  |
+| internshipType          | _[nullable] string_ ([Lookup](#internshiptype))                                       |
+| internshipLength        | _[nullable] decimal(18,1)_ ([required] if internshipType == `optional` or `required`) |
+| internshipDescription   | _[nullable] string_ (min 1, max 100)                                                  |
+| instructionHours        | _[nullable] decimal(18,1)_                                                            |
+| expirationDate          | _[nullable] string_ date string in format `yyyy-MM-dd`                                |
+| intakeExpectedEndDate   | _[nullable] string_ date string in format `yyyy-MM-dd`                                |
+| firstPaymentAmount      | _[nullable] decimal(18,2)_                                                            |
+| firstPaymentDate        | _[nullable] string_ date string in format `yyyy-MM-dd`                                |
+| secondPaymentAmount     | _[nullable] decimal(18,2)_                                                            |
+| secondPaymentDate       | _[nullable] string_ date string in format `yyyy-MM-dd`                                |
+| tuitionFees             | _[nullable] decimal(18,2)_                                                            |
+| ancillaryFees           | _[nullable] decimal(18,2)_                                                            |
+| hasFinancialAid         | _boolean_                                                                             |
+| financialAidDescription | string_ (min 1, max 100) ([required] if hasFinancialAid == `true`)                    |
+| conditions              | Array[0..5] of [OfferCondition](#offercondition)                                      |
+| customOfferLetter       | _[nullable]_ [NewBinaryDocumentInfo](#newbinarydocumentinfo)                          |
 
 **_Example:_**
 
@@ -1238,31 +1246,33 @@ Example: See [Appendix: ApplicationFull](#appendix-applicationfull)
 
 ### UpdateOffer ###
 
-| Property              | Type                                                                                  |
-| --------------------- | ------------------------------------------------------------------------------------- |
-| applicationNumber     | _string_ (min 1, max 20)                                                              |
-| campusCode            | _string_ (min 1, max 4)                                                               |
-| deliveryOption        | _string_ ([Lookup](#intakedeliveryoption))                                            |
-| programCode           | _string_ (min 1, max 10)                                                              |
-| startDate             | _string_ date string in format `yyyy-MM-dd'                                           |
-| studentId             | _[nullable] string_ (min 1, max 30)                                                   |
-| isPreAdmit            | _boolean_                                                                             |
-| entryLevelType        | _[nullable] string_ ([Lookup](#entryleveltype)) defaults to `01`                      |
-| isExchange            | _[nullable] boolean_                                                                  |
-| internshipType        | _[nullable] string_ ([Lookup](#internshiptype))                                       |
-| internshipLength      | _[nullable] decimal(18,1)_ ([required] if internshipType == `optional` or `required`) |
-| internshipDescription | _[nullable] string_ (min 1, max 100)                                                  |
-| instructionHours      | _[nullable] decimal(18,1)_                                                            |
-| expirationDate        | _[nullable] string_ date string in format `yyyy-MM-dd`                                |
-| intakeExpectedEndDate | _[nullable] string_ date string in format `yyyy-MM-dd`                                |
-| firstPaymentAmount    | _[nullable] decimal(18,2)_                                                            |
-| firstPaymentDate      | _[nullable] string_ date string in format `yyyy-MM-dd`                                |
-| secondPaymentAmount   | _[nullable] decimal(18,2)_                                                            |
-| secondPaymentDate     | _[nullable] string_ date string in format `yyyy-MM-dd`                                |
-| tuitionFees           | _[nullable] decimal(18,2)_                                                            |
-| ancillaryFees         | _[nullable] decimal(18,2)_                                                            |
-| conditions            | Array[0..5] of [OfferCondition](#offercondition)                                      |
-| customOfferLetter     | _[nullable]_ [NewBinaryDocumentInfo](#newbinarydocumentinfo)                          |
+| Property                | Type                                                                                  |
+| ----------------------- | ------------------------------------------------------------------------------------- |
+| applicationNumber       | _string_ (min 1, max 20)                                                              |
+| campusCode              | _string_ (min 1, max 4)                                                               |
+| deliveryOption          | _string_ ([Lookup](#intakedeliveryoption))                                            |
+| programCode             | _string_ (min 1, max 10)                                                              |
+| startDate               | _string_ date string in format `yyyy-MM-dd'                                           |
+| studentId               | _[nullable] string_ (min 1, max 30)                                                   |
+| isPreAdmit              | _boolean_                                                                             |
+| entryLevelType          | _[nullable] string_ ([Lookup](#entryleveltype)) defaults to `01`                      |
+| isExchange              | _[nullable] boolean_                                                                  |
+| internshipType          | _[nullable] string_ ([Lookup](#internshiptype))                                       |
+| internshipLength        | _[nullable] decimal(18,1)_ ([required] if internshipType == `optional` or `required`) |
+| internshipDescription   | _[nullable] string_ (min 1, max 100)                                                  |
+| instructionHours        | _[nullable] decimal(18,1)_                                                            |
+| expirationDate          | _[nullable] string_ date string in format `yyyy-MM-dd`                                |
+| intakeExpectedEndDate   | _[nullable] string_ date string in format `yyyy-MM-dd`                                |
+| firstPaymentAmount      | _[nullable] decimal(18,2)_                                                            |
+| firstPaymentDate        | _[nullable] string_ date string in format `yyyy-MM-dd`                                |
+| secondPaymentAmount     | _[nullable] decimal(18,2)_                                                            |
+| secondPaymentDate       | _[nullable] string_ date string in format `yyyy-MM-dd`                                |
+| tuitionFees             | _[nullable] decimal(18,2)_                                                            |
+| ancillaryFees           | _[nullable] decimal(18,2)_                                                            |
+| hasFinancialAid         | _boolean_                                                                             |
+| financialAidDescription | string_ (min 1, max 100) ([required] if hasFinancialAid == `true`)                    |
+| conditions              | Array[0..5] of [OfferCondition](#offercondition)                                      |
+| customOfferLetter       | _[nullable]_ [NewBinaryDocumentInfo](#newbinarydocumentinfo)                          |
 
 **_Example:_**
 
@@ -2531,6 +2541,8 @@ Used by:
   "secondPaymentDate" : "2018-05-01",
   "tuitionFees" : 50,
   "ancillaryFees" : 50,
+  "hasFinancialAid": true,
+  "financialAidDescription": "Acme Scholarship",
   "conditions": [
     {
       "offerConditionType": "eslcomplete"
@@ -2570,6 +2582,8 @@ Used by:
   <secondPaymentDate>2018-05-01</secondPaymentDate>
   <tuitionFees>50</tuitionFees>
   <ancillaryFees>50</ancillaryFees>
+  <hasFinancialAid>true</hasFinancialAid>
+  <financialAidDescription>Acme Scholarship</financialAidDescription>
   <conditions>
     <item>
       <offerConditionType>eslcomplete</offerConditionType>
