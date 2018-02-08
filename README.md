@@ -8,6 +8,7 @@ Table of Contents
   - [Table of Contents](#table-of-contents)
   - [Document Revisions](#document-revisions)
     - [Change History](#change-history)
+      - [1.5.3](#153)
       - [1.5.2](#152)
       - [1.5.1](#151)
       - [1.5.0](#150)
@@ -137,6 +138,7 @@ Document Revisions
 
 | Version | Date         | Editor           |
 | ------- | ------------ | ---------------- |
+| 1.5.3   | Feb 08, 2018 | Kevin Schneider  |
 | 1.5.2   | Feb 02, 2018 | Kevin Schneider  |
 | 1.5.1   | Jan 30, 2018 | Jay Dobson       |
 | 1.5.0   | Jan 26, 2018 | Michael Aldworth |
@@ -154,6 +156,10 @@ Document Revisions
 | 1.0.0   | Nov 24, 2017 | Michael Aldworth |
 
 ### Change History ###
+
+#### 1.5.3 ####
+
+- Update application cycle in JSON/XML samples to have proper year values
 
 #### 1.5.2 ####
 
@@ -1237,7 +1243,7 @@ Example: See [Appendix: ApplicationFull](#appendix-applicationfull)
 
 ```JSON
 {
-  "applicationCycle":2020,
+  "applicationCycle":2019,
   "code":"fall",
   "startDate":"2019-08-01",
   "endDate":"2019-11-30"
@@ -2069,7 +2075,7 @@ Note: Empty JSON collections are not represented within the XML.
     "selections": [
       {
         "term": {
-          "applicationCycle": 2019,
+          "applicationCycle": 2018,
           "code": "fall",
           "startDate": "2018-08-01",
           "endDate": "2018-11-30"
@@ -2085,7 +2091,7 @@ Note: Empty JSON collections are not represented within the XML.
       },
       {
         "term": {
-          "applicationCycle": 2017,
+          "applicationCycle": 2016,
           "code": "fall",
           "startDate": "2016-08-01",
           "endDate": "2016-11-30"
@@ -2101,7 +2107,7 @@ Note: Empty JSON collections are not represented within the XML.
       },
       {
         "term": {
-          "applicationCycle": 2019,
+          "applicationCycle": 2018,
           "code": "fall",
           "startDate": "2018-08-01",
           "endDate": "2018-11-30"
@@ -2308,7 +2314,7 @@ Note: Empty JSON collections are not represented within the XML.
     <selections>
       <item>
         <term>
-          <applicationCycle>2019</applicationCycle>
+          <applicationCycle>2018</applicationCycle>
           <code>fall</code>
           <startDate>2018-08-01</startDate>
           <endDate>2018-11-30</endDate>
@@ -2324,7 +2330,7 @@ Note: Empty JSON collections are not represented within the XML.
       </item>
       <item>
         <term>
-          <applicationCycle>2017</applicationCycle>
+          <applicationCycle>2016</applicationCycle>
           <code>fall</code>
           <startDate>2016-08-01</startDate>
           <endDate>2016-11-30</endDate>
@@ -2340,7 +2346,7 @@ Note: Empty JSON collections are not represented within the XML.
       </item>
       <item>
         <term>
-          <applicationCycle>2019</applicationCycle>
+          <applicationCycle>2018</applicationCycle>
           <code>fall</code>
           <startDate>2018-08-01</startDate>
           <endDate>2018-11-30</endDate>
@@ -2379,7 +2385,7 @@ Used by:
     "selections": [
       {
         "term": {
-          "applicationCycle": 2019,
+          "applicationCycle": 2018,
           "code": "fall",
           "startDate": "2018-08-01",
           "endDate": "2018-11-30"
@@ -2395,7 +2401,7 @@ Used by:
       },
       {
         "term": {
-          "applicationCycle": 2017,
+          "applicationCycle": 2016,
           "code": "fall",
           "startDate": "2016-08-01",
           "endDate": "2016-11-30"
@@ -2411,7 +2417,7 @@ Used by:
       },
       {
         "term": {
-          "applicationCycle": 2019,
+          "applicationCycle": 2018,
           "code": "fall",
           "startDate": "2018-08-01",
           "endDate": "2018-11-30"
@@ -2444,7 +2450,7 @@ Used by:
     <selections>
       <item>
         <term>
-          <applicationCycle>2019</applicationCycle>
+          <applicationCycle>2018</applicationCycle>
           <code>fall</code>
           <startDate>2018-08-01</startDate>
           <endDate>2018-11-30</endDate>
@@ -2460,7 +2466,7 @@ Used by:
       </item>
       <item>
         <term>
-          <applicationCycle>2017</applicationCycle>
+          <applicationCycle>2016</applicationCycle>
           <code>fall</code>
           <startDate>2016-08-01</startDate>
           <endDate>2016-11-30</endDate>
@@ -2476,7 +2482,7 @@ Used by:
       </item>
       <item>
         <term>
-          <applicationCycle>2019</applicationCycle>
+          <applicationCycle>2018</applicationCycle>
           <code>fall</code>
           <startDate>2018-08-01</startDate>
           <endDate>2018-11-30</endDate>
