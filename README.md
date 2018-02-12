@@ -1810,10 +1810,10 @@ Below is a table of error codes that may be returned from the SisApi
 
 Below is a table of warning codes that may be returned from the SisApi
 
-| Code  | Description                                        |
-| ----- | -------------------------------------------------- |
-| W0010 | Duplicate Event Id and Payload Sent to API         |
-| W0110 | Attempt to Pay Offer In Revoked or Withdrawn State |
+| Code  | Description                                                   |
+| ----- | ------------------------------------------------------------- |
+| W0010 | Duplicate Event Id and Payload Sent to API                    |
+| W0110 | Attempt to Pay Offer In Revoked, Declined, or Withdrawn State |
 
 Authentication and Authorization
 --------------------------------
