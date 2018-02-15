@@ -8,6 +8,7 @@ Table of Contents
   - [Table of Contents](#table-of-contents)
   - [Document Revisions](#document-revisions)
     - [Change History](#change-history)
+      - [1.5.4](#154)
       - [1.5.3](#153)
       - [1.5.2](#152)
       - [1.5.1](#151)
@@ -138,6 +139,7 @@ Document Revisions
 
 | Version | Date         | Editor           |
 | ------- | ------------ | ---------------- |
+| 1.5.4   | Feb 15, 2018 | Michael Aldworth |
 | 1.5.3   | Feb 08, 2018 | Kevin Schneider  |
 | 1.5.2   | Feb 02, 2018 | Kevin Schneider  |
 | 1.5.1   | Jan 30, 2018 | Jay Dobson       |
@@ -156,6 +158,13 @@ Document Revisions
 | 1.0.0   | Nov 24, 2017 | Michael Aldworth |
 
 ### Change History ###
+
+#### 1.5.4 ####
+
+- Fix typo with one of the RevokeOfferTypes (nopaymentnoseats -> nopayment)
+- Renamed [EmergencyContact](#emergencycontact) property from "firstLanguage" ->
+  "spokenLanguage". Nuget Package updated to 2.2.2 to reflect this property name
+  change.
 
 #### 1.5.3 ####
 
@@ -895,13 +904,13 @@ Example: See [Appendix: ApplicationFull](#appendix-applicationfull)
 
 ### EmergencyContact ###
 
-| Property      | Type                                       |
-| ------------- | ------------------------------------------ |
-| name          | _string_ (min 1, max 100)                  |
-| phone         | [Phone](#phone)                            |
-| email         | _string_ (min 5, max 128)                  |
-| relationship  | _string_ (min 1, max 50)                   |
-| firstLanguage | _string_ ([Lookup](#languages)) ISO 6392-1 |
+| Property       | Type                                       |
+| -------------- | ------------------------------------------ |
+| name           | _string_ (min 1, max 100)                  |
+| phone          | [Phone](#phone)                            |
+| email          | _string_ (min 5, max 128)                  |
+| relationship   | _string_ (min 1, max 50)                   |
+| spokenLanguage | _string_ ([Lookup](#languages)) ISO 6392-1 |
 
 **_Example:_**
 
@@ -911,7 +920,7 @@ Example: See [Appendix: ApplicationFull](#appendix-applicationfull)
   "phone" : {},
   "email" : "beth@example.com",
   "relationship" : "Mother",
-  "firstLanguage" : "en"
+  "spokenLanguage" : "en"
 }
 ```
 
@@ -986,6 +995,8 @@ Example: See [Appendix: ApplicationFull](#appendix-applicationfull)
   "secondPaymentDate" : "2018-05-01",
   "tuitionFees" : 50,
   "ancillaryFees" : 50,
+  "hasFinancialAid": true,
+  "financialAidDescription": "Acme Scholarship",
   "conditions": [],
   "customOfferLetter" : {}
 }
@@ -1465,14 +1476,14 @@ Lookups
 
 ### OfferRevokeType ###
 
-| Code             |
-| ---------------- |
-| deadline         |
-| nopaymentnoseats |
-| noshow           |
-| noseats          |
-| novisa           |
-| other            |
+| Code      |
+| --------- |
+| deadline  |
+| nopayment |
+| noshow    |
+| noseats   |
+| novisa    |
+| other     |
 
 ### PhoneType ###
 
@@ -1973,7 +1984,7 @@ Note: Empty JSON collections are not represented within the XML.
         },
         "email": "Lina_Strom87@mailinator.com",
         "relationship": "suscipit",
-        "firstLanguage": "gv"
+        "spokenLanguage": "gv"
       },
       "credentials": [
         {
@@ -2212,7 +2223,7 @@ Note: Empty JSON collections are not represented within the XML.
         </phone>
         <email>Lina_Strom87@mailinator.com</email>
         <relationship>suscipit</relationship>
-        <firstLanguage>gv</firstLanguage>
+        <spokenLanguage>gv</spokenLanguage>
       </emergencyContact>
       <credentials>
         <item>
