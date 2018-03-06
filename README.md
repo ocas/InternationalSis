@@ -8,6 +8,7 @@ Table of Contents
   - [Table of Contents](#table-of-contents)
   - [Document Revisions](#document-revisions)
     - [Change History](#change-history)
+      - [1.6.0](#160)
       - [1.5.4](#154)
       - [1.5.3](#153)
       - [1.5.2](#152)
@@ -59,6 +60,7 @@ Table of Contents
     - [Phone](#phone)
     - [Program](#program)
     - [ProgramSelection](#programselection)
+    - [ProgramSelectionDeclined](#programselectiondeclined)
     - [RevokeOffer](#revokeoffer)
     - [SisEvent](#sisevent)
     - [SisInboundEvent](#sisinboundevent)
@@ -139,6 +141,7 @@ Document Revisions
 
 | Version | Date         | Editor           |
 | ------- | ------------ | ---------------- |
+| 1.6.0   | Mar 02, 2018 | Jay Dobson       |
 | 1.5.4   | Feb 15, 2018 | Michael Aldworth |
 | 1.5.3   | Feb 08, 2018 | Kevin Schneider  |
 | 1.5.2   | Feb 02, 2018 | Kevin Schneider  |
@@ -158,6 +161,10 @@ Document Revisions
 | 1.0.0   | Nov 24, 2017 | Michael Aldworth |
 
 ### Change History ###
+
+#### 1.6.0 ####
+
+- Add New Outbound Event *DeclinedProgramSelection*
 
 #### 1.5.4 ####
 
@@ -1185,6 +1192,34 @@ otherwise the OIS will generate an offer letter on your behalf.
 
 Example: See [Appendix: ApplicationFull](#appendix-applicationfull)
 
+### ProgramSelectionDeclined ###
+
+| Property           | Type                                       |
+| ------------------ | ------------------------------------------ |
+| applicationNumber  | _string_ (min 1, max 20)                   |
+| applicationCycle   | _number_ ([Lookup](#applicationcycle))     |
+| programCode        | _string_ (min 1, max 10)                   |
+| term               | _string_ ([Lookup](#termcode))             |
+| declineReasonCode  | _string_ ([Lookup](#programdeclinereason)) |
+| declineReasonOther | _[nullable] string_ (min 1, max 100)       |
+| timestamp          | _string_ ISO 8601 Date Formatted String    |
+| by                 | _string_ (min 1, max 255)                  |
+
+**_Example:_**
+
+```JSON
+{
+  "applicationNumber" : "X1484934",
+  "applicationCycle" : 2017,
+  "by" : "John Doe",
+  "term" : "spring",
+  "programCode" : "TST1DG5",
+  "declineReasonCode" : "other",
+  "declineReasonOther" : "Unspecified",
+  "timestamp" : "2017-12-08T17:19:02.3269001Z"
+}
+```
+
 ### RevokeOffer ###
 
 | Property          | Type                                                 |
@@ -1523,15 +1558,16 @@ Lookups
 
 ### SisInboundEventType ###
 
-| Key                      | Data Object Type                          | Parent Event(s)                             |
-| ------------------------ | ----------------------------------------- | ------------------------------------------- |
-| ApplicantProfileUpdated  | [Applicant](#applicant)                   | ApplicationScreened or ApplicationSubmitted |
-| ApplicationScreened      | [ApplicationFull](#applicationfull)       |                                             |
-| ApplicationSubmitted     | [ApplicationFull](#applicationfull)       |                                             |
-| OfferDeclined            | [OfferDeclined](#offerdeclined)           |                                             |
-| OfferWithdrawn           | [OfferWithdrawn](#offerwithdrawn)         |                                             |
-| OfferPreRegistered       | [OfferPreRegistered](#OfferPreRegistered) |                                             |
-| ProgramSelectionsUpdated | [Application](#application)               | ApplicationScreened or ApplicationSubmitted |
+| Key                      | Data Object Type                                      | Parent Event(s)                             |
+| ------------------------ | ----------------------------------------------------- | ------------------------------------------- |
+| ApplicantProfileUpdated  | [Applicant](#applicant)                               | ApplicationScreened or ApplicationSubmitted |
+| ApplicationScreened      | [ApplicationFull](#applicationfull)                   |                                             |
+| ApplicationSubmitted     | [ApplicationFull](#applicationfull)                   |                                             |
+| OfferDeclined            | [OfferDeclined](#offerdeclined)                       |                                             |
+| OfferWithdrawn           | [OfferWithdrawn](#offerwithdrawn)                     |                                             |
+| OfferPreRegistered       | [OfferPreRegistered](#OfferPreRegistered)             |                                             |
+| ProgramSelectionsUpdated | [Application](#application)                           | ApplicationScreened or ApplicationSubmitted |
+| ProgramSelectionDeclined | [ProgramSelectionDeclined](#programSelectionDeclined) | ApplicationScreened or ApplicationSubmitted |
 
 _*Special Note for Parent Event(s):*_ These two events are dependent on being subscribed
 to the parent event. This means you have to be subscribed to at least one of the
