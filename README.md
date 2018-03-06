@@ -8,6 +8,7 @@ Table of Contents
   - [Table of Contents](#table-of-contents)
   - [Document Revisions](#document-revisions)
     - [Change History](#change-history)
+      - [1.6.1](#161)
       - [1.6.0](#160)
       - [1.5.4](#154)
       - [1.5.3](#153)
@@ -52,6 +53,7 @@ Table of Contents
     - [EmergencyContact](#emergencycontact)
     - [NewBinaryDocumentInfo](#newbinarydocumentinfo)
     - [NewOfferInfo](#newofferinfo)
+    - [OfferAccepted](#offeraccepted)
     - [OfferCondition](#offercondition)
     - [OfferDeclined](#offerdeclined)
     - [OfferPreRegistered](#offerpreregistered)
@@ -141,6 +143,7 @@ Document Revisions
 
 | Version | Date         | Editor           |
 | ------- | ------------ | ---------------- |
+| 1.6.1   | Mar 06, 2018 | Jaime Valencia   |
 | 1.6.0   | Mar 02, 2018 | Jay Dobson       |
 | 1.5.4   | Feb 15, 2018 | Michael Aldworth |
 | 1.5.3   | Feb 08, 2018 | Kevin Schneider  |
@@ -161,6 +164,10 @@ Document Revisions
 | 1.0.0   | Nov 24, 2017 | Michael Aldworth |
 
 ### Change History ###
+
+#### 1.6.1 ####
+
+- Added New inbound event type *OfferAccepted*.
 
 #### 1.6.0 ####
 
@@ -1037,6 +1044,32 @@ These fields are as follows:
 If a value is provided for `customOfferLetter` then that will be used,
 otherwise the OIS will generate an offer letter on your behalf.
 
+### OfferAccepted ###
+
+| Property          | Type                                                 |
+| ----------------- | ---------------------------------------------------- |
+| applicationNumber | _string_ (min 1, max 20)                             |
+| campusCode        | _string_ (min 1, max 4)                              |
+| deliveryOption    | _string_  _string_ ([Lookup](#intakedeliveryoption)) |
+| programCode       | _string_ (min 1, max 10)                             |
+| startDate         | _string_ date string in format `yyyy-MM-dd'          |
+| timestamp         | _string_ ISO 8601 Date Formatted String              |
+| by                | _string_ (min 1, max 255)                            |
+
+**_Example:_**
+
+```JSON
+{
+  "applicationNumber" : "X12345",
+  "campusCode" : "main",
+  "deliveryOption" : "fulltime",
+  "programCode" : "TSTAD1",
+  "startDate" : "2017-01-20",
+  "timestamp" : "2017-12-08T17:19:02.3269001Z",
+  "by" : "John Doe"
+}
+```
+
 ### OfferCondition ###
 
 | Property           | Type                                                          |
@@ -1563,6 +1596,7 @@ Lookups
 | ApplicantProfileUpdated  | [Applicant](#applicant)                               | ApplicationScreened or ApplicationSubmitted |
 | ApplicationScreened      | [ApplicationFull](#applicationfull)                   |                                             |
 | ApplicationSubmitted     | [ApplicationFull](#applicationfull)                   |                                             |
+| OfferAccepted            | [OfferAccepted](#offeraccepted)                       |                                             |
 | OfferDeclined            | [OfferDeclined](#offerdeclined)                       |                                             |
 | OfferWithdrawn           | [OfferWithdrawn](#offerwithdrawn)                     |                                             |
 | OfferPreRegistered       | [OfferPreRegistered](#OfferPreRegistered)             |                                             |
