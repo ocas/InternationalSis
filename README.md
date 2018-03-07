@@ -8,6 +8,7 @@ Table of Contents
   - [Table of Contents](#table-of-contents)
   - [Document Revisions](#document-revisions)
     - [Change History](#change-history)
+      - [1.6.2](#162)
       - [1.6.1](#161)
       - [1.6.0](#160)
       - [1.5.4](#154)
@@ -54,6 +55,7 @@ Table of Contents
     - [NewBinaryDocumentInfo](#newbinarydocumentinfo)
     - [NewOfferInfo](#newofferinfo)
     - [OfferAccepted](#offeraccepted)
+    - [OfferDetails](#offerdetails)
     - [OfferCondition](#offercondition)
     - [OfferDeclined](#offerdeclined)
     - [OfferPreRegistered](#offerpreregistered)
@@ -84,6 +86,7 @@ Table of Contents
     - [NameSuffix](#namesuffix)
     - [OfferConditionType](#offerconditiontype)
     - [OfferRevokeType](#offerrevoketype)
+    - [OfferState](#offerstate)
     - [PhoneType](#phonetype)
     - [ProgramCredentialType](#programcredentialtype)
     - [ProgramDeclineReason](#programdeclinereason)
@@ -132,6 +135,9 @@ Table of Contents
     - [Appendix: CreateOffer](#appendix-createoffer)
       - [CreateOffer JSON](#createoffer-json)
       - [CreateOffer XML](#createoffer-xml)
+    - [Appendix: OfferCreated](#appendix-offercreated)
+      - [OfferCreated JSON](#offercreated-json)
+      - [OfferCreated XML](#offercreated-xml)
     - [Appendix: PayOffer](#appendix-payoffer)
       - [PayOffer JSON](#payoffer-json)
       - [PayOffer XML](#payoffer-xml)
@@ -143,6 +149,7 @@ Document Revisions
 
 | Version | Date         | Editor           |
 | ------- | ------------ | ---------------- |
+| 1.6.2   | Mar 07, 2018 | Michael Aldworth |
 | 1.6.1   | Mar 06, 2018 | Jaime Valencia   |
 | 1.6.0   | Mar 02, 2018 | Jay Dobson       |
 | 1.5.4   | Feb 15, 2018 | Michael Aldworth |
@@ -164,6 +171,10 @@ Document Revisions
 | 1.0.0   | Nov 24, 2017 | Michael Aldworth |
 
 ### Change History ###
+
+#### 1.6.2 ####
+
+- Added new inbound event types OfferCreated and OfferUpdated
 
 #### 1.6.1 ####
 
@@ -966,7 +977,7 @@ Example: See [Appendix: ApplicationFull](#appendix-applicationfull)
 | campusCode              | _string_ (min 1, max 4)                                                               |
 | deliveryOption          | _string_ ([Lookup](#intakedeliveryoption))                                            |
 | programCode             | _string_ (min 1, max 10)                                                              |
-| startDate               | _string_ date string in format `yyyy-MM-dd'                                           |
+| startDate               | _string_ date string in format `yyyy-MM-dd`                                           |
 | studentId               | _[nullable] string_ (min 1, max 30)                                                   |
 | isPreAdmit              | _boolean_                                                                             |
 | entryLevelType          | _[nullable] string_ ([Lookup](#entryleveltype)) defaults to `01`                      |
@@ -1052,7 +1063,7 @@ otherwise the OIS will generate an offer letter on your behalf.
 | campusCode        | _string_ (min 1, max 4)                              |
 | deliveryOption    | _string_  _string_ ([Lookup](#intakedeliveryoption)) |
 | programCode       | _string_ (min 1, max 10)                             |
-| startDate         | _string_ date string in format `yyyy-MM-dd'          |
+| startDate         | _string_ date string in format `yyyy-MM-dd`          |
 | timestamp         | _string_ ISO 8601 Date Formatted String              |
 | by                | _string_ (min 1, max 255)                            |
 
@@ -1070,6 +1081,77 @@ otherwise the OIS will generate an offer letter on your behalf.
 }
 ```
 
+### OfferDetails ###
+
+| Property                | Type                                                                                  |
+| ----------------------- | ------------------------------------------------------------------------------------- |
+| applicationNumber       | _string_ (min 1, max 20)                                                              |
+| campusCode              | _string_ (min 1, max 4)                                                               |
+| deliveryOption          | _string_  _string_ ([Lookup](#intakedeliveryoption))                                  |
+| programCode             | _string_ (min 1, max 10)                                                              |
+| state                   | _string_ (min 1, max 50) ([Lookup](#offerstate))                                      |
+| startDate               | _string_ date string in format `yyyy-MM-dd`                                           |
+| studentId               | _[nullable] string_ (min 1, max 30)                                                   |
+| entryLevelType          | _string_ ([Lookup](#entryleveltype)) defaults to `01`                                 |
+| isExchange              | _boolean_                                                                             |
+| internshipType          | _string_ ([Lookup](#internshiptype))                                                  |
+| internshipLength        | _[nullable] decimal(18,1)_ ([required] if internshipType == `optional` or `required`) |
+| internshipDescription   | _[nullable] string_ (min 1, max 100)                                                  |
+| instructionHours        | _[nullable] decimal(18,1)_                                                            |
+| expirationDate          | _string_ date string in format `yyyy-MM-dd`                                           |
+| intakeExpectedEndDate   | _string_ date string in format `yyyy-MM-dd`                                           |
+| firstPaymentAmount      | _decimal(18,2)_                                                                       |
+| firstPaymentDate        | _string_ date string in format `yyyy-MM-dd`                                           |
+| secondPaymentAmount     | _decimal(18,2)_                                                                       |
+| secondPaymentDate       | _string_ date string in format `yyyy-MM-dd`                                           |
+| tuitionFees             | _decimal(18,2)_                                                                       |
+| ancillaryFees           | _decimal(18,2)_                                                                       |
+| hasFinancialAid         | _boolean_                                                                             |
+| financialAidDescription | _string_ (min 1, max 100) ([required] if hasFinancialAid == `true`)                   |
+| conditions              | Array[0..5] of [OfferCondition](#offercondition)                                      |
+| offerLetter             | [BinaryDocument](#binarydocument)                                                     |
+| timestamp               | _string_ ISO 8601 Date Formatted String                                               |
+| by                      | _string_ (min 1, max 255)                                                             |
+
+**_Example:_**
+
+```JSON
+{
+  "applicationNumber" : "X1484934",
+  "campusCode" : "C4",
+  "deliveryOption" : "fulltime",
+  "programCode" : "TST1DG5",
+  "startDate" : "2018-01-01",
+  "state" : "Sent",
+  "isExchange" : true,
+  "internshipType" : "notavailable",
+  "expirationDate" : "2018-01-01",
+  "intakeExpectedEndDate" : "2018-12-01",
+  "firstPaymentAmount" : 100,
+  "firstPaymentDate" : "2018-01-01",
+  "secondPaymentAmount": 200,
+  "secondPaymentDate" : "2018-05-01",
+  "tuitionFees" : 50,
+  "ancillaryFees" : 50,
+  "hasFinancialAid": true,
+  "financialAidDescription": "Acme Scholarship",
+  "conditions": [],
+  "offerLetter" : {
+    "id": "00000000-0000-0000-0000-000000000000",
+    "link": "https://someurltodownloadfile",
+    "name": "filename.jpg",
+    "mimeType": "image/jpeg",
+    "uploaded": "2017-12-08T17:19:02.3269001Z",
+    "uploadedBy": "Jane Smith"
+  },
+  "timestamp" : "2017-12-08T17:19:02.3269001Z",
+  "by" : "John Doe"
+}
+```
+
+XML Example: See [Appendix: OfferCreated](#appendix-offercreated)
+
+
 ### OfferCondition ###
 
 | Property           | Type                                                          |
@@ -1085,7 +1167,7 @@ otherwise the OIS will generate an offer letter on your behalf.
 | campusCode        | _string_ (min 1, max 4)                              |
 | deliveryOption    | _string_  _string_ ([Lookup](#intakedeliveryoption)) |
 | programCode       | _string_ (min 1, max 10)                             |
-| startDate         | _string_ date string in format `yyyy-MM-dd'          |
+| startDate         | _string_ date string in format `yyyy-MM-dd`          |
 | timestamp         | _string_ ISO 8601 Date Formatted String              |
 
 **_Example:_**
@@ -1109,7 +1191,7 @@ otherwise the OIS will generate an offer letter on your behalf.
 | campusCode        | _string_ (min 1, max 4)                              |
 | deliveryOption    | _string_  _string_ ([Lookup](#intakedeliveryoption)) |
 | programCode       | _string_ (min 1, max 10)                             |
-| startDate         | _string_ date string in format `yyyy-MM-dd'          |
+| startDate         | _string_ date string in format `yyyy-MM-dd`          |
 | timestamp         | _string_ ISO 8601 Date Formatted String              |
 
 **_Example:_**
@@ -1133,7 +1215,7 @@ otherwise the OIS will generate an offer letter on your behalf.
 | campusCode        | _string_ (min 1, max 4)                                    |
 | deliveryOption    | _string_  _string_ ([Lookup](#intakedeliveryoption))       |
 | programCode       | _string_ (min 1, max 10)                                   |
-| startDate         | _string_ date string in format `yyyy-MM-dd'                |
+| startDate         | _string_ date string in format `yyyy-MM-dd`                |
 | timestamp         | _string_ ISO 8601 Date Formatted String                    |
 | withdrawnType     | _string_ ([Lookup](#withdrawtype))                         |
 | otherReason       | _[null if withdrawnType != other] string_ (min 1, max 100) |
@@ -1160,7 +1242,7 @@ otherwise the OIS will generate an offer letter on your behalf.
 | campusCode        | _string_ (min 1, max 4)                                      |
 | deliveryOption    | _string_  _string_ ([Lookup](#intakedeliveryoption))         |
 | programCode       | _string_ (min 1, max 10)                                     |
-| startDate         | _string_ date string in format `yyyy-MM-dd'                  |
+| startDate         | _string_ date string in format `yyyy-MM-dd`                  |
 | receipt           | _[nullable]_ [NewBinaryDocumentInfo](#newbinarydocumentinfo) |
 
 **_Example:_**
@@ -1261,7 +1343,7 @@ Example: See [Appendix: ApplicationFull](#appendix-applicationfull)
 | campusCode        | _string_ (min 1, max 4)                              |
 | deliveryOption    | _string_  _string_ ([Lookup](#intakedeliveryoption)) |
 | programCode       | _string_ (min 1, max 10)                             |
-| startDate         | _string_ date string in format `yyyy-MM-dd'          |
+| startDate         | _string_ date string in format `yyyy-MM-dd`          |
 | revokeType        | _string_ ([Lookup](#offerrevoketype))                |
 | otherReason       | _[nullable] string_ (min 1, max 100)                 |
 
@@ -1337,7 +1419,7 @@ Example: See [Appendix: ApplicationFull](#appendix-applicationfull)
 | campusCode              | _string_ (min 1, max 4)                                                               |
 | deliveryOption          | _string_ ([Lookup](#intakedeliveryoption))                                            |
 | programCode             | _string_ (min 1, max 10)                                                              |
-| startDate               | _string_ date string in format `yyyy-MM-dd'                                           |
+| startDate               | _string_ date string in format `yyyy-MM-dd`                                           |
 | studentId               | _[nullable] string_ (min 1, max 30)                                                   |
 | isPreAdmit              | _boolean_                                                                             |
 | entryLevelType          | _[nullable] string_ ([Lookup](#entryleveltype)) defaults to `01`                      |
@@ -1553,6 +1635,19 @@ Lookups
 | novisa    |
 | other     |
 
+### OfferState ###
+
+| Code          |
+| ------------- |
+| PreAdmit      |
+| Sent          |
+| Accepted      |
+| Paid          |
+| PreRegistered |
+| Withdrawn     |
+| Revoked       |
+| Declined      |
+
 ### PhoneType ###
 
 | Code   |
@@ -1597,7 +1692,9 @@ Lookups
 | ApplicationScreened      | [ApplicationFull](#applicationfull)                   |                                             |
 | ApplicationSubmitted     | [ApplicationFull](#applicationfull)                   |                                             |
 | OfferAccepted            | [OfferAccepted](#offeraccepted)                       |                                             |
+| OfferCreated             | [OfferDetails](#offerdetails)                         |                                             |
 | OfferDeclined            | [OfferDeclined](#offerdeclined)                       |                                             |
+| OfferUpdated             | [OfferDetails](#offerdetails)                         |                                             |
 | OfferWithdrawn           | [OfferWithdrawn](#offerwithdrawn)                     |                                             |
 | OfferPreRegistered       | [OfferPreRegistered](#OfferPreRegistered)             |                                             |
 | ProgramSelectionsUpdated | [Application](#application)                           | ApplicationScreened or ApplicationSubmitted |
@@ -2067,6 +2164,7 @@ Note: Empty JSON collections are not represented within the XML.
           "credentialType": "university-degree",
           "supportingDocuments": [
             {
+              "id": "00000000-0000-00C0-0000-0000C0000001",
               "link": "https://somelinktodocument",
               "name": "my-university-proof.pdf",
               "mimeType": "application/pdf",
@@ -2085,6 +2183,7 @@ Note: Empty JSON collections are not represented within the XML.
           "credentialType": "college-other",
           "supportingDocuments": [
             {
+              "id": "00000000-0000-0F00-0000-000000000006",
               "link": "https://somelinktodocument",
               "name": "my-college-proof.pdf",
               "mimeType": "application/pdf",
@@ -2103,6 +2202,7 @@ Note: Empty JSON collections are not represented within the XML.
           "credentialType": "secondary-other",
           "supportingDocuments": [
             {
+              "id": "00000C00-0000-0000-0000-000000000000",
               "link": "https://somelinktodocument",
               "name": "my-secondary-proof.pdf",
               "mimeType": "application/pdf",
@@ -2128,6 +2228,7 @@ Note: Empty JSON collections are not represented within the XML.
           "completionDate": "2017-10-19",
           "supportingDocuments": [
             {
+              "id": "00000000-0000-0000-0000-000000000001",
               "link": "https://somelinktodocument",
               "name": "my-testscore-pg1.pdf",
               "mimeType": "application/pdf",
@@ -2135,6 +2236,7 @@ Note: Empty JSON collections are not represented within the XML.
               "uploadedBy": "Beth Smith"
             },
             {
+              "id": "00000000-0000-0A00-0000-00000000000",
               "link": "https://somelinktodocument",
               "name": "my-testscore-pg2.pdf",
               "mimeType": "application/pdf",
@@ -2306,6 +2408,7 @@ Note: Empty JSON collections are not represented within the XML.
           <credentialType>university-degree</credentialType>
           <supportingDocuments>
             <item>
+              <id>00000000-0000-00C0-0000-0000C0000001</id>
               <link>https://somelinktodocument</link>
               <name>my-university-proof.pdf</name>
               <mimeType>application/pdf</mimeType>
@@ -2324,6 +2427,7 @@ Note: Empty JSON collections are not represented within the XML.
           <credentialType>college-other</credentialType>
           <supportingDocuments>
             <item>
+              <id>00000000-0000-0F00-0000-000000000006</id>
               <link>https://somelinktodocument</link>
               <name>my-college-proof.pdf</name>
               <mimeType>application/pdf</mimeType>
@@ -2342,6 +2446,7 @@ Note: Empty JSON collections are not represented within the XML.
           <credentialType>secondary-other</credentialType>
           <supportingDocuments>
             <item>
+              <id>00000C00-0000-0000-0000-000000000000</id>
               <link>https://somelinktodocument</link>
               <name>my-secondary-proof.pdf</name>
               <mimeType>application/pdf</mimeType>
@@ -2367,6 +2472,7 @@ Note: Empty JSON collections are not represented within the XML.
           <completionDate>2017-10-19</completionDate>
           <supportingDocuments>
             <item>
+              <id>00000000-0000-0000-0000-000000000001</id>
               <link>https://somelinktodocument</link>
               <name>my-testscore-pg1.pdf</name>
               <mimeType>application/pdf</mimeType>
@@ -2374,6 +2480,7 @@ Note: Empty JSON collections are not represented within the XML.
               <uploadedBy>Beth Smith</uploaded>
             </item>
             <item>
+              <id>00000000-0000-0A00-0000-00000000000</id>
               <link>https://somelinktodocument</link>
               <name>my-testscore-pg2.pdf</name>
               <mimeType>application/pdf</mimeType>
@@ -2686,6 +2793,98 @@ Used by:
     <mimeType>application/pdf</mimeType>
     <length>96041</length>
   </customOfferLetter>
+</root>
+```
+
+### Appendix: OfferCreated ###
+
+#### OfferCreated JSON ####
+
+```JSON
+{
+  "applicationNumber" : "X1484934",
+  "campusCode" : "C4",
+  "deliveryOption" : "fulltime",
+  "programCode" : "TST1DG5",
+  "state" : "Sent",
+  "startDate" : "2018-06-25",
+  "isExchange" : true,
+  "internshipType" : "notavailable",
+  "instructionHours" : 5,
+  "expirationDate" : "2018-01-01",
+  "intakeExpectedEndDate" : "2018-12-01",
+  "firstPaymentAmount" : 100,
+  "firstPaymentDate" : "2018-01-01",
+  "secondPaymentAmount": 200,
+  "secondPaymentDate" : "2018-05-01",
+  "tuitionFees" : 50,
+  "ancillaryFees" : 50,
+  "hasFinancialAid": true,
+  "financialAidDescription": "Acme Scholarship",
+  "conditions": [
+    {
+      "offerConditionType": "eslcomplete"
+    },
+    {
+      "offerConditionType": "other",
+      "other": "Must get straight A's"
+    }
+  ],
+  "offerLetter" : {
+    "id": "00000000-0000-0000-0000-000000000000",
+    "link": "https://someurltodownloadfile",
+    "name": "myofferletter.pdf",
+    "mimeType": "application/pdf",
+    "uploaded": "2018-12-08T16:22:01Z",
+    "uploadedBy": "Jane Smith"
+  },
+  "timestamp" : "2018-03-07T16:22:02Z",
+  "by" : "Beth MacDonald"
+}
+```
+
+#### OfferCreated XML ####
+
+```XML
+<root>
+  <applicationNumber>X1484934</applicationNumber>
+  <campusCode>C4</campusCode>
+  <deliveryOption>fulltime</deliveryOption>
+  <programCode>TST1DG5</programCode>
+  <state>Sent</state>
+  <startDate>2018-06-25</startDate>
+  <isExchange>true</isExchange>
+  <internshipType>notavailable</internshipType>
+  <instructionHours>5</instructionHours>
+  <expirationDate>2018-01-01</expirationDate>
+  <intakeExpectedEndDate>2018-12-01</intakeExpectedEndDate>
+  <firstPaymentAmount>100</firstPaymentAmount>
+  <firstPaymentDate>2018-01-01</firstPaymentDate>
+  <secondPaymentAmount>200</secondPaymentAmount>
+  <secondPaymentDate>2018-05-01</secondPaymentDate>
+  <tuitionFees>50</tuitionFees>
+  <ancillaryFees>50</ancillaryFees>
+  <hasFinancialAid>true</hasFinancialAid>
+  <financialAidDescription>Acme Scholarship</financialAidDescription>
+  <conditions>
+    <item>
+      <offerConditionType>eslcomplete</offerConditionType>
+    </item>
+    <item>
+      <offerConditionType>other</offerConditionType>
+      <other>Must get straight A's</other>
+    </item>
+  </conditions>
+  <offerLetter>
+    <id>00000000-0000-0000-0000-000000000000</id>
+    <link>https://somelinktodocument</link>
+    <name>myofferletter.pdf</name>
+    <mimeType>application/pdf</mimeType>
+    <uploaded>2018-12-08T16:22:01Z</uploaded>
+    <uploadedBy>Beth Smith</uploaded>
+  </offerLetter>
+  <timestamp>2018-03-07T16:22:02Z</timestamp>
+  <by>Beth MacDonald</by>
 </root>
 ```
 
