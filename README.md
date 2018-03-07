@@ -8,6 +8,7 @@ Table of Contents
   - [Table of Contents](#table-of-contents)
   - [Document Revisions](#document-revisions)
     - [Change History](#change-history)
+      - [1.6.3](#163)
       - [1.6.2](#162)
       - [1.6.1](#161)
       - [1.6.0](#160)
@@ -149,6 +150,7 @@ Document Revisions
 
 | Version | Date         | Editor           |
 | ------- | ------------ | ---------------- |
+| 1.6.3   | Mar 07, 2018 | Jay Dobson       |
 | 1.6.2   | Mar 07, 2018 | Michael Aldworth |
 | 1.6.1   | Mar 06, 2018 | Jaime Valencia   |
 | 1.6.0   | Mar 02, 2018 | Jay Dobson       |
@@ -171,6 +173,10 @@ Document Revisions
 | 1.0.0   | Nov 24, 2017 | Michael Aldworth |
 
 ### Change History ###
+
+#### 1.6.3 ####
+
+- Added UnpaidPlacement InternshipType option
 
 #### 1.6.2 ####
 
@@ -261,7 +267,7 @@ inbound event types
 
 #### 1.1.1 ####
 
-- Updated error codes table to inclde 404.13 when maximum content length is exceeded
+- Updated error codes table to include 404.13 when maximum content length is exceeded
 
 #### 1.1.0 ####
 
@@ -359,7 +365,7 @@ Please see the [Authentication and Authorization](#authentication-and-authorizat
 section.
 
 You will notice that all events are transmitted to the Partner through the **Peek*
-endpoint. This is delibrate, as the payload will contain the event action type and
+endpoint. This is deliberate, as the payload will contain the event action type and
 payload. You can see [available events below](#sisinboundeventtype), which must
 be individually toggled on individually through configuration by OCAS in order to
 start receiving them.
@@ -723,6 +729,8 @@ And now to Deserialize or Serialize, please look at the example in [JsonConvert 
 | identificationDocuments   | Array[1..10] of [ApplicantSupportingDocument](#applicantsupportingdocument) |
 | visaDocuments             | Array[0..10] of [ApplicantSupportingDocument](#applicantsupportingdocument) |
 | otherDocuments            | Array[0..10] of [ApplicantSupportingDocument](#applicantsupportingdocument) |
+| timestamp                 | _string_ ISO 8601 Date Formatted String                                     |
+| by                        | _string_ (min 1, max 255)                                                   |
 
 Example: See [Appendix: ApplicationFull](#appendix-applicationfull)
 
@@ -861,6 +869,8 @@ Example: See [Appendix: ApplicationFull](#appendix-applicationfull)
 | submitted  | _string_ ISO 8601 Date Formatted String            |
 | screened   | _[nullable] string_ ISO 8601 Date Formatted String |
 | selections | Array of [ProgramSelection](#programselection)     |
+| timestamp  | _string_ ISO 8601 Date Formatted String            |
+| by         | _string_ (min 1, max 255)                          |
 
 Example: See [Appendix: Application](#appendix-application)
 
@@ -877,6 +887,8 @@ Example: See [Appendix: Application](#appendix-application)
 | submitted  | _string_ ISO 8601 Date Formatted String            |
 | created    | _string_ ISO 8601 Date Formatted String            |
 | updated    | _string_ ISO 8601 Date Formatted String            |
+| timestamp  | _string_ ISO 8601 Date Formatted String            |
+| by         | _string_ (min 1, max 255)                          |
 
 Example: See [Appendix: ApplicationFull](#appendix-applicationfull)
 
@@ -971,33 +983,33 @@ Example: See [Appendix: ApplicationFull](#appendix-applicationfull)
 
 ### NewOfferInfo ###
 
-| Property                | Type                                                                                  |
-| ----------------------- | ------------------------------------------------------------------------------------- |
-| applicationNumber       | _string_ (min 1, max 20)                                                              |
-| campusCode              | _string_ (min 1, max 4)                                                               |
-| deliveryOption          | _string_ ([Lookup](#intakedeliveryoption))                                            |
-| programCode             | _string_ (min 1, max 10)                                                              |
-| startDate               | _string_ date string in format `yyyy-MM-dd`                                           |
-| studentId               | _[nullable] string_ (min 1, max 30)                                                   |
-| isPreAdmit              | _boolean_                                                                             |
-| entryLevelType          | _[nullable] string_ ([Lookup](#entryleveltype)) defaults to `01`                      |
-| isExchange              | _[nullable] boolean_                                                                  |
-| internshipType          | _[nullable] string_ ([Lookup](#internshiptype))                                       |
-| internshipLength        | _[nullable] decimal(18,1)_ ([required] if internshipType == `optional` or `required`) |
-| internshipDescription   | _[nullable] string_ (min 1, max 100)                                                  |
-| instructionHours        | _[nullable] decimal(18,1)_                                                            |
-| expirationDate          | _[nullable] string_ date string in format `yyyy-MM-dd`                                |
-| intakeExpectedEndDate   | _[nullable] string_ date string in format `yyyy-MM-dd`                                |
-| firstPaymentAmount      | _[nullable] decimal(18,2)_                                                            |
-| firstPaymentDate        | _[nullable] string_ date string in format `yyyy-MM-dd`                                |
-| secondPaymentAmount     | _[nullable] decimal(18,2)_                                                            |
-| secondPaymentDate       | _[nullable] string_ date string in format `yyyy-MM-dd`                                |
-| tuitionFees             | _[nullable] decimal(18,2)_                                                            |
-| ancillaryFees           | _[nullable] decimal(18,2)_                                                            |
-| hasFinancialAid         | _boolean_                                                                             |
-| financialAidDescription | string_ (min 1, max 100) ([required] if hasFinancialAid == `true`)                    |
-| conditions              | Array[0..5] of [OfferCondition](#offercondition)                                      |
-| customOfferLetter       | _[nullable]_ [NewBinaryDocumentInfo](#newbinarydocumentinfo)                          |
+| Property                | Type                                                                                                       |
+| ----------------------- | ---------------------------------------------------------------------------------------------------------- |
+| applicationNumber       | _string_ (min 1, max 20)                                                                                   |
+| campusCode              | _string_ (min 1, max 4)                                                                                    |
+| deliveryOption          | _string_ ([Lookup](#intakedeliveryoption))                                                                 |
+| programCode             | _string_ (min 1, max 10)                                                                                   |
+| startDate               | _string_ date string in format `yyyy-MM-dd`                                                                |
+| studentId               | _[nullable] string_ (min 1, max 30)                                                                        |
+| isPreAdmit              | _boolean_                                                                                                  |
+| entryLevelType          | _[nullable] string_ ([Lookup](#entryleveltype))                                                            |
+| isExchange              | _[nullable] boolean_                                                                                       |
+| internshipType          | _[nullable] string_ ([Lookup](#internshiptype))                                                            |
+| internshipLength        | _[nullable] decimal(18,1)_ ([required] if internshipType == `optional` or `required` or `unpaidplacement`) |
+| internshipDescription   | _[nullable] string_ (min 1, max 100)                                                                       |
+| instructionHours        | _[nullable] decimal(18,1)_                                                                                 |
+| expirationDate          | _[nullable] string_ date string in format `yyyy-MM-dd`                                                     |
+| intakeExpectedEndDate   | _[nullable] string_ date string in format `yyyy-MM-dd`                                                     |
+| firstPaymentAmount      | _[nullable] decimal(18,2)_                                                                                 |
+| firstPaymentDate        | _[nullable] string_ date string in format `yyyy-MM-dd`                                                     |
+| secondPaymentAmount     | _[nullable] decimal(18,2)_                                                                                 |
+| secondPaymentDate       | _[nullable] string_ date string in format `yyyy-MM-dd`                                                     |
+| tuitionFees             | _[nullable] decimal(18,2)_                                                                                 |
+| ancillaryFees           | _[nullable] decimal(18,2)_                                                                                 |
+| hasFinancialAid         | _boolean_                                                                                                  |
+| financialAidDescription | string_ (min 1, max 100) ([required] if hasFinancialAid == `true`)                                         |
+| conditions              | Array[0..5] of [OfferCondition](#offercondition)                                                           |
+| customOfferLetter       | _[nullable]_ [NewBinaryDocumentInfo](#newbinarydocumentinfo)                                               |
 
 **_Example:_**
 
@@ -1061,7 +1073,7 @@ otherwise the OIS will generate an offer letter on your behalf.
 | ----------------- | ---------------------------------------------------- |
 | applicationNumber | _string_ (min 1, max 20)                             |
 | campusCode        | _string_ (min 1, max 4)                              |
-| deliveryOption    | _string_  _string_ ([Lookup](#intakedeliveryoption)) |
+| deliveryOption    | _string_ ([Lookup](#intakedeliveryoption))           |
 | programCode       | _string_ (min 1, max 10)                             |
 | startDate         | _string_ date string in format `yyyy-MM-dd`          |
 | timestamp         | _string_ ISO 8601 Date Formatted String              |
@@ -1083,35 +1095,35 @@ otherwise the OIS will generate an offer letter on your behalf.
 
 ### OfferDetails ###
 
-| Property                | Type                                                                                  |
-| ----------------------- | ------------------------------------------------------------------------------------- |
-| applicationNumber       | _string_ (min 1, max 20)                                                              |
-| campusCode              | _string_ (min 1, max 4)                                                               |
-| deliveryOption          | _string_  _string_ ([Lookup](#intakedeliveryoption))                                  |
-| programCode             | _string_ (min 1, max 10)                                                              |
-| state                   | _string_ (min 1, max 50) ([Lookup](#offerstate))                                      |
-| startDate               | _string_ date string in format `yyyy-MM-dd`                                           |
-| studentId               | _[nullable] string_ (min 1, max 30)                                                   |
-| entryLevelType          | _string_ ([Lookup](#entryleveltype)) defaults to `01`                                 |
-| isExchange              | _boolean_                                                                             |
-| internshipType          | _string_ ([Lookup](#internshiptype))                                                  |
-| internshipLength        | _[nullable] decimal(18,1)_ ([required] if internshipType == `optional` or `required`) |
-| internshipDescription   | _[nullable] string_ (min 1, max 100)                                                  |
-| instructionHours        | _[nullable] decimal(18,1)_                                                            |
-| expirationDate          | _string_ date string in format `yyyy-MM-dd`                                           |
-| intakeExpectedEndDate   | _string_ date string in format `yyyy-MM-dd`                                           |
-| firstPaymentAmount      | _decimal(18,2)_                                                                       |
-| firstPaymentDate        | _string_ date string in format `yyyy-MM-dd`                                           |
-| secondPaymentAmount     | _decimal(18,2)_                                                                       |
-| secondPaymentDate       | _string_ date string in format `yyyy-MM-dd`                                           |
-| tuitionFees             | _decimal(18,2)_                                                                       |
-| ancillaryFees           | _decimal(18,2)_                                                                       |
-| hasFinancialAid         | _boolean_                                                                             |
-| financialAidDescription | _string_ (min 1, max 100) ([required] if hasFinancialAid == `true`)                   |
-| conditions              | Array[0..5] of [OfferCondition](#offercondition)                                      |
-| offerLetter             | [BinaryDocument](#binarydocument)                                                     |
-| timestamp               | _string_ ISO 8601 Date Formatted String                                               |
-| by                      | _string_ (min 1, max 255)                                                             |
+| Property                | Type                                                                                                       |
+| ----------------------- | ---------------------------------------------------------------------------------------------------------- |
+| applicationNumber       | _string_ (min 1, max 20)                                                                                   |
+| campusCode              | _string_ (min 1, max 4)                                                                                    |
+| deliveryOption          | _string_ ([Lookup](#intakedeliveryoption))                                                                 |
+| programCode             | _string_ (min 1, max 10)                                                                                   |
+| state                   | _string_ (min 1, max 50) ([Lookup](#offerstate))                                                           |
+| startDate               | _string_ date string in format `yyyy-MM-dd`                                                                |
+| studentId               | _[nullable] string_ (min 1, max 30)                                                                        |
+| entryLevelType          | _string_ ([Lookup](#entryleveltype))                                                                       |
+| isExchange              | _boolean_                                                                                                  |
+| internshipType          | _string_ ([Lookup](#internshiptype))                                                                       |
+| internshipLength        | _[nullable] decimal(18,1)_ ([required] if internshipType == `optional` or `required` or `unpaidplacement`) |
+| internshipDescription   | _[nullable] string_ (min 1, max 100)                                                                       |
+| instructionHours        | _[nullable] decimal(18,1)_                                                                                 |
+| expirationDate          | _string_ date string in format `yyyy-MM-dd`                                                                |
+| intakeExpectedEndDate   | _string_ date string in format `yyyy-MM-dd`                                                                |
+| firstPaymentAmount      | _decimal(18,2)_                                                                                            |
+| firstPaymentDate        | _string_ date string in format `yyyy-MM-dd`                                                                |
+| secondPaymentAmount     | _decimal(18,2)_                                                                                            |
+| secondPaymentDate       | _string_ date string in format `yyyy-MM-dd`                                                                |
+| tuitionFees             | _decimal(18,2)_                                                                                            |
+| ancillaryFees           | _decimal(18,2)_                                                                                            |
+| hasFinancialAid         | _boolean_                                                                                                  |
+| financialAidDescription | _string_ (min 1, max 100) ([required] if hasFinancialAid == `true`)                                        |
+| conditions              | Array[0..5] of [OfferCondition](#offercondition)                                                           |
+| offerLetter             | [BinaryDocument](#binarydocument)                                                                          |
+| timestamp               | _string_ ISO 8601 Date Formatted String                                                                    |
+| by                      | _string_ (min 1, max 255)                                                                                  |
 
 **_Example:_**
 
@@ -1165,10 +1177,11 @@ XML Example: See [Appendix: OfferCreated](#appendix-offercreated)
 | ----------------- | ---------------------------------------------------- |
 | applicationNumber | _string_ (min 1, max 20)                             |
 | campusCode        | _string_ (min 1, max 4)                              |
-| deliveryOption    | _string_  _string_ ([Lookup](#intakedeliveryoption)) |
+| deliveryOption    | _string_ ([Lookup](#intakedeliveryoption))           |
 | programCode       | _string_ (min 1, max 10)                             |
 | startDate         | _string_ date string in format `yyyy-MM-dd`          |
 | timestamp         | _string_ ISO 8601 Date Formatted String              |
+| by                | _string_ (min 1, max 255)                            |
 
 **_Example:_**
 
@@ -1179,7 +1192,8 @@ XML Example: See [Appendix: OfferCreated](#appendix-offercreated)
   "deliveryOption" : "fulltime",
   "programCode" : "TSTAD1",
   "startDate" : "2017-01-20",
-  "timestamp" : "2017-12-08T17:19:02.3269001Z"
+  "timestamp" : "2017-12-08T17:19:02.3269001Z",
+  "by" : "John Doe"
 }
 ```
 
@@ -1189,10 +1203,11 @@ XML Example: See [Appendix: OfferCreated](#appendix-offercreated)
 | ----------------- | ---------------------------------------------------- |
 | applicationNumber | _string_ (min 1, max 20)                             |
 | campusCode        | _string_ (min 1, max 4)                              |
-| deliveryOption    | _string_  _string_ ([Lookup](#intakedeliveryoption)) |
+| deliveryOption    | _string_ ([Lookup](#intakedeliveryoption))           |
 | programCode       | _string_ (min 1, max 10)                             |
 | startDate         | _string_ date string in format `yyyy-MM-dd`          |
 | timestamp         | _string_ ISO 8601 Date Formatted String              |
+| by                | _string_ (min 1, max 255)                            |
 
 **_Example:_**
 
@@ -1203,7 +1218,8 @@ XML Example: See [Appendix: OfferCreated](#appendix-offercreated)
   "deliveryOption" : "fulltime",
   "programCode" : "TSTAD1",
   "startDate" : "2017-01-20",
-  "timestamp" : "2017-12-08T17:19:02.3269001Z"
+  "timestamp" : "2017-12-08T17:19:02.3269001Z",
+  "by" : "John Doe"
 }
 ```
 
@@ -1213,10 +1229,11 @@ XML Example: See [Appendix: OfferCreated](#appendix-offercreated)
 | ----------------- | ---------------------------------------------------------- |
 | applicationNumber | _string_ (min 1, max 20)                                   |
 | campusCode        | _string_ (min 1, max 4)                                    |
-| deliveryOption    | _string_  _string_ ([Lookup](#intakedeliveryoption))       |
+| deliveryOption    | _string_ ([Lookup](#intakedeliveryoption))                 |
 | programCode       | _string_ (min 1, max 10)                                   |
 | startDate         | _string_ date string in format `yyyy-MM-dd`                |
 | timestamp         | _string_ ISO 8601 Date Formatted String                    |
+| by                | _string_ (min 1, max 255)                                  |
 | withdrawnType     | _string_ ([Lookup](#withdrawtype))                         |
 | otherReason       | _[null if withdrawnType != other] string_ (min 1, max 100) |
 
@@ -1230,7 +1247,9 @@ XML Example: See [Appendix: OfferCreated](#appendix-offercreated)
   "programCode" : "TSTAD1",
   "startDate" : "2018-01-20",
   "withdrawnType" : "visadeclined",
-  "otherReason" : null
+  "otherReason" : null,
+  "timestamp" : "2017-12-08T17:19:02.3269001Z",
+  "by" : "John Doe"
 }
 ```
 
@@ -1240,7 +1259,7 @@ XML Example: See [Appendix: OfferCreated](#appendix-offercreated)
 | ----------------- | ------------------------------------------------------------ |
 | applicationNumber | _string_ (min 1, max 20)                                     |
 | campusCode        | _string_ (min 1, max 4)                                      |
-| deliveryOption    | _string_  _string_ ([Lookup](#intakedeliveryoption))         |
+| deliveryOption    | _string_ ([Lookup](#intakedeliveryoption))                   |
 | programCode       | _string_ (min 1, max 10)                                     |
 | startDate         | _string_ date string in format `yyyy-MM-dd`                  |
 | receipt           | _[nullable]_ [NewBinaryDocumentInfo](#newbinarydocumentinfo) |
@@ -1341,7 +1360,7 @@ Example: See [Appendix: ApplicationFull](#appendix-applicationfull)
 | ----------------- | ---------------------------------------------------- |
 | applicationNumber | _string_ (min 1, max 20)                             |
 | campusCode        | _string_ (min 1, max 4)                              |
-| deliveryOption    | _string_  _string_ ([Lookup](#intakedeliveryoption)) |
+| deliveryOption    | _string_ ([Lookup](#intakedeliveryoption))           |
 | programCode       | _string_ (min 1, max 10)                             |
 | startDate         | _string_ date string in format `yyyy-MM-dd`          |
 | revokeType        | _string_ ([Lookup](#offerrevoketype))                |
@@ -1413,33 +1432,33 @@ Example: See [Appendix: ApplicationFull](#appendix-applicationfull)
 
 ### UpdateOffer ###
 
-| Property                | Type                                                                                  |
-| ----------------------- | ------------------------------------------------------------------------------------- |
-| applicationNumber       | _string_ (min 1, max 20)                                                              |
-| campusCode              | _string_ (min 1, max 4)                                                               |
-| deliveryOption          | _string_ ([Lookup](#intakedeliveryoption))                                            |
-| programCode             | _string_ (min 1, max 10)                                                              |
-| startDate               | _string_ date string in format `yyyy-MM-dd`                                           |
-| studentId               | _[nullable] string_ (min 1, max 30)                                                   |
-| isPreAdmit              | _boolean_                                                                             |
-| entryLevelType          | _[nullable] string_ ([Lookup](#entryleveltype)) defaults to `01`                      |
-| isExchange              | _[nullable] boolean_                                                                  |
-| internshipType          | _[nullable] string_ ([Lookup](#internshiptype))                                       |
-| internshipLength        | _[nullable] decimal(18,1)_ ([required] if internshipType == `optional` or `required`) |
-| internshipDescription   | _[nullable] string_ (min 1, max 100)                                                  |
-| instructionHours        | _[nullable] decimal(18,1)_                                                            |
-| expirationDate          | _[nullable] string_ date string in format `yyyy-MM-dd`                                |
-| intakeExpectedEndDate   | _[nullable] string_ date string in format `yyyy-MM-dd`                                |
-| firstPaymentAmount      | _[nullable] decimal(18,2)_                                                            |
-| firstPaymentDate        | _[nullable] string_ date string in format `yyyy-MM-dd`                                |
-| secondPaymentAmount     | _[nullable] decimal(18,2)_                                                            |
-| secondPaymentDate       | _[nullable] string_ date string in format `yyyy-MM-dd`                                |
-| tuitionFees             | _[nullable] decimal(18,2)_                                                            |
-| ancillaryFees           | _[nullable] decimal(18,2)_                                                            |
-| hasFinancialAid         | _boolean_                                                                             |
-| financialAidDescription | string_ (min 1, max 100) ([required] if hasFinancialAid == `true`)                    |
-| conditions              | Array[0..5] of [OfferCondition](#offercondition)                                      |
-| customOfferLetter       | _[nullable]_ [NewBinaryDocumentInfo](#newbinarydocumentinfo)                          |
+| Property                | Type                                                                                                       |
+| ----------------------- | ---------------------------------------------------------------------------------------------------------- |
+| applicationNumber       | _string_ (min 1, max 20)                                                                                   |
+| campusCode              | _string_ (min 1, max 4)                                                                                    |
+| deliveryOption          | _string_ ([Lookup](#intakedeliveryoption))                                                                 |
+| programCode             | _string_ (min 1, max 10)                                                                                   |
+| startDate               | _string_ date string in format `yyyy-MM-dd`                                                                |
+| studentId               | _[nullable] string_ (min 1, max 30)                                                                        |
+| isPreAdmit              | _boolean_                                                                                                  |
+| entryLevelType          | _[nullable] string_ ([Lookup](#entryleveltype))                                                            |
+| isExchange              | _[nullable] boolean_                                                                                       |
+| internshipType          | _[nullable] string_ ([Lookup](#internshiptype))                                                            |
+| internshipLength        | _[nullable] decimal(18,1)_ ([required] if internshipType == `optional` or `required` or `unpaidplacement`) |
+| internshipDescription   | _[nullable] string_ (min 1, max 100)                                                                       |
+| instructionHours        | _[nullable] decimal(18,1)_                                                                                 |
+| expirationDate          | _[nullable] string_ date string in format `yyyy-MM-dd`                                                     |
+| intakeExpectedEndDate   | _[nullable] string_ date string in format `yyyy-MM-dd`                                                     |
+| firstPaymentAmount      | _[nullable] decimal(18,2)_                                                                                 |
+| firstPaymentDate        | _[nullable] string_ date string in format `yyyy-MM-dd`                                                     |
+| secondPaymentAmount     | _[nullable] decimal(18,2)_                                                                                 |
+| secondPaymentDate       | _[nullable] string_ date string in format `yyyy-MM-dd`                                                     |
+| tuitionFees             | _[nullable] decimal(18,2)_                                                                                 |
+| ancillaryFees           | _[nullable] decimal(18,2)_                                                                                 |
+| hasFinancialAid         | _boolean_                                                                                                  |
+| financialAidDescription | string_ (min 1, max 100) ([required] if hasFinancialAid == `true`)                                         |
+| conditions              | Array[0..5] of [OfferCondition](#offercondition)                                                           |
+| customOfferLetter       | _[nullable]_ [NewBinaryDocumentInfo](#newbinarydocumentinfo)                                               |
 
 **_Example:_**
 
@@ -1572,11 +1591,12 @@ Lookups
 
 ### InternshipType ###
 
-| Code         |
-| ------------ |
-| required     |
-| optional     |
-| notavailable |
+| Code            |
+| --------------- |
+| required        |
+| optional        |
+| notavailable    |
+| unpaidplacement |
 
 ### Languages ###
 
@@ -1639,7 +1659,7 @@ Lookups
 
 | Code          |
 | ------------- |
-| PreAdmit      |
+| PreAdmitted   |
 | Sent          |
 | Accepted      |
 | Paid          |
@@ -1705,7 +1725,7 @@ to the parent event. This means you have to be subscribed to at least one of the
 parent events. These events also behave slightly different depending on which parent
 event you are subscribed to.
 
-E.g. If you are subsribed to the ApplicationScreened, then you will not receive any
+E.g. If you are subscribed to the ApplicationScreened, then you will not receive any
 ApplicantProfileUpdates or ProgramSelectionUpdates until the application has had
 it's screened flag marked. This eliminates unnecessary notifications for events that
 you might receive during the screening process.
@@ -1932,7 +1952,7 @@ create logging entries within the Windows Event Viewer without administrative ri
 ### Database Structure ###
 
 The SIS Receiver and Sender applications each have an individual database table 
-required to write and read events respecfully.
+required to write and read events respectively.
 
 | Name              | Type    | Purpose                  |
 | ----------------- | ------- | ------------------------ |
@@ -2308,7 +2328,9 @@ Note: Empty JSON collections are not represented within the XML.
     "screened": null,
     "submitted": "2017-12-09T11:19:46.6378594Z",
     "created": "2017-12-08T17:19:02.3269001Z",
-    "updated": "2017-12-10T11:19:46.6378594Z"
+    "updated": "2017-12-10T11:19:46.6378594Z",
+    "by": "Esperanza Abe Lexus Jeromy Edmond Kristian Alan Henry Medhurst",
+    "timestamp": "2017-12-09T11:19:46.6378594Z"
   }
 }
 ```
@@ -2553,6 +2575,8 @@ Note: Empty JSON collections are not represented within the XML.
     <submitted>2017-12-09T11:19:46.6378594Z</submitted>
     <created>2017-12-08T17:19:02.3269001Z</created>
     <updated>2017-12-10T11:19:46.6378594Z</updated>
+    <by>Esperanza Abe Lexus Jeromy Edmond Kristian Alan Henry Medhurst</by>
+    <timestamp>2017-12-09T11:19:46.6378594Z</timestamp>
   </data>
 </root>
 ```
@@ -2622,7 +2646,9 @@ Used by:
     ],
     "screened": null,
     "submitted": "2017-12-09T11:19:46.6378594Z",
-    "created": "2017-12-08T17:19:02.3269001Z"
+    "created": "2017-12-08T17:19:02.3269001Z",
+    "by": "Esperanza Abe Lexus Jeromy Edmond Kristian Alan Henry Medhurst",
+    "timestamp": "2017-12-09T11:19:46.6378594Z"
   }
 }
 ```
@@ -2688,6 +2714,8 @@ Used by:
     <screened />
     <submitted>2017-12-09T11:19:46.6378594Z</submitted>
     <created>2017-12-08T17:19:02.3269001Z</created>
+    <by>Esperanza Abe Lexus Jeromy Edmond Kristian Alan Henry Medhurst</by>
+    <timestamp>2017-12-09T11:19:46.6378594Z</timestamp>
   </data>
 </root>
 ```
