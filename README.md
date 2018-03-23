@@ -1053,6 +1053,7 @@ These fields are as follows:
 - entryLevelType
 - isExchange
 - internshipType
+- internshipLength
 - internshipDescription
 - instructionHours
 - expirationDate
@@ -1716,9 +1717,9 @@ Lookups
 | OfferDeclined            | [OfferDeclined](#offerdeclined)                       |                                             |
 | OfferUpdated             | [OfferDetails](#offerdetails)                         |                                             |
 | OfferWithdrawn           | [OfferWithdrawn](#offerwithdrawn)                     |                                             |
-| OfferPreRegistered       | [OfferPreRegistered](#OfferPreRegistered)             |                                             |
+| OfferPreRegistered       | [OfferPreRegistered](#offerpreregistered)             |                                             |
 | ProgramSelectionsUpdated | [Application](#application)                           | ApplicationScreened or ApplicationSubmitted |
-| ProgramSelectionDeclined | [ProgramSelectionDeclined](#programSelectionDeclined) | ApplicationScreened or ApplicationSubmitted |
+| ProgramSelectionDeclined | [ProgramSelectionDeclined](#programselectiondeclined) | ApplicationScreened or ApplicationSubmitted |
 
 _*Special Note for Parent Event(s):*_ These two events are dependent on being subscribed
 to the parent event. This means you have to be subscribed to at least one of the
