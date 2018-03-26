@@ -8,6 +8,7 @@ Table of Contents
   - [Table of Contents](#table-of-contents)
   - [Document Revisions](#document-revisions)
     - [Change History](#change-history)
+      - [1.6.4](#164)
       - [1.6.3](#163)
       - [1.6.2](#162)
       - [1.6.1](#161)
@@ -53,6 +54,7 @@ Table of Contents
     - [BinaryDocument](#binarydocument)
     - [DeclineProgramSelection](#declineprogramselection)
     - [EmergencyContact](#emergencycontact)
+    - [Intake](#intake)
     - [NewBinaryDocumentInfo](#newbinarydocumentinfo)
     - [NewOfferInfo](#newofferinfo)
     - [OfferAccepted](#offeraccepted)
@@ -150,6 +152,7 @@ Document Revisions
 
 | Version | Date         | Editor           |
 | ------- | ------------ | ---------------- |
+| 1.6.4   | Mar 26, 2018 | Darren O'Shea    |
 | 1.6.3   | Mar 07, 2018 | Jay Dobson       |
 | 1.6.2   | Mar 07, 2018 | Michael Aldworth |
 | 1.6.1   | Mar 06, 2018 | Jaime Valencia   |
@@ -173,6 +176,10 @@ Document Revisions
 | 1.0.0   | Nov 24, 2017 | Michael Aldworth |
 
 ### Change History ###
+
+#### 1.6.4 ####
+
+- Added FutureIntake property to OfferDetails, NewOfferInfo, and UpdateOffer
 
 #### 1.6.3 ####
 
@@ -961,6 +968,26 @@ Example: See [Appendix: ApplicationFull](#appendix-applicationfull)
 }
 ```
 
+### Intake ###
+
+| Property          | Type                                        |
+| ------------------| --------------------------------------------|
+| campusCode        | _string_ (min 1, max 4)                     |
+| deliveryOption    | _string_ ([Lookup](#intakedeliveryoption))  |
+| programCode       | _string_ (min 1, max 10)                    |
+| startDate         | _string_ date string in format `yyyy-MM-dd` |
+
+**_Example:_**
+
+```JSON
+{
+  "campusCode" : "C4",
+  "deliveryOption" : "fulltime",
+  "programCode" : "TST1DG5",
+  "startDate" : "2018-01-01",
+}
+```
+
 ### NewBinaryDocumentInfo ###
 
 | Property | Type                            |
@@ -1010,6 +1037,7 @@ Example: See [Appendix: ApplicationFull](#appendix-applicationfull)
 | financialAidDescription | string_ (min 1, max 100) ([required] if hasFinancialAid == `true`)                                         |
 | conditions              | Array[0..5] of [OfferCondition](#offercondition)                                                           |
 | customOfferLetter       | _[nullable]_ [NewBinaryDocumentInfo](#newbinarydocumentinfo)                                               |
+| futureIntake            | _[nullable]_ [Intake](#intake)                                                                             |
 
 **_Example:_**
 
@@ -1035,7 +1063,13 @@ Example: See [Appendix: ApplicationFull](#appendix-applicationfull)
   "hasFinancialAid": true,
   "financialAidDescription": "Acme Scholarship",
   "conditions": [],
-  "customOfferLetter" : {}
+  "customOfferLetter" : {},
+  "futureIntake": {
+    "campusCode" : "C4",
+    "deliveryOption" : "fulltime",
+    "programCode" : "TST1DG5",
+    "startDate" : "2018-01-01",
+  }
 }
 ```
 
@@ -1125,6 +1159,7 @@ otherwise the OIS will generate an offer letter on your behalf.
 | offerLetter             | [BinaryDocument](#binarydocument)                                                                          |
 | timestamp               | _string_ ISO 8601 Date Formatted String                                                                    |
 | by                      | _string_ (min 1, max 255)                                                                                  |
+| futureIntake            | _[nullable]_ [Intake](#intake)                                                                             |
 
 **_Example:_**
 
@@ -1158,7 +1193,13 @@ otherwise the OIS will generate an offer letter on your behalf.
     "uploadedBy": "Jane Smith"
   },
   "timestamp" : "2017-12-08T17:19:02.3269001Z",
-  "by" : "John Doe"
+  "by" : "John Doe",
+  "futureIntake": {
+    "campusCode" : "C4",
+    "deliveryOption" : "fulltime",
+    "programCode" : "TST1DG5",
+    "startDate" : "2018-01-01",
+  }
 }
 ```
 
@@ -1460,6 +1501,7 @@ Example: See [Appendix: ApplicationFull](#appendix-applicationfull)
 | financialAidDescription | string_ (min 1, max 100) ([required] if hasFinancialAid == `true`)                                         |
 | conditions              | Array[0..5] of [OfferCondition](#offercondition)                                                           |
 | customOfferLetter       | _[nullable]_ [NewBinaryDocumentInfo](#newbinarydocumentinfo)                                               |
+| futureIntake            | _[nullable]_ [Intake](#intake)                                                                             |
 
 **_Example:_**
 
@@ -1483,7 +1525,13 @@ Example: See [Appendix: ApplicationFull](#appendix-applicationfull)
   "tuitionFees" : 50,
   "ancillaryFees" : 50,
   "conditions": [],
-  "customOfferLetter" : {}
+  "customOfferLetter" : {},
+  "futureIntake": {
+    "campusCode" : "C4",
+    "deliveryOption" : "fulltime",
+    "programCode" : "TST1DG5",
+    "startDate" : "2018-01-01",
+  }
 }
 ```
 
@@ -2780,7 +2828,8 @@ Used by:
     "name": "filename.pdf",
     "mimeType": "application/pdf",
     "length": 96041
-  }
+  },
+  "futureIntake": null
 }
 ```
 
@@ -2822,6 +2871,7 @@ Used by:
     <mimeType>application/pdf</mimeType>
     <length>96041</length>
   </customOfferLetter>
+  <futureIntake />
 </root>
 ```
 
@@ -2914,6 +2964,12 @@ Used by:
   </offerLetter>
   <timestamp>2018-03-07T16:22:02Z</timestamp>
   <by>Beth MacDonald</by>
+  <futureIntake>
+    <campusCode>C4</campusCode>
+    <deliveryOption>fulltime</deliveryOption>
+    <programCode>TST1DG5</programCode>
+    <startDate>2019-06-25</startDate>
+  </futureIntake>
 </root>
 ```
 
