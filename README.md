@@ -2484,7 +2484,7 @@ Note: Empty JSON collections are not represented within the XML.
               <name>my-university-proof.pdf</name>
               <mimeType>application/pdf</mimeType>
               <uploaded>2017-12-08T16:19:02.3269001Z</uploaded>
-              <uploadedBy>Beth Smith</uploaded>
+              <uploadedBy>Beth Smith</uploadedBy>
             </item>
           </supportingDocuments>
         </item>
@@ -2503,7 +2503,7 @@ Note: Empty JSON collections are not represented within the XML.
               <name>my-college-proof.pdf</name>
               <mimeType>application/pdf</mimeType>
               <uploaded>2017-12-08T16:19:02.3269001Z</uploaded>
-              <uploadedBy>Beth Smith</uploaded>
+              <uploadedBy>Beth Smith</uploadedBy>
             </item>
           </supportingDocuments>
         </item>
@@ -2522,7 +2522,7 @@ Note: Empty JSON collections are not represented within the XML.
               <name>my-secondary-proof.pdf</name>
               <mimeType>application/pdf</mimeType>
               <uploaded>2017-12-08T16:19:02.3269001Z</uploaded>
-              <uploadedBy>Beth Smith</uploaded>
+              <uploadedBy>Beth Smith</uploadedBy>
             </item>
           </supportingDocuments>
         </item>
@@ -2548,7 +2548,7 @@ Note: Empty JSON collections are not represented within the XML.
               <name>my-testscore-pg1.pdf</name>
               <mimeType>application/pdf</mimeType>
               <uploaded>2017-12-08T16:22:02.3269001Z</uploaded>
-              <uploadedBy>Beth Smith</uploaded>
+              <uploadedBy>Beth Smith</uploadedBy>
             </item>
             <item>
               <id>00000000-0000-0A00-0000-00000000000</id>
@@ -2556,7 +2556,7 @@ Note: Empty JSON collections are not represented within the XML.
               <name>my-testscore-pg2.pdf</name>
               <mimeType>application/pdf</mimeType>
               <uploaded>2017-12-08T16:22:32.3269001Z</uploaded>
-              <uploadedBy>Beth Smith</uploaded>
+              <uploadedBy>Beth Smith</uploadedBy>
             </item>
           </supportingDocuments>
         </item>
@@ -2960,7 +2960,7 @@ Used by:
     <name>myofferletter.pdf</name>
     <mimeType>application/pdf</mimeType>
     <uploaded>2018-12-08T16:22:01Z</uploaded>
-    <uploadedBy>Beth Smith</uploaded>
+    <uploadedBy>Beth Smith</uploadedBy>
   </offerLetter>
   <timestamp>2018-03-07T16:22:02Z</timestamp>
   <by>Beth MacDonald</by>
