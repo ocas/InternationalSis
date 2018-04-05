@@ -66,6 +66,7 @@ Table of Contents
     - [OfferWithdrawn](#offerwithdrawn)
     - [PayOffer](#payoffer)
     - [Phone](#phone)
+    - [PreAdmitOfferAccepted](#preadmitofferaccepted)
     - [Program](#program)
     - [ProgramSelection](#programselection)
     - [ProgramSelectionDeclined](#programselectiondeclined)
@@ -182,6 +183,7 @@ Document Revisions
 #### 1.6.5 ####
 
 - Added new state PreAdmitAccepted to offer
+- Added new event PreAdmitOfferAccepted to offer
 
 #### 1.6.4 ####
 
@@ -1343,6 +1345,32 @@ XML Example: See [Appendix: OfferCreated](#appendix-offercreated)
 }
 ```
 
+### PreAdmitOfferAccepted ###
+
+| Property          | Type                                                 |
+| ----------------- | ---------------------------------------------------- |
+| applicationNumber | _string_ (min 1, max 20)                             |
+| campusCode        | _string_ (min 1, max 4)                              |
+| deliveryOption    | _string_ ([Lookup](#intakedeliveryoption))           |
+| programCode       | _string_ (min 1, max 10)                             |
+| startDate         | _string_ date string in format `yyyy-MM-dd`          |
+| timestamp         | _string_ ISO 8601 Date Formatted String              |
+| by                | _string_ (min 1, max 255)                            |
+
+**_Example:_**
+
+```JSON
+{
+  "applicationNumber" : "X12345",
+  "campusCode" : "main",
+  "deliveryOption" : "fulltime",
+  "programCode" : "TSTAD1",
+  "startDate" : "2017-01-20",
+  "timestamp" : "2017-12-08T17:19:02.3269001Z",
+  "by" : "John Doe"
+}
+```
+
 ### Program ###
 
 | Property                 | Type                                           |
@@ -1767,6 +1795,7 @@ Lookups
 | ApplicantProfileUpdated  | [Applicant](#applicant)                               | ApplicationScreened or ApplicationSubmitted |
 | ApplicationScreened      | [ApplicationFull](#applicationfull)                   |                                             |
 | ApplicationSubmitted     | [ApplicationFull](#applicationfull)                   |                                             |
+| PreAdmitOfferAccepted    | [PreAdmitOfferAccepted](#preadmitofferaccepted)       |                                             |
 | OfferAccepted            | [OfferAccepted](#offeraccepted)                       |                                             |
 | OfferCreated             | [OfferDetails](#offerdetails)                         |                                             |
 | OfferDeclined            | [OfferDeclined](#offerdeclined)                       |                                             |
