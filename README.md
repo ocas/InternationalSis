@@ -8,6 +8,7 @@ Table of Contents
   - [Table of Contents](#table-of-contents)
   - [Document Revisions](#document-revisions)
     - [Change History](#change-history)
+      - [1.6.5](#165)
       - [1.6.4](#164)
       - [1.6.3](#163)
       - [1.6.2](#162)
@@ -152,6 +153,7 @@ Document Revisions
 
 | Version | Date         | Editor           |
 | ------- | ------------ | ---------------- |
+| 1.6.5   | Apr 05, 2018 | Jaime Valencia   |
 | 1.6.4   | Mar 26, 2018 | Darren O'Shea    |
 | 1.6.3   | Mar 07, 2018 | Jay Dobson       |
 | 1.6.2   | Mar 07, 2018 | Michael Aldworth |
@@ -176,6 +178,10 @@ Document Revisions
 | 1.0.0   | Nov 24, 2017 | Michael Aldworth |
 
 ### Change History ###
+
+#### 1.6.5 ####
+
+- Added new state PreAdmitAccepted to offer
 
 #### 1.6.4 ####
 
@@ -1706,16 +1712,17 @@ Lookups
 
 ### OfferState ###
 
-| Code          |
-| ------------- |
-| PreAdmitted   |
-| Sent          |
-| Accepted      |
-| Paid          |
-| PreRegistered |
-| Withdrawn     |
-| Revoked       |
-| Declined      |
+| Code             |
+| ---------------- |
+| PreAdmitted      |
+| PreAdmitAccepted |
+| Sent             |
+| Accepted         |
+| Paid             |
+| PreRegistered    |
+| Withdrawn        |
+| Revoked          |
+| Declined         |
 
 ### PhoneType ###
 
