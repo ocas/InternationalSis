@@ -8,6 +8,7 @@ Table of Contents
   - [Table of Contents](#table-of-contents)
   - [Document Revisions](#document-revisions)
     - [Change History](#change-history)
+      - [1.6.6](#166)
       - [1.6.5](#165)
       - [1.6.4](#164)
       - [1.6.3](#163)
@@ -154,6 +155,7 @@ Document Revisions
 
 | Version | Date         | Editor           |
 | ------- | ------------ | ---------------- |
+| 1.6.6   | Apr 30, 2018 | Jaime Valencia   |
 | 1.6.5   | Apr 05, 2018 | Jaime Valencia   |
 | 1.6.4   | Mar 26, 2018 | Darren O'Shea    |
 | 1.6.3   | Mar 07, 2018 | Jay Dobson       |
@@ -179,6 +181,10 @@ Document Revisions
 | 1.0.0   | Nov 24, 2017 | Michael Aldworth |
 
 ### Change History ###
+
+#### 1.6.6 ####
+
+- Added PreferredIntakeId to ProgramSelection
 
 #### 1.6.5 ####
 
@@ -1398,6 +1404,7 @@ XML Example: See [Appendix: OfferCreated](#appendix-offercreated)
 | term                | [Term](#term)                                                             |
 | program             | [Program](#program)                                                       |
 | preferredCampusCode | _[nullable] string_ (min 1, max 4) (college assigned Campus Code)         |
+| preferredIntakeId   | _[nullable] string_ Intake selected                                       |
 | choiceNumber        | _number_ (less than 0 = EAP/ESL Program, greater than 0 = Normal Program) |
 
 Example: See [Appendix: ApplicationFull](#appendix-applicationfull)
@@ -2375,6 +2382,7 @@ Note: Empty JSON collections are not represented within the XML.
           "internationalProgramType": "Esl"
         },
         "preferredCampusCode": null,
+        "preferredIntakeId": null,
         "choiceNumber": -1
       },
       {
@@ -2391,6 +2399,7 @@ Note: Empty JSON collections are not represented within the XML.
           "internationalProgramType": "Normal"
         },
         "preferredCampusCode": null,
+        "preferredIntakeId": null,
         "choiceNumber": 1
       },
       {
@@ -2407,6 +2416,7 @@ Note: Empty JSON collections are not represented within the XML.
           "internationalProgramType": "Normal"
         },
         "preferredCampusCode": null,
+        "preferredIntakeId": null,
         "choiceNumber": 2
       }
     ],
@@ -2621,6 +2631,7 @@ Note: Empty JSON collections are not represented within the XML.
           <internationalProgramType>Esl</internationalProgramType>
         </program>
         <preferredCampusCode />
+        <preferredIntakeId />
         <choiceNumber>-1</choiceNumber>
       </item>
       <item>
@@ -2637,6 +2648,7 @@ Note: Empty JSON collections are not represented within the XML.
           <internationalProgramType>Normal</internationalProgramType>
         </program>
         <preferredCampusCode />
+        <preferredIntakeId />
         <choiceNumber>1</choiceNumber>
       </item>
       <item>
@@ -2653,6 +2665,7 @@ Note: Empty JSON collections are not represented within the XML.
           <internationalProgramType>Normal</internationalProgramType>
         </program>
         <preferredCampusCode />
+        <preferredIntakeId />
         <choiceNumber>2</choiceNumber>
       </item>
     </selections>
@@ -2694,6 +2707,7 @@ Used by:
           "internationalProgramType": "Esl"
         },
         "preferredCampusCode": null,
+        "preferredIntakeId": null,
         "choiceNumber": -1
       },
       {
@@ -2710,6 +2724,7 @@ Used by:
           "internationalProgramType": "Normal"
         },
         "preferredCampusCode": null,
+        "preferredIntakeId": null,
         "choiceNumber": 1
       },
       {
@@ -2726,6 +2741,7 @@ Used by:
           "internationalProgramType": "Normal"
         },
         "preferredCampusCode": null,
+        "preferredIntakeId": null,
         "choiceNumber": 2
       }
     ],
@@ -2761,6 +2777,7 @@ Used by:
           <internationalProgramType>Esl</internationalProgramType>
         </program>
         <preferredCampusCode />
+        <preferredIntakeId />
         <choiceNumber>-1</choiceNumber>
       </item>
       <item>
@@ -2777,6 +2794,7 @@ Used by:
           <internationalProgramType>Normal</internationalProgramType>
         </program>
         <preferredCampusCode />
+        <preferredIntakeId />
         <choiceNumber>1</choiceNumber>
       </item>
       <item>
@@ -2793,6 +2811,7 @@ Used by:
           <internationalProgramType>Normal</internationalProgramType>
         </program>
         <preferredCampusCode />
+        <preferredIntakeId />
         <choiceNumber>2</choiceNumber>
       </item>
     </selections>
