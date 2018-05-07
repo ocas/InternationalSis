@@ -36,11 +36,11 @@ Table of Contents
   - [International SISAPI](#international-sisapi)
     - [SIS Environments](#sis-environments)
     - [Endpoints](#endpoints)
-      - [PUT /api/v1/applicants/{number}/college-details](#put-apiv1applicantsnumbercollege-details)
-      - [POST /api/v1/events](#post-apiv1events)
-      - [GET /api/v1/events/peek](#get-apiv1eventspeek)
-      - [PUT /api/v1/events/{id}/ack](#put-apiv1eventsidack)
-      - [PUT /api/v1/offers/pay-offer](#put-apiv1offerspay-offer)
+      - [PUT /api/v1/applicants/{number}/college-details](#put--api-v1-applicants-number-college-details)
+      - [POST /api/v1/events](#post--api-v1-events)
+      - [GET /api/v1/events/peek](#get--api-v1-events-peek)
+      - [PUT /api/v1/events/{id}/ack](#put--api-v1-events-id-ack)
+      - [PUT /api/v1/offers/pay-offer](#put--api-v1-offers-pay-offer)
   - [Objects](#objects)
     - [Address](#address)
     - [Agency](#agency)
@@ -108,9 +108,9 @@ Table of Contents
     - [Database Connectivity](#database-connectivity)
     - [Sleep Interval](#sleep-interval)
     - [Logging Configuration](#logging-configuration)
-      - [serilog:using:RollingFileAlternate](#serilogusingrollingfilealternate)
-      - [serilog:using:EventLog](#serilogusingeventlog)
-      - [serilog:using:Console](#serilogusingconsole)
+      - [serilog:using:RollingFileAlternate](#serilog-using-rollingfilealternate)
+      - [serilog:using:EventLog](#serilog-using-eventlog)
+      - [serilog:using:Console](#serilog-using-console)
     - [Identity Configuration](#identity-configuration)
       - [Receiver Client](#receiver-client)
         - [Receiver Client Configuration](#receiver-client-configuration)
@@ -129,22 +129,22 @@ Table of Contents
   - [Authentication and Authorization](#authentication-and-authorization)
     - [How to Get a Bearer Token](#how-to-get-a-bearer-token)
   - [Appendix](#appendix)
-    - [Appendix: ApplicationFull](#appendix-applicationfull)
+    - [Appendix: ApplicationFull](#appendix--applicationfull)
       - [ApplicationFull Submitted JSON](#applicationfull-submitted-json)
       - [ApplicationFull Submitted XML](#applicationfull-submitted-xml)
-    - [Appendix: Application](#appendix-application)
+    - [Appendix: Application](#appendix--application)
       - [Application Submitted JSON](#application-submitted-json)
       - [Application XML](#application-xml)
-    - [Appendix: ApplicantCollegeDetails](#appendix-applicantcollegedetails)
+    - [Appendix: ApplicantCollegeDetails](#appendix--applicantcollegedetails)
       - [ApplicantCollegeDetails JSON](#applicantcollegedetails-json)
       - [ApplicantCollegeDetails XML](#applicantcollegedetails-xml)
-    - [Appendix: CreateOffer](#appendix-createoffer)
+    - [Appendix: CreateOffer](#appendix--createoffer)
       - [CreateOffer JSON](#createoffer-json)
       - [CreateOffer XML](#createoffer-xml)
-    - [Appendix: OfferCreated](#appendix-offercreated)
+    - [Appendix: OfferCreated](#appendix--offercreated)
       - [OfferCreated JSON](#offercreated-json)
       - [OfferCreated XML](#offercreated-xml)
-    - [Appendix: PayOffer](#appendix-payoffer)
+    - [Appendix: PayOffer](#appendix--payoffer)
       - [PayOffer JSON](#payoffer-json)
       - [PayOffer XML](#payoffer-xml)
       - [RevokeOffer JSON](#revokeoffer-json)
@@ -729,7 +729,7 @@ And now to Deserialize or Serialize, please look at the example in [JsonConvert 
 | Property                  | Type                                                                        |
 | ------------------------- | --------------------------------------------------------------------------- |
 | id                        | _string_ guid                                                               |
-| number                    | _string_ (min 1, max 20)                                                    |
+| number                    | _string_ (min 1, max 20) the Applicant Number (not Application Number)      |
 | version                   | number (used for historical profile tracking)                               |
 | created                   | _string_ ISO 8601 Date Formatted String                                     |
 | updated                   | _string_ ISO 8601 Date Formatted String                                     |
@@ -884,7 +884,7 @@ Example: See [Appendix: ApplicationFull](#appendix-applicationfull)
 | Property   | Type                                               |
 | ---------- | -------------------------------------------------- |
 | id         | _string_ guid                                      |
-| number     | _string_ (min 1, max 20)                           |
+| number     | _string_ (min 1, max 20) the Application Number    |
 | created    | _string_ ISO 8601 Date Formatted String            |
 | updated    | _string_ ISO 8601 Date Formatted String            |
 | submitted  | _string_ ISO 8601 Date Formatted String            |
@@ -900,7 +900,7 @@ Example: See [Appendix: Application](#appendix-application)
 | Property   | Type                                               |
 | ---------- | -------------------------------------------------- |
 | id         | _string_ guid                                      |
-| number     | _string_ (min 1, max 20)                           |
+| number     | _string_ (min 1, max 20) the Application Number    |
 | agency     | [Agency](#agency)                                  |
 | applicant  | [Applicant](#applicant)                            |
 | selections | Array of [ProgramSelection](#programselection)     |
