@@ -1297,6 +1297,8 @@ XML Example: See [Appendix: OfferCreated](#appendix-offercreated)
 | startDate         | _string_ date string in format `yyyy-MM-dd`          |
 | timestamp         | _string_ ISO 8601 Date Formatted String              |
 | by                | _string_ (min 1, max 255)                            |
+| revokeType        | _string_ ([Lookup](#offerrevoketype))                |
+| otherReason       | _[nullable] string_ (min 1, max 100)                 |
 
 **_Example:_**
 
@@ -1308,7 +1310,9 @@ XML Example: See [Appendix: OfferCreated](#appendix-offercreated)
   "programCode" : "TSTAD1",
   "startDate" : "2017-01-20",
   "timestamp" : "2017-12-08T17:19:02.3269001Z",
-  "by" : "John Doe"
+  "by" : "John Doe",
+  "revokeType" : "other",
+  "otherReason" : "something that isn't covered in the list of common responses"
 }
 ```
 
