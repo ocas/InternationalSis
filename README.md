@@ -8,6 +8,7 @@ Table of Contents
   - [Table of Contents](#table-of-contents)
   - [Document Revisions](#document-revisions)
     - [Change History](#change-history)
+      - [1.7.0](#170)
       - [1.6.6](#166)
       - [1.6.5](#165)
       - [1.6.4](#164)
@@ -64,6 +65,7 @@ Table of Contents
     - [OfferCondition](#offercondition)
     - [OfferDeclined](#offerdeclined)
     - [OfferPreRegistered](#offerpreregistered)
+    - [OfferRevoked](#offerrevoked)
     - [OfferWithdrawn](#offerwithdrawn)
     - [PayOffer](#payoffer)
     - [Phone](#phone)
@@ -155,6 +157,7 @@ Document Revisions
 
 | Version | Date         | Editor           |
 | ------- | ------------ | ---------------- |
+| 1.7.0   | May 08, 2018 | Jaime Valencia   |
 | 1.6.6   | Apr 30, 2018 | Jaime Valencia   |
 | 1.6.5   | Apr 05, 2018 | Jaime Valencia   |
 | 1.6.4   | Mar 26, 2018 | Darren O'Shea    |
@@ -181,6 +184,10 @@ Document Revisions
 | 1.0.0   | Nov 24, 2017 | Michael Aldworth |
 
 ### Change History ###
+
+#### 1.7.0 ####
+
+- Added OfferRevoked inbound event types
 
 #### 1.6.6 ####
 
@@ -1254,6 +1261,32 @@ XML Example: See [Appendix: OfferCreated](#appendix-offercreated)
 ```
 
 ### OfferPreRegistered ###
+
+| Property          | Type                                                 |
+| ----------------- | ---------------------------------------------------- |
+| applicationNumber | _string_ (min 1, max 20)                             |
+| campusCode        | _string_ (min 1, max 4)                              |
+| deliveryOption    | _string_ ([Lookup](#intakedeliveryoption))           |
+| programCode       | _string_ (min 1, max 10)                             |
+| startDate         | _string_ date string in format `yyyy-MM-dd`          |
+| timestamp         | _string_ ISO 8601 Date Formatted String              |
+| by                | _string_ (min 1, max 255)                            |
+
+**_Example:_**
+
+```JSON
+{
+  "applicationNumber" : "X12345",
+  "campusCode" : "main",
+  "deliveryOption" : "fulltime",
+  "programCode" : "TSTAD1",
+  "startDate" : "2017-01-20",
+  "timestamp" : "2017-12-08T17:19:02.3269001Z",
+  "by" : "John Doe"
+}
+```
+
+### OfferRevoked ###
 
 | Property          | Type                                                 |
 | ----------------- | ---------------------------------------------------- |
