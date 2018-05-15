@@ -8,6 +8,7 @@ Table of Contents
   - [Table of Contents](#table-of-contents)
   - [Document Revisions](#document-revisions)
     - [Change History](#change-history)
+      - [1.7.1](#171)
       - [1.7.0](#170)
       - [1.6.6](#166)
       - [1.6.5](#165)
@@ -157,6 +158,7 @@ Document Revisions
 
 | Version | Date         | Editor           |
 | ------- | ------------ | ---------------- |
+| 1.7.1   | May 14, 2018 | Jaime Valencia   |
 | 1.7.0   | May 08, 2018 | Jaime Valencia   |
 | 1.6.6   | Apr 30, 2018 | Jaime Valencia   |
 | 1.6.5   | Apr 05, 2018 | Jaime Valencia   |
@@ -184,6 +186,12 @@ Document Revisions
 | 1.0.0   | Nov 24, 2017 | Michael Aldworth |
 
 ### Change History ###
+
+#### 1.7.1 ####
+
+- Add intakeId to NewOfferInfo, OfferAccepted, OfferDetails, OfferDeclined, OfferPreRegistered, OfferRevoked
+  OfferWithdrawn, PayOffer, PreAdmitOfferAccepted, RevokeOffer and UpdateOffer so now the intake can be identified
+  using campusCode, deliveryOption, programCode and startDate or intakeId.
 
 #### 1.7.0 ####
 
@@ -1034,10 +1042,11 @@ Example: See [Appendix: ApplicationFull](#appendix-applicationfull)
 | Property                | Type                                                                                                       |
 | ----------------------- | ---------------------------------------------------------------------------------------------------------- |
 | applicationNumber       | _string_ (min 1, max 20)                                                                                   |
-| campusCode              | _string_ (min 1, max 4)                                                                                    |
-| deliveryOption          | _string_ ([Lookup](#intakedeliveryoption))                                                                 |
-| programCode             | _string_ (min 1, max 10)                                                                                   |
-| startDate               | _string_ date string in format `yyyy-MM-dd`                                                                |
+| campusCode              | _string_ (min 1, max 4)  _[nullable]_ if intakeId is provided                                              |
+| deliveryOption          | _string_ ([Lookup](#intakedeliveryoption)) _[nullable]_ if intakeId is provided                            |
+| programCode             | _string_ (min 1, max 10) _[nullable]_ if intakeId is provided                                              |
+| startDate               | _string_ date string in format `yyyy-MM-dd` _[nullable]_ if intakeId is provided                           |
+| intakeId                | _[nullable] guid_ however, if provided, then campusCode-deliveryOption-programCode-startDate must be null  |
 | studentId               | _[nullable] string_ (min 1, max 30)                                                                        |
 | isPreAdmit              | _boolean_                                                                                                  |
 | entryLevelType          | _[nullable] string_ ([Lookup](#entryleveltype))                                                            |
@@ -1069,6 +1078,7 @@ Example: See [Appendix: ApplicationFull](#appendix-applicationfull)
   "deliveryOption" : "fulltime",
   "programCode" : "TST1DG5",
   "startDate" : "2018-01-01",
+  "intakeId" : "00000000-0000-0000-0000-000000000000",
   "isPreAdmit" : false,
   "isExchange" : true,
   "internshipType" : "notavailable",
@@ -1125,15 +1135,16 @@ otherwise the OIS will generate an offer letter on your behalf.
 
 ### OfferAccepted ###
 
-| Property          | Type                                                 |
-| ----------------- | ---------------------------------------------------- |
-| applicationNumber | _string_ (min 1, max 20)                             |
-| campusCode        | _string_ (min 1, max 4)                              |
-| deliveryOption    | _string_ ([Lookup](#intakedeliveryoption))           |
-| programCode       | _string_ (min 1, max 10)                             |
-| startDate         | _string_ date string in format `yyyy-MM-dd`          |
-| timestamp         | _string_ ISO 8601 Date Formatted String              |
-| by                | _string_ (min 1, max 255)                            |
+| Property          | Type                                                                                                       |
+| ----------------- | ---------------------------------------------------------------------------------------------------------- |
+| applicationNumber | _string_ (min 1, max 20)                                                                                   |
+| campusCode        | _string_ (min 1, max 4) _[nullable]_ if intakeId is provided                                               |
+| deliveryOption    | _string_ ([Lookup](#intakedeliveryoption)) _[nullable]_ if intakeId is provided                            |
+| programCode       | _string_ (min 1, max 10) _[nullable]_ if intakeId is provided                                              |
+| startDate         | _string_ date string in format `yyyy-MM-dd` _[nullable]_ if intakeId is provided                           |
+| intakeId          | _[nullable] guid_ however, if provided, then campusCode-deliveryOption-programCode-startDate must be null  |
+| timestamp         | _string_ ISO 8601 Date Formatted String                                                                    |
+| by                | _string_ (min 1, max 255)                                                                                  |
 
 **_Example:_**
 
@@ -1144,6 +1155,7 @@ otherwise the OIS will generate an offer letter on your behalf.
   "deliveryOption" : "fulltime",
   "programCode" : "TSTAD1",
   "startDate" : "2017-01-20",
+  "intakeId" : "00000000-0000-0000-0000-000000000000",
   "timestamp" : "2017-12-08T17:19:02.3269001Z",
   "by" : "John Doe"
 }
@@ -1154,11 +1166,12 @@ otherwise the OIS will generate an offer letter on your behalf.
 | Property                | Type                                                                                                       |
 | ----------------------- | ---------------------------------------------------------------------------------------------------------- |
 | applicationNumber       | _string_ (min 1, max 20)                                                                                   |
-| campusCode              | _string_ (min 1, max 4)                                                                                    |
-| deliveryOption          | _string_ ([Lookup](#intakedeliveryoption))                                                                 |
-| programCode             | _string_ (min 1, max 10)                                                                                   |
+| campusCode              | _string_ (min 1, max 4) _[nullable]_ if intakeId is provided                                               |
+| deliveryOption          | _string_ ([Lookup](#intakedeliveryoption)) _[nullable]_ if intakeId is provided                            |
+| programCode             | _string_ (min 1, max 10) _[nullable]_ if intakeId is provided                                              |
+| startDate               | _string_ date string in format `yyyy-MM-dd` _[nullable]_ if intakeId is provided                           |
+| intakeId                | _[nullable] guid_ however, if provided, then campusCode-deliveryOption-programCode-startDate must be null  |
 | state                   | _string_ (min 1, max 50) ([Lookup](#offerstate))                                                           |
-| startDate               | _string_ date string in format `yyyy-MM-dd`                                                                |
 | studentId               | _[nullable] string_ (min 1, max 30)                                                                        |
 | entryLevelType          | _string_ ([Lookup](#entryleveltype))                                                                       |
 | isExchange              | _boolean_                                                                                                  |
@@ -1191,6 +1204,7 @@ otherwise the OIS will generate an offer letter on your behalf.
   "deliveryOption" : "fulltime",
   "programCode" : "TST1DG5",
   "startDate" : "2018-01-01",
+  "intakeId" : "00000000-0000-0000-0000-000000000000",
   "state" : "Sent",
   "isExchange" : true,
   "internshipType" : "notavailable",
@@ -1236,15 +1250,16 @@ XML Example: See [Appendix: OfferCreated](#appendix-offercreated)
 
 ### OfferDeclined ###
 
-| Property          | Type                                                 |
-| ----------------- | ---------------------------------------------------- |
-| applicationNumber | _string_ (min 1, max 20)                             |
-| campusCode        | _string_ (min 1, max 4)                              |
-| deliveryOption    | _string_ ([Lookup](#intakedeliveryoption))           |
-| programCode       | _string_ (min 1, max 10)                             |
-| startDate         | _string_ date string in format `yyyy-MM-dd`          |
-| timestamp         | _string_ ISO 8601 Date Formatted String              |
-| by                | _string_ (min 1, max 255)                            |
+| Property          | Type                                                                                                       |
+| ----------------- | ---------------------------------------------------------------------------------------------------------- |
+| applicationNumber | _string_ (min 1, max 20)                                                                                   |
+| campusCode        | _string_ (min 1, max 4) _[nullable]_ if intakeId is provided                                               |
+| deliveryOption    | _string_ ([Lookup](#intakedeliveryoption)) _[nullable]_ if intakeId is provided                            |
+| programCode       | _string_ (min 1, max 10) _[nullable]_ if intakeId is provided                                              |
+| startDate         | _string_ date string in format `yyyy-MM-dd` _[nullable]_ if intakeId is provided                           |
+| intakeId          | _[nullable] guid_ however, if provided, then campusCode-deliveryOption-programCode-startDate must be null  |
+| timestamp         | _string_ ISO 8601 Date Formatted String                                                                    |
+| by                | _string_ (min 1, max 255)                                                                                  |
 
 **_Example:_**
 
@@ -1255,6 +1270,7 @@ XML Example: See [Appendix: OfferCreated](#appendix-offercreated)
   "deliveryOption" : "fulltime",
   "programCode" : "TSTAD1",
   "startDate" : "2017-01-20",
+  "intakeId" : "00000000-0000-0000-0000-000000000000",
   "timestamp" : "2017-12-08T17:19:02.3269001Z",
   "by" : "John Doe"
 }
@@ -1262,15 +1278,16 @@ XML Example: See [Appendix: OfferCreated](#appendix-offercreated)
 
 ### OfferPreRegistered ###
 
-| Property          | Type                                                 |
-| ----------------- | ---------------------------------------------------- |
-| applicationNumber | _string_ (min 1, max 20)                             |
-| campusCode        | _string_ (min 1, max 4)                              |
-| deliveryOption    | _string_ ([Lookup](#intakedeliveryoption))           |
-| programCode       | _string_ (min 1, max 10)                             |
-| startDate         | _string_ date string in format `yyyy-MM-dd`          |
-| timestamp         | _string_ ISO 8601 Date Formatted String              |
-| by                | _string_ (min 1, max 255)                            |
+| Property          | Type                                                                                                       |
+| ----------------- | ---------------------------------------------------------------------------------------------------------- |
+| applicationNumber | _string_ (min 1, max 20)                                                                                   |
+| campusCode        | _string_ (min 1, max 4) _[nullable]_ if intakeId is provided                                               |
+| deliveryOption    | _string_ ([Lookup](#intakedeliveryoption)) _[nullable]_ if intakeId is provided                            |
+| programCode       | _string_ (min 1, max 10) _[nullable]_ if intakeId is provided                                              |
+| startDate         | _string_ date string in format `yyyy-MM-dd` _[nullable]_ if intakeId is provided                           |
+| intakeId          | _[nullable] guid_ however, if provided, then campusCode-deliveryOption-programCode-startDate must be null  |
+| timestamp         | _string_ ISO 8601 Date Formatted String                                                                    |
+| by                | _string_ (min 1, max 255)                                                                                  |
 
 **_Example:_**
 
@@ -1281,6 +1298,7 @@ XML Example: See [Appendix: OfferCreated](#appendix-offercreated)
   "deliveryOption" : "fulltime",
   "programCode" : "TSTAD1",
   "startDate" : "2017-01-20",
+  "intakeId" : "00000000-0000-0000-0000-000000000000",
   "timestamp" : "2017-12-08T17:19:02.3269001Z",
   "by" : "John Doe"
 }
@@ -1288,17 +1306,18 @@ XML Example: See [Appendix: OfferCreated](#appendix-offercreated)
 
 ### OfferRevoked ###
 
-| Property          | Type                                                 |
-| ----------------- | ---------------------------------------------------- |
-| applicationNumber | _string_ (min 1, max 20)                             |
-| campusCode        | _string_ (min 1, max 4)                              |
-| deliveryOption    | _string_ ([Lookup](#intakedeliveryoption))           |
-| programCode       | _string_ (min 1, max 10)                             |
-| startDate         | _string_ date string in format `yyyy-MM-dd`          |
-| timestamp         | _string_ ISO 8601 Date Formatted String              |
-| by                | _string_ (min 1, max 255)                            |
-| revokeType        | _string_ ([Lookup](#offerrevoketype))                |
-| otherReason       | _[nullable] string_ (min 1, max 100)                 |
+| Property          | Type                                                                                                       |
+| ----------------- | ---------------------------------------------------------------------------------------------------------- |
+| applicationNumber | _string_ (min 1, max 20)                                                                                   |
+| campusCode        | _string_ (min 1, max 4) _[nullable]_ if intakeId is provided                                               |
+| deliveryOption    | _string_ ([Lookup](#intakedeliveryoption)) _[nullable]_ if intakeId is provided                            |
+| programCode       | _string_ (min 1, max 10) _[nullable]_ if intakeId is provided                                              |
+| startDate         | _string_ date string in format `yyyy-MM-dd` _[nullable]_ if intakeId is provided                           |
+| intakeId          | _[nullable] guid_ however, if provided, then campusCode-deliveryOption-programCode-startDate must be null  |
+| timestamp         | _string_ ISO 8601 Date Formatted String                                                                    |
+| by                | _string_ (min 1, max 255)                                                                                  |
+| revokeType        | _string_ ([Lookup](#offerrevoketype))                                                                      |
+| otherReason       | _[nullable] string_ (min 1, max 100)                                                                       |
 
 **_Example:_**
 
@@ -1309,6 +1328,7 @@ XML Example: See [Appendix: OfferCreated](#appendix-offercreated)
   "deliveryOption" : "fulltime",
   "programCode" : "TSTAD1",
   "startDate" : "2017-01-20",
+  "intakeId" : "00000000-0000-0000-0000-000000000000",
   "timestamp" : "2017-12-08T17:19:02.3269001Z",
   "by" : "John Doe",
   "revokeType" : "other",
@@ -1318,17 +1338,18 @@ XML Example: See [Appendix: OfferCreated](#appendix-offercreated)
 
 ### OfferWithdrawn ###
 
-| Property          | Type                                                       |
-| ----------------- | ---------------------------------------------------------- |
-| applicationNumber | _string_ (min 1, max 20)                                   |
-| campusCode        | _string_ (min 1, max 4)                                    |
-| deliveryOption    | _string_ ([Lookup](#intakedeliveryoption))                 |
-| programCode       | _string_ (min 1, max 10)                                   |
-| startDate         | _string_ date string in format `yyyy-MM-dd`                |
-| timestamp         | _string_ ISO 8601 Date Formatted String                    |
-| by                | _string_ (min 1, max 255)                                  |
-| withdrawnType     | _string_ ([Lookup](#withdrawtype))                         |
-| otherReason       | _[null if withdrawnType != other] string_ (min 1, max 100) |
+| Property          | Type                                                                                                       |
+| ----------------- | ---------------------------------------------------------------------------------------------------------- |
+| applicationNumber | _string_ (min 1, max 20)                                                                                   |
+| campusCode        | _string_ (min 1, max 4) _[nullable]_ if intakeId is provided                                               |
+| deliveryOption    | _string_ ([Lookup](#intakedeliveryoption)) _[nullable]_ if intakeId is provided                            |
+| programCode       | _string_ (min 1, max 10) _[nullable]_ if intakeId is provided                                              |
+| startDate         | _string_ date string in format `yyyy-MM-dd` _[nullable]_ if intakeId is provided                           |
+| intakeId          | _[nullable] guid_ however, if provided, then campusCode-deliveryOption-programCode-startDate must be null  |
+| timestamp         | _string_ ISO 8601 Date Formatted String                                                                    |
+| by                | _string_ (min 1, max 255)                                                                                  |
+| withdrawnType     | _string_ ([Lookup](#withdrawtype))                                                                         |
+| otherReason       | _[null if withdrawnType != other] string_ (min 1, max 100)                                                 |
 
 **_Example:_**
 
@@ -1339,6 +1360,7 @@ XML Example: See [Appendix: OfferCreated](#appendix-offercreated)
   "deliveryOption" : "fulltime",
   "programCode" : "TSTAD1",
   "startDate" : "2018-01-20",
+  "intakeId" : "00000000-0000-0000-0000-000000000000",
   "withdrawnType" : "visadeclined",
   "otherReason" : null,
   "timestamp" : "2017-12-08T17:19:02.3269001Z",
@@ -1348,14 +1370,15 @@ XML Example: See [Appendix: OfferCreated](#appendix-offercreated)
 
 ### PayOffer ###
 
-| Property          | Type                                                         |
-| ----------------- | ------------------------------------------------------------ |
-| applicationNumber | _string_ (min 1, max 20)                                     |
-| campusCode        | _string_ (min 1, max 4)                                      |
-| deliveryOption    | _string_ ([Lookup](#intakedeliveryoption))                   |
-| programCode       | _string_ (min 1, max 10)                                     |
-| startDate         | _string_ date string in format `yyyy-MM-dd`                  |
-| receipt           | _[nullable]_ [NewBinaryDocumentInfo](#newbinarydocumentinfo) |
+| Property          | Type                                                                                                       |
+| ----------------- | ---------------------------------------------------------------------------------------------------------- |
+| applicationNumber | _string_ (min 1, max 20)                                                                                   |
+| campusCode        | _string_ (min 1, max 4) _[nullable]_ if intakeId is provided                                               |
+| deliveryOption    | _string_ ([Lookup](#intakedeliveryoption)) _[nullable]_ if intakeId is provided                            |
+| programCode       | _string_ (min 1, max 10) _[nullable]_ if intakeId is provided                                              |
+| startDate         | _string_ date string in format `yyyy-MM-dd` _[nullable]_ if intakeId is provided                           |
+| intakeId          | _[nullable] guid_ however, if provided, then campusCode-deliveryOption-programCode-startDate must be null  |
+| receipt           | _[nullable]_ [NewBinaryDocumentInfo](#newbinarydocumentinfo)                                               |
 
 **_Example:_**
 
@@ -1366,7 +1389,8 @@ XML Example: See [Appendix: OfferCreated](#appendix-offercreated)
   "deliveryOption" : "fulltime",
   "programCode" : "TSTAD1",
   "startDate" : "2018-01-20",
-  "receipt" : {}
+  "intakeId" : "00000000-0000-0000-0000-000000000000",
+  "receipt" : null
 }
 ```
 
@@ -1390,15 +1414,16 @@ XML Example: See [Appendix: OfferCreated](#appendix-offercreated)
 
 ### PreAdmitOfferAccepted ###
 
-| Property          | Type                                                 |
-| ----------------- | ---------------------------------------------------- |
-| applicationNumber | _string_ (min 1, max 20)                             |
-| campusCode        | _string_ (min 1, max 4)                              |
-| deliveryOption    | _string_ ([Lookup](#intakedeliveryoption))           |
-| programCode       | _string_ (min 1, max 10)                             |
-| startDate         | _string_ date string in format `yyyy-MM-dd`          |
-| timestamp         | _string_ ISO 8601 Date Formatted String              |
-| by                | _string_ (min 1, max 255)                            |
+| Property          | Type                                                                                                       |
+| ----------------- | ---------------------------------------------------------------------------------------------------------- |
+| applicationNumber | _string_ (min 1, max 20)                                                                                   |
+| campusCode        | _string_ (min 1, max 4) _[nullable]_ if intakeId is provided                                               |
+| deliveryOption    | _string_ ([Lookup](#intakedeliveryoption)) _[nullable]_ if intakeId is provided                            |
+| programCode       | _string_ (min 1, max 10) _[nullable]_ if intakeId is provided                                              |
+| startDate         | _string_ date string in format `yyyy-MM-dd` _[nullable]_ if intakeId is provided                           |
+| intakeId          | _[nullable] guid_ however, if provided, then campusCode-deliveryOption-programCode-startDate must be null  |
+| timestamp         | _string_ ISO 8601 Date Formatted String                                                                    |
+| by                | _string_ (min 1, max 255)                                                                                  |
 
 **_Example:_**
 
@@ -1409,6 +1434,7 @@ XML Example: See [Appendix: OfferCreated](#appendix-offercreated)
   "deliveryOption" : "fulltime",
   "programCode" : "TSTAD1",
   "startDate" : "2017-01-20",
+  "intakeId" : "00000000-0000-0000-0000-000000000000",
   "timestamp" : "2017-12-08T17:19:02.3269001Z",
   "by" : "John Doe"
 }
@@ -1476,15 +1502,16 @@ Example: See [Appendix: ApplicationFull](#appendix-applicationfull)
 
 ### RevokeOffer ###
 
-| Property          | Type                                                 |
-| ----------------- | ---------------------------------------------------- |
-| applicationNumber | _string_ (min 1, max 20)                             |
-| campusCode        | _string_ (min 1, max 4)                              |
-| deliveryOption    | _string_ ([Lookup](#intakedeliveryoption))           |
-| programCode       | _string_ (min 1, max 10)                             |
-| startDate         | _string_ date string in format `yyyy-MM-dd`          |
-| revokeType        | _string_ ([Lookup](#offerrevoketype))                |
-| otherReason       | _[nullable] string_ (min 1, max 100)                 |
+| Property          | Type                                                                                                       |
+| ----------------- | ---------------------------------------------------------------------------------------------------------- |
+| applicationNumber | _string_ (min 1, max 20)                                                                                   |
+| campusCode        | _string_ (min 1, max 4) _[nullable]_ if intakeId is provided                                               |
+| deliveryOption    | _string_ ([Lookup](#intakedeliveryoption)) _[nullable]_ if intakeId is provided                            |
+| programCode       | _string_ (min 1, max 10) _[nullable]_ if intakeId is provided                                              |
+| startDate         | _string_ date string in format `yyyy-MM-dd` _[nullable]_ if intakeId is provided                           |
+| intakeId          | _[nullable] guid_ however, if provided, then campusCode-deliveryOption-programCode-startDate must be null  |
+| revokeType        | _string_ ([Lookup](#offerrevoketype))                                                                      |
+| otherReason       | _[nullable] string_ (min 1, max 100)                                                                       |
 
 **_Example:_**
 
@@ -1495,6 +1522,7 @@ Example: See [Appendix: ApplicationFull](#appendix-applicationfull)
   "deliveryOption" : "fulltime",
   "programCode" : "TSTAD1",
   "startDate" : "2018-01-20",
+  "intakeId" : "00000000-0000-0000-0000-000000000000",
   "revokeType" : "other",
   "otherReason" : "something that isn't covered in the list of common responses"
 }
@@ -1555,10 +1583,11 @@ Example: See [Appendix: ApplicationFull](#appendix-applicationfull)
 | Property                | Type                                                                                                       |
 | ----------------------- | ---------------------------------------------------------------------------------------------------------- |
 | applicationNumber       | _string_ (min 1, max 20)                                                                                   |
-| campusCode              | _string_ (min 1, max 4)                                                                                    |
-| deliveryOption          | _string_ ([Lookup](#intakedeliveryoption))                                                                 |
-| programCode             | _string_ (min 1, max 10)                                                                                   |
-| startDate               | _string_ date string in format `yyyy-MM-dd`                                                                |
+| campusCode              | _string_ (min 1, max 4) _[nullable]_ if intakeId is provided                                               |
+| deliveryOption          | _string_ ([Lookup](#intakedeliveryoption)) _[nullable]_ if intakeId is provided                            |
+| programCode             | _string_ (min 1, max 10) _[nullable]_ if intakeId is provided                                              |
+| startDate               | _string_ date string in format `yyyy-MM-dd` _[nullable]_ if intakeId is provided                           |
+| intakeId                | _[nullable] guid_ however, if provided, then campusCode-deliveryOption-programCode-startDate must be null  |
 | studentId               | _[nullable] string_ (min 1, max 30)                                                                        |
 | isPreAdmit              | _boolean_                                                                                                  |
 | entryLevelType          | _[nullable] string_ ([Lookup](#entryleveltype))                                                            |
@@ -1590,6 +1619,7 @@ Example: See [Appendix: ApplicationFull](#appendix-applicationfull)
   "deliveryOption" : "fulltime",
   "programCode" : "TST1DG5",
   "startDate" : "2018-01-01",
+  "intakeId" : "00000000-0000-0000-0000-000000000000",
   "isPreAdmit" : false,
   "isExchange" : true,
   "internshipType" : "notavailable",
