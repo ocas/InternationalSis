@@ -8,6 +8,7 @@ Table of Contents
   - [Table of Contents](#table-of-contents)
   - [Document Revisions](#document-revisions)
     - [Change History](#change-history)
+      - [1.7.2](#172)
       - [1.7.1](#171)
       - [1.7.0](#170)
       - [1.6.6](#166)
@@ -61,6 +62,7 @@ Table of Contents
     - [Intake](#intake)
     - [NewBinaryDocumentInfo](#newbinarydocumentinfo)
     - [NewOfferInfo](#newofferinfo)
+    - [NewPaymentReceiptInfo](#newpaymentreceiptinfo)
     - [OfferAccepted](#offeraccepted)
     - [OfferDetails](#offerdetails)
     - [OfferCondition](#offercondition)
@@ -68,7 +70,7 @@ Table of Contents
     - [OfferPreRegistered](#offerpreregistered)
     - [OfferRevoked](#offerrevoked)
     - [OfferWithdrawn](#offerwithdrawn)
-    - [PayOffer](#payoffer)
+    - [OfferPaymentReceipt](#offerpaymentreceipt)
     - [Phone](#phone)
     - [PreAdmitOfferAccepted](#preadmitofferaccepted)
     - [Program](#program)
@@ -99,6 +101,7 @@ Table of Contents
     - [PhoneType](#phonetype)
     - [ProgramCredentialType](#programcredentialtype)
     - [ProgramDeclineReason](#programdeclinereason)
+    - [ReceiptType](#receipttype)
     - [SchoolType](#schooltype)
     - [SisInboundEventType](#sisinboundeventtype)
     - [SisOutboundEventType](#sisoutboundeventtype)
@@ -147,9 +150,10 @@ Table of Contents
     - [Appendix: OfferCreated](#appendix--offercreated)
       - [OfferCreated JSON](#offercreated-json)
       - [OfferCreated XML](#offercreated-xml)
-    - [Appendix: PayOffer](#appendix--payoffer)
-      - [PayOffer JSON](#payoffer-json)
-      - [PayOffer XML](#payoffer-xml)
+    - [Appendix: OfferPaymentReceipt](#appendix--offerpaymentreceipt)
+      - [OfferPaymentReceipt JSON](#offerpaymentreceipt-json)
+      - [OfferPaymentReceipt XML](#offerpaymentreceipt-xml)
+    - [Appendix: RevokeOffer](#appendix--revokeoffer)
       - [RevokeOffer JSON](#revokeoffer-json)
       - [RevokeOffer XML](#revokeoffer-xml)
 
@@ -158,6 +162,7 @@ Document Revisions
 
 | Version | Date         | Editor           |
 | ------- | ------------ | ---------------- |
+| 1.7.2   | May 29, 2018 | Michael Aldworth |
 | 1.7.1   | May 14, 2018 | Jaime Valencia   |
 | 1.7.0   | May 08, 2018 | Jaime Valencia   |
 | 1.6.6   | Apr 30, 2018 | Jaime Valencia   |
@@ -186,6 +191,12 @@ Document Revisions
 | 1.0.0   | Nov 24, 2017 | Michael Aldworth |
 
 ### Change History ###
+
+#### 1.7.2 ####
+
+- Added new event AddOfferPaymentReceipt
+- Add new property to PayOffer event "generateReceiptInfo", which will generate a receipt from the receipt template
+- Add ReceiptType Lookup
 
 #### 1.7.1 ####
 
@@ -1136,6 +1147,26 @@ These fields are as follows:
 If a value is provided for `customOfferLetter` then that will be used,
 otherwise the OIS will generate an offer letter on your behalf.
 
+### NewPaymentReceiptInfo ###
+
+| Property    | Type                                                                          |
+| ----------- | ----------------------------------------------------------------------------- |
+| receiptType | _string_ ([Lookup](#receipttype))                                             |
+| paymentDate | _string_ date string in format `yyyy-MM-dd`                                   |
+| amount      | _number_ (min 0.00, max 999,999,999.00)                                       |
+| number      | _[nullable] string_ the receipt number, invoice number, or college identifier |
+
+**_Example:_**
+
+```JSON
+{
+  "receiptType": "Deposit",
+  "paymentDate": "2018-04-20",
+  "amount": 2000.00,
+  "number": "INV54321"
+}
+```
+
 ### OfferAccepted ###
 
 | Property          | Type                                                              |
@@ -1372,17 +1403,33 @@ XML Example: See [Appendix: OfferCreated](#appendix-offercreated)
 }
 ```
 
-### PayOffer ###
+### OfferPaymentReceipt ###
 
-| Property          | Type                                                                                                       |
-| ----------------- | ---------------------------------------------------------------------------------------------------------- |
-| applicationNumber | _string_ (min 1, max 20)                                                                                   |
-| campusCode        | _string_ (min 1, max 4) _[nullable]_ if intakeId is provided                                               |
-| deliveryOption    | _string_ ([Lookup](#intakedeliveryoption)) _[nullable]_ if intakeId is provided                            |
-| programCode       | _string_ (min 1, max 10) _[nullable]_ if intakeId is provided                                              |
-| startDate         | _string_ date string in format `yyyy-MM-dd` _[nullable]_ if intakeId is provided                           |
-| intakeId          | _[nullable] string_ guid if provided, then campusCode-deliveryOption-programCode-startDate must be null    |
-| receipt           | _[nullable]_ [NewBinaryDocumentInfo](#newbinarydocumentinfo)                                               |
+| Property                | Type                                                                                                                 |
+| ----------------------- | -------------------------------------------------------------------------------------------------------------------- |
+| applicationNumber       | _string_ (min 1, max 20)                                                                                             |
+| campusCode              | _string_ (min 1, max 4) _[nullable]_ if intakeId is provided                                                         |
+| deliveryOption          | _string_ ([Lookup](#intakedeliveryoption)) _[nullable]_ if intakeId is provided                                      |
+| programCode             | _string_ (min 1, max 10) _[nullable]_ if intakeId is provided                                                        |
+| startDate               | _string_ date string in format `yyyy-MM-dd` _[nullable]_ if intakeId is provided                                     |
+| intakeId                | _[nullable] string_ guid if provided, then campusCode-deliveryOption-programCode-startDate must be null              |
+| receipt                 | _[nullable]_ [NewBinaryDocumentInfo](#newbinarydocumentinfo) cannot provide both 'receipt' and 'generateReceiptInfo' |
+| generateReceiptInfo     | _[nullable]_ [NewPaymentReceiptInfo](#newpaymentreceiptinfo)                                                         |
+| sendReceiptNotification | _[nullable] boolean_ will send an e-mail notification to the applicant/agent indicating receipt is attached to offer |
+
+**_Notes:_**
+
+For 'sendReceiptNotification', null and false are treated the same. Only a true
+value will send the e-mail notification.
+
+When using this object for the **AddOfferPaymentReceipt** event, the offer must
+be in the Paid or PreRegistered state. Unlike PayOffer, this will not transition
+the offer state, and can be called repeatedly (no limit). You must provide one of
+'receipt' or 'generateReceiptInfo' with this event (but not both).
+
+When using this object for the **PayOffer** event, the offer must be in the Sent
+or Accepted state. This event can only be called once, because it transitions the
+offer state into Paid.
 
 **_Example:_**
 
@@ -1397,6 +1444,8 @@ XML Example: See [Appendix: OfferCreated](#appendix-offercreated)
   "receipt" : null
 }
 ```
+
+XML Example: See [Appendix: OfferPaymentReceipt](#appendix-offerpaymentreceipt)
 
 ### Phone ###
 
@@ -1859,6 +1908,13 @@ Lookups
 | programsuspended     |
 | other                |
 
+### ReceiptType ###
+
+| Code     |
+| -------- |
+| Deposit  |
+| Tuition  |
+
 ### SchoolType ###
 
 | Code       |
@@ -1902,7 +1958,8 @@ you might receive during the screening process.
 | CreateOffer                   | [NewOfferInfo](#newofferinfo)                       |
 | UpdateOffer                   | [UpdateOffer](#updateoffer)                         |
 | DeclineProgramSelection       | [DeclineProgramSelection](#declineprogramselection) |
-| PayOffer                      | [PayOffer](#payoffer)                               |
+| PayOffer                      | [OfferPaymentReceipt](#offerpaymentreceipt)         |
+| AddOfferPaymentReceipt        | [OfferPaymentReceipt](#offerpaymentreceipt)         |
 | RevokeOffer                   | [RevokeOffer](#revokeoffer)                         |
 | UpdateApplicantCollegeDetails | [ApplicantCollegeDetails](#applicantcollegedetails) |
 
@@ -3103,9 +3160,9 @@ Used by:
 </root>
 ```
 
-### Appendix: PayOffer ###
+### Appendix: OfferPaymentReceipt ###
 
-#### PayOffer JSON ####
+#### OfferPaymentReceipt JSON ####
 
 ```JSON
 {
@@ -3119,11 +3176,13 @@ Used by:
     "name": "filename.jpg",
     "mimeType": "image/jpeg",
     "length": 96041
-  }
+  },
+  "generateReceiptInfo": null,
+  "sendReceiptNotification": true
 }
 ```
 
-#### PayOffer XML ####
+#### OfferPaymentReceipt XML ####
 
 ```XML
 <root>
@@ -3138,8 +3197,11 @@ Used by:
     <mimeType>image/jpeg</mimeType>
     <length>96041</length>
   </receipt>
+  <sendReceiptNotification>true</sendReceiptNotification>
 </root>
 ```
+
+### Appendix: RevokeOffer ###
 
 #### RevokeOffer JSON ####
 
