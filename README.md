@@ -355,10 +355,10 @@ System.
 International SISAPI
 ---------------------
 
-All interaction with the OCAS International System (OIS) will be done through the
-SISAPI. The SISAPI is secured with the OpenId Protocol. In order to receive data
-from the HTTP Endpoint, each call will need to be passed a Bearer Token in the
-Authorization Header. Please see the [Authentication and Authorization](#authentication-and-authorization)
+All interaction with the OCAS International Application System (IAS) will be done
+through the SISAPI. The SISAPI is secured with the OpenId Protocol. In order to
+receive data from the HTTP Endpoint, each call will need to be passed a Bearer Token
+in the Authorization Header. Please see the [Authentication and Authorization](#authentication-and-authorization)
 section to learn how to retrieve a Bearer Token. If you are using the OCAS Supplied
 [Sender Client](#sender-client) or [Receiver Client](#receiver-client),
 we have taken care of the work of acquiring a Bearer Token for you.
@@ -1124,7 +1124,7 @@ Many of the fields on the [NewOfferInfo](#newofferinfo) model can be left
 undefined. The values will then be drawn from the program catalogue
 within the OCAS International System.
 
-_Be warned, however, that if a value has not been configured in the OIS catalogue
+_Be warned, however, that if a value has not been configured in the IAS catalogue
 and is also left undefined as part of this event an error will be raised._
 
 These fields are as follows:
@@ -1145,7 +1145,7 @@ These fields are as follows:
 - ancillaryFees
 
 If a value is provided for `customOfferLetter` then that will be used,
-otherwise the OIS will generate an offer letter on your behalf.
+otherwise the IAS will generate an offer letter on your behalf.
 
 ### NewPaymentReceiptInfo ###
 
@@ -1710,7 +1710,7 @@ you don't provide conditions, it will mean they have been lifted (removed)
 from the offer._
 
 If a value is provided for `customOfferLetter` then that will be used,
-otherwise the OIS will generate an offer letter on your behalf.
+otherwise the IAS will generate an offer letter on your behalf.
 
 Lookups
 -------
@@ -2279,7 +2279,7 @@ in a variable, then construct another HTTP Request with the word `Bearer <token_
 in the Authorization Header as follows:
    ```HTTP
    GET /api/v1/diagnostics/authorization HTTP/1.1
-   Host: <OIS>.ca
+   Host: <IAS>.ca
    Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiYWRtaW4iOnRydWV9.TJVA95OrM7E2cBab30RMHrHDcEfxjoYZgeFONFh7HgQ
    Accept: application/json
    Cache-Control: no-cache
