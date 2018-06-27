@@ -8,6 +8,7 @@ Table of Contents
   - [Table of Contents](#table-of-contents)
   - [Document Revisions](#document-revisions)
     - [Change History](#change-history)
+      - [1.7.3](#173)
       - [1.7.2](#172)
       - [1.7.1](#171)
       - [1.7.0](#170)
@@ -162,6 +163,7 @@ Document Revisions
 
 | Version | Date         | Editor           |
 | ------- | ------------ | ---------------- |
+| 1.7.3   | Jun 27, 2018 | Jay Dobson       |
 | 1.7.2   | May 29, 2018 | Michael Aldworth |
 | 1.7.1   | May 14, 2018 | Jaime Valencia   |
 | 1.7.0   | May 08, 2018 | Jaime Valencia   |
@@ -191,6 +193,10 @@ Document Revisions
 | 1.0.0   | Nov 24, 2017 | Michael Aldworth |
 
 ### Change History ###
+
+#### 1.7.3 ####
+
+- Added new program selection declined reasons
 
 #### 1.7.2 ####
 
@@ -1901,8 +1907,11 @@ Lookups
 | Code                 |
 | -------------------- |
 | admissionrequirement |
-| programcancelled     |
+| alternateoffer       |
+| alternatedecision    |
+| intakefull           |
 | programsuspended     |
+| programcancelled     |
 | other                |
 
 ### ReceiptType ###
