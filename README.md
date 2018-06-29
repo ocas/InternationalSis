@@ -2315,248 +2315,245 @@ Note: Empty JSON collections are not represented within the XML.
 
 ```JSON
 {
-  "action": "ApplicationSubmitted",
-  "data": {
-    "id": "85aee8dc-3bdc-e711-8737-e4b318b38df4",
-    "number": "X1485152",
-    "agency": {
-      "name": "Agency Test",
-      "sisIdentifier": "ABC123"
+  "id": "85aee8dc-3bdc-e711-8737-e4b318b38df4",
+  "number": "X1485152",
+  "agency": {
+    "name": "Agency Test",
+    "sisIdentifier": "ABC123"
+  },
+  "applicant": {
+    "id": "7036e524-305c-4fb6-b45c-61a9f828f35c",
+    "number": "X1185682",
+    "version": 2,
+    "created": "2017-12-08T17:19:02.3269001Z",
+    "legalName": {
+      "firstName": "Esperanza",
+      "middleNames": [
+        "Jon",
+        "Al"
+      ],
+      "lastName": "Medhurst",
+      "prefix": null,
+      "suffix": null
     },
-    "applicant": {
-      "id": "7036e524-305c-4fb6-b45c-61a9f828f35c",
-      "number": "X1185682",
-      "version": 2,
-      "created": "2017-12-08T17:19:02.3269001Z",
-      "legalName": {
-        "firstName": "Esperanza",
-        "middleNames": [
-          "Jon",
-          "Al"
-        ],
-        "lastName": "Medhurst",
+    "dateOfBirth": "1908-03-02",
+    "canadianStatus": "none",
+    "primaryCitizenshipCountry": "ET",
+    "fullLegalName": "Esperanza Abe Lexus Jeromy Edmond Kristian Alan Henry Medhurst",
+    "casualNames": [
+      {
+        "firstName": "Lexus",
+        "middleNames": [],
+        "lastName": "Abe",
         "prefix": null,
         "suffix": null
-      },
-      "dateOfBirth": "1908-03-02",
-      "canadianStatus": "none",
-      "primaryCitizenshipCountry": "ET",
-      "fullLegalName": "Esperanza Abe Lexus Jeromy Edmond Kristian Alan Henry Medhurst",
-      "casualNames": [
-        {
-          "firstName": "Lexus",
-          "middleNames": [],
-          "lastName": "Abe",
-          "prefix": null,
-          "suffix": null
-        }
-      ],
-      "gender": "female",
-      "mailingAddress": {
-        "street": "083 Ismael Lock",
-        "apartment": "4579",
-        "city": "Sybletown",
-        "province": null,
-        "country": "BS",
-        "postalCode": "16178"
-      },
-      "currentAddress": {
-        "street": "35775 Jessica Street",
-        "apartment": "59129",
-        "city": "South Sandrine",
-        "province": null,
-        "country": "TW",
-        "postalCode": "97474"
-      },
-      "phones": [
-        {
-          "type": "home",
-          "number": "US+19083680301",
-          "ext": null
-        },
-        {
-          "type": "mobile",
-          "number": "US+15259228253",
-          "ext": null
-        }
-      ],
-      "emails": [
-        "Esperanza77@mailinator.com",
-        "Esperanza_Test77@mailinator.com"
-      ],
-      "emergencyContact": {
-        "name": "Lina Streich",
-        "phone": {
-          "type": "other",
-          "number": "US+8899746991",
-          "ext": null
-        },
-        "email": "Lina_Strom87@mailinator.com",
-        "relationship": "suscipit",
-        "spokenLanguage": "gv"
-      },
-      "credentials": [
-        {
-          "schoolType": "university",
-          "schoolName": "quo-eaque-nemo",
-          "country": "VI",
-          "programName": "velit",
-          "status": "NotCompleted",
-          "completionDate": "2016-08-07",
-          "credentialType": "university-degree",
-          "supportingDocuments": [
-            {
-              "id": "00000000-0000-00C0-0000-0000C0000001",
-              "link": "https://somelinktodocument",
-              "name": "my-university-proof.pdf",
-              "mimeType": "application/pdf",
-              "uploaded": "2017-12-08T16:19:02.3269001Z",
-              "uploadedBy": "Beth Smith"
-            }
-          ]
-        },
-        {
-          "schoolType": "college",
-          "schoolName": "sit-qui-omnis",
-          "country": "UZ",
-          "programName": null,
-          "status": "InProgress",
-          "completionDate": "2016-03-01",
-          "credentialType": "college-other",
-          "supportingDocuments": [
-            {
-              "id": "00000000-0000-0F00-0000-000000000006",
-              "link": "https://somelinktodocument",
-              "name": "my-college-proof.pdf",
-              "mimeType": "application/pdf",
-              "uploaded": "2017-12-08T16:19:02.3269001Z",
-              "uploadedBy": "Beth Smith"
-            }
-          ]
-        },
-        {
-          "schoolType": "secondary",
-          "schoolName": "rerum-nihil-necessitatibus",
-          "country": "AD",
-          "programName": "fuga",
-          "status": "InProgress",
-          "completionDate": "2014-12-21",
-          "credentialType": "secondary-other",
-          "supportingDocuments": [
-            {
-              "id": "00000C00-0000-0000-0000-000000000000",
-              "link": "https://somelinktodocument",
-              "name": "my-secondary-proof.pdf",
-              "mimeType": "application/pdf",
-              "uploaded": "2017-12-08T16:19:02.3269001Z",
-              "uploadedBy": "Beth Smith"
-            }
-          ]
-        }
-      ],
-      "proficiencies": [
-        {
-          "type": "eap",
-          "otherName": null,
-          "score": "64",
-          "completionDate": "2017-11-05",
-          "subScores": [],
-          "supportingDocuments": []
-        },
-        {
-          "type": "ielts",
-          "otherName": null,
-          "score": "71",
-          "completionDate": "2017-10-19",
-          "supportingDocuments": [
-            {
-              "id": "00000000-0000-0000-0000-000000000001",
-              "link": "https://somelinktodocument",
-              "name": "my-testscore-pg1.pdf",
-              "mimeType": "application/pdf",
-              "uploaded": "2017-12-08T16:22:02.3269001Z",
-              "uploadedBy": "Beth Smith"
-            },
-            {
-              "id": "00000000-0000-0A00-0000-00000000000",
-              "link": "https://somelinktodocument",
-              "name": "my-testscore-pg2.pdf",
-              "mimeType": "application/pdf",
-              "uploaded": "2017-12-08T16:22:32.3269001Z",
-              "uploadedBy": "Beth Smith"
-            }
-          ]
-        },
-        {
-          "type": "eap",
-          "otherName": null,
-          "score": "94",
-          "completionDate": "2015-02-05",
-          "subScores": [],
-          "supportingDocuments": []
-        }
-      ]
-    },
-    "selections": [
-      {
-        "term": {
-          "applicationCycle": 2018,
-          "code": "fall",
-          "startDate": "2018-08-01",
-          "endDate": "2018-11-30"
-        },
-        "program": {
-          "code": "TST1ESL1",
-          "title": "ESL Program 1",
-          "credential": "other",
-          "internationalProgramType": "Esl"
-        },
-        "preferredCampusCode": null,
-        "preferredIntakeId": null,
-        "choiceNumber": -1
-      },
-      {
-        "term": {
-          "applicationCycle": 2016,
-          "code": "fall",
-          "startDate": "2016-08-01",
-          "endDate": "2016-11-30"
-        },
-        "program": {
-          "code": "TST1O2",
-          "title": "Other 2",
-          "credential": "other",
-          "internationalProgramType": "Normal"
-        },
-        "preferredCampusCode": null,
-        "preferredIntakeId": null,
-        "choiceNumber": 1
-      },
-      {
-        "term": {
-          "applicationCycle": 2018,
-          "code": "fall",
-          "startDate": "2018-08-01",
-          "endDate": "2018-11-30"
-        },
-        "program": {
-          "code": "TST1DG1",
-          "title": "Degree 1",
-          "credential": "degree",
-          "internationalProgramType": "Normal"
-        },
-        "preferredCampusCode": null,
-        "preferredIntakeId": null,
-        "choiceNumber": 2
       }
     ],
-    "screened": null,
-    "submitted": "2017-12-09T11:19:46.6378594Z",
-    "created": "2017-12-08T17:19:02.3269001Z",
-    "updated": "2017-12-10T11:19:46.6378594Z",
-    "by": "Esperanza Abe Lexus Jeromy Edmond Kristian Alan Henry Medhurst",
-    "timestamp": "2017-12-09T11:19:46.6378594Z"
-  }
+    "gender": "female",
+    "mailingAddress": {
+      "street": "083 Ismael Lock",
+      "apartment": "4579",
+      "city": "Sybletown",
+      "province": null,
+      "country": "BS",
+      "postalCode": "16178"
+    },
+    "currentAddress": {
+      "street": "35775 Jessica Street",
+      "apartment": "59129",
+      "city": "South Sandrine",
+      "province": null,
+      "country": "TW",
+      "postalCode": "97474"
+    },
+    "phones": [
+      {
+        "type": "home",
+        "number": "US+19083680301",
+        "ext": null
+      },
+      {
+        "type": "mobile",
+        "number": "US+15259228253",
+        "ext": null
+      }
+    ],
+    "emails": [
+      "Esperanza77@mailinator.com",
+      "Esperanza_Test77@mailinator.com"
+    ],
+    "emergencyContact": {
+      "name": "Lina Streich",
+      "phone": {
+        "type": "other",
+        "number": "US+8899746991",
+        "ext": null
+      },
+      "email": "Lina_Strom87@mailinator.com",
+      "relationship": "suscipit",
+      "spokenLanguage": "gv"
+    },
+    "credentials": [
+      {
+        "schoolType": "university",
+        "schoolName": "quo-eaque-nemo",
+        "country": "VI",
+        "programName": "velit",
+        "status": "NotCompleted",
+        "completionDate": "2016-08-07",
+        "credentialType": "university-degree",
+        "supportingDocuments": [
+          {
+            "id": "00000000-0000-00C0-0000-0000C0000001",
+            "link": "https://somelinktodocument",
+            "name": "my-university-proof.pdf",
+            "mimeType": "application/pdf",
+            "uploaded": "2017-12-08T16:19:02.3269001Z",
+            "uploadedBy": "Beth Smith"
+          }
+        ]
+      },
+      {
+        "schoolType": "college",
+        "schoolName": "sit-qui-omnis",
+        "country": "UZ",
+        "programName": null,
+        "status": "InProgress",
+        "completionDate": "2016-03-01",
+        "credentialType": "college-other",
+        "supportingDocuments": [
+          {
+            "id": "00000000-0000-0F00-0000-000000000006",
+            "link": "https://somelinktodocument",
+            "name": "my-college-proof.pdf",
+            "mimeType": "application/pdf",
+            "uploaded": "2017-12-08T16:19:02.3269001Z",
+            "uploadedBy": "Beth Smith"
+          }
+        ]
+      },
+      {
+        "schoolType": "secondary",
+        "schoolName": "rerum-nihil-necessitatibus",
+        "country": "AD",
+        "programName": "fuga",
+        "status": "InProgress",
+        "completionDate": "2014-12-21",
+        "credentialType": "secondary-other",
+        "supportingDocuments": [
+          {
+            "id": "00000C00-0000-0000-0000-000000000000",
+            "link": "https://somelinktodocument",
+            "name": "my-secondary-proof.pdf",
+            "mimeType": "application/pdf",
+            "uploaded": "2017-12-08T16:19:02.3269001Z",
+            "uploadedBy": "Beth Smith"
+          }
+        ]
+      }
+    ],
+    "proficiencies": [
+      {
+        "type": "eap",
+        "otherName": null,
+        "score": "64",
+        "completionDate": "2017-11-05",
+        "subScores": [],
+        "supportingDocuments": []
+      },
+      {
+        "type": "ielts",
+        "otherName": null,
+        "score": "71",
+        "completionDate": "2017-10-19",
+        "supportingDocuments": [
+          {
+            "id": "00000000-0000-0000-0000-000000000001",
+            "link": "https://somelinktodocument",
+            "name": "my-testscore-pg1.pdf",
+            "mimeType": "application/pdf",
+            "uploaded": "2017-12-08T16:22:02.3269001Z",
+            "uploadedBy": "Beth Smith"
+          },
+          {
+            "id": "00000000-0000-0A00-0000-00000000000",
+            "link": "https://somelinktodocument",
+            "name": "my-testscore-pg2.pdf",
+            "mimeType": "application/pdf",
+            "uploaded": "2017-12-08T16:22:32.3269001Z",
+            "uploadedBy": "Beth Smith"
+          }
+        ]
+      },
+      {
+        "type": "eap",
+        "otherName": null,
+        "score": "94",
+        "completionDate": "2015-02-05",
+        "subScores": [],
+        "supportingDocuments": []
+      }
+    ]
+  },
+  "selections": [
+    {
+      "term": {
+        "applicationCycle": 2018,
+        "code": "fall",
+        "startDate": "2018-08-01",
+        "endDate": "2018-11-30"
+      },
+      "program": {
+        "code": "TST1ESL1",
+        "title": "ESL Program 1",
+        "credential": "other",
+        "internationalProgramType": "Esl"
+      },
+      "preferredCampusCode": null,
+      "preferredIntakeId": null,
+      "choiceNumber": -1
+    },
+    {
+      "term": {
+        "applicationCycle": 2016,
+        "code": "fall",
+        "startDate": "2016-08-01",
+        "endDate": "2016-11-30"
+      },
+      "program": {
+        "code": "TST1O2",
+        "title": "Other 2",
+        "credential": "other",
+        "internationalProgramType": "Normal"
+      },
+      "preferredCampusCode": null,
+      "preferredIntakeId": null,
+      "choiceNumber": 1
+    },
+    {
+      "term": {
+        "applicationCycle": 2018,
+        "code": "fall",
+        "startDate": "2018-08-01",
+        "endDate": "2018-11-30"
+      },
+      "program": {
+        "code": "TST1DG1",
+        "title": "Degree 1",
+        "credential": "degree",
+        "internationalProgramType": "Normal"
+      },
+      "preferredCampusCode": null,
+      "preferredIntakeId": null,
+      "choiceNumber": 2
+    }
+  ],
+  "screened": null,
+  "submitted": "2017-12-09T11:19:46.6378594Z",
+  "created": "2017-12-08T17:19:02.3269001Z",
+  "updated": "2017-12-10T11:19:46.6378594Z",
+  "by": "Esperanza Abe Lexus Jeromy Edmond Kristian Alan Henry Medhurst",
+  "timestamp": "2017-12-09T11:19:46.6378594Z"
 }
 ```
 
@@ -2564,248 +2561,245 @@ Note: Empty JSON collections are not represented within the XML.
 
 ```XML
 <root>
-  <action>ApplicationSubmitted</action>
-  <data>
-    <id>85aee8dc-3bdc-e711-8737-e4b318b38df4</id>
-    <number>X1485152</number>
-    <agency>
-      <name>Agency Test</name>
-      <sisIdentifier>ABC123</sisIdentifier>
-    </agency>
-    <applicant>
-      <id>7036e524-305c-4fb6-b45c-61a9f828f35c</id>
-      <number>X1185682</number>
-      <version>2</version>
-      <created>2017-12-08T17:19:02.3269001Z</created>
-      <legalName>
-        <firstName>Esperanza</firstName>
-        <middleNames>
-          <item>Jon</item>
-          <item>Al</item>
-        </middleNames>
-        <lastName>Medhurst</lastName>
+  <id>85aee8dc-3bdc-e711-8737-e4b318b38df4</id>
+  <number>X1485152</number>
+  <agency>
+    <name>Agency Test</name>
+    <sisIdentifier>ABC123</sisIdentifier>
+  </agency>
+  <applicant>
+    <id>7036e524-305c-4fb6-b45c-61a9f828f35c</id>
+    <number>X1185682</number>
+    <version>2</version>
+    <created>2017-12-08T17:19:02.3269001Z</created>
+    <legalName>
+      <firstName>Esperanza</firstName>
+      <middleNames>
+        <item>Jon</item>
+        <item>Al</item>
+      </middleNames>
+      <lastName>Medhurst</lastName>
+      <prefix />
+      <suffix />
+    </legalName>
+    <dateOfBirth>1908-03-02</dateOfBirth>
+    <canadianStatus>none</canadianStatus>
+    <primaryCitizenshipCountry>ET</primaryCitizenshipCountry>
+    <fullLegalName>Esperanza Abe Lexus Jeromy Edmond Kristian Alan Henry Medhurst</fullLegalName>
+    <casualNames>
+      <item>
+        <firstName>Lexus</firstName>
+        <middleNames />
+        <lastName>Abe</lastName>
         <prefix />
         <suffix />
-      </legalName>
-      <dateOfBirth>1908-03-02</dateOfBirth>
-      <canadianStatus>none</canadianStatus>
-      <primaryCitizenshipCountry>ET</primaryCitizenshipCountry>
-      <fullLegalName>Esperanza Abe Lexus Jeromy Edmond Kristian Alan Henry Medhurst</fullLegalName>
-      <casualNames>
-        <item>
-          <firstName>Lexus</firstName>
-          <middleNames />
-          <lastName>Abe</lastName>
-          <prefix />
-          <suffix />
-        </item>
-      </casualNames>
-      <gender>female</gender>
-      <mailingAddress>
-        <street>083 Ismael Lock</street>
-        <apartment>4579</apartment>
-        <city>Sybletown</city>
-        <province />
-        <country>BS</country>
-        <postalCode>16178</postalCode>
-      </mailingAddress>
-      <currentAddress>
-        <street>35775 Jessica Street</street>
-        <apartment>59129</apartment>
-        <city>South Sandrine</city>
-        <province />
-        <country>TW</country>
-        <postalCode>97474</postalCode>
-      </currentAddress>
-      <phones>
-        <item>
-          <type>home</type>
-          <number>US+19083680301</number>
-          <ext />
-        </item>
-        <item>
-          <type>mobile</type>
-          <number>US+15259228253</number>
-          <ext />
-        </item>
-      </phones>
-      <emails>
-        <item>Esperanza77@mailinator.com</item>
-        <item>Esperanza_Test77@mailinator.com</item>
-      </emails>
-      <emergencyContact>
-        <name>Lina Streich</name>
-        <phone>
-          <type>other</type>
-          <number>US+8899746991</number>
-          <ext />
-        </phone>
-        <email>Lina_Strom87@mailinator.com</email>
-        <relationship>suscipit</relationship>
-        <spokenLanguage>gv</spokenLanguage>
-      </emergencyContact>
-      <credentials>
-        <item>
-          <schoolType>university</schoolType>
-          <schoolName>quo-eaque-nemo</schoolName>
-          <country>VI</country>
-          <programName>velit</programName>
-          <status>NotCompleted</status>
-          <completionDate>2016-08-07</completionDate>
-          <credentialType>university-degree</credentialType>
-          <supportingDocuments>
-            <item>
-              <id>00000000-0000-00C0-0000-0000C0000001</id>
-              <link>https://somelinktodocument</link>
-              <name>my-university-proof.pdf</name>
-              <mimeType>application/pdf</mimeType>
-              <uploaded>2017-12-08T16:19:02.3269001Z</uploaded>
-              <uploadedBy>Beth Smith</uploadedBy>
-            </item>
-          </supportingDocuments>
-        </item>
-        <item>
-          <schoolType>college</schoolType>
-          <schoolName>sit-qui-omnis</schoolName>
-          <country>UZ</country>
-          <programName />
-          <status>InProgress</status>
-          <completionDate>2016-03-01</completionDate>
-          <credentialType>college-other</credentialType>
-          <supportingDocuments>
-            <item>
-              <id>00000000-0000-0F00-0000-000000000006</id>
-              <link>https://somelinktodocument</link>
-              <name>my-college-proof.pdf</name>
-              <mimeType>application/pdf</mimeType>
-              <uploaded>2017-12-08T16:19:02.3269001Z</uploaded>
-              <uploadedBy>Beth Smith</uploadedBy>
-            </item>
-          </supportingDocuments>
-        </item>
-        <item>
-          <schoolType>secondary</schoolType>
-          <schoolName>rerum-nihil-necessitatibus</schoolName>
-          <country>AD</country>
-          <programName>fuga</programName>
-          <status>InProgress</status>
-          <completionDate>2014-12-21</completionDate>
-          <credentialType>secondary-other</credentialType>
-          <supportingDocuments>
-            <item>
-              <id>00000C00-0000-0000-0000-000000000000</id>
-              <link>https://somelinktodocument</link>
-              <name>my-secondary-proof.pdf</name>
-              <mimeType>application/pdf</mimeType>
-              <uploaded>2017-12-08T16:19:02.3269001Z</uploaded>
-              <uploadedBy>Beth Smith</uploadedBy>
-            </item>
-          </supportingDocuments>
-        </item>
-      </credentials>
-      <proficiencies>
-        <item>
-          <type>eap</type>
-          <otherName />
-          <score>64</score>
-          <completionDate>2017-11-05</completionDate>
-          <subScores />
-          <supportingDocuments />
-        </item>
-        <item>
-          <type>ielts</type>
-          <otherName />
-          <score>71</score>
-          <completionDate>2017-10-19</completionDate>
-          <supportingDocuments>
-            <item>
-              <id>00000000-0000-0000-0000-000000000001</id>
-              <link>https://somelinktodocument</link>
-              <name>my-testscore-pg1.pdf</name>
-              <mimeType>application/pdf</mimeType>
-              <uploaded>2017-12-08T16:22:02.3269001Z</uploaded>
-              <uploadedBy>Beth Smith</uploadedBy>
-            </item>
-            <item>
-              <id>00000000-0000-0A00-0000-00000000000</id>
-              <link>https://somelinktodocument</link>
-              <name>my-testscore-pg2.pdf</name>
-              <mimeType>application/pdf</mimeType>
-              <uploaded>2017-12-08T16:22:32.3269001Z</uploaded>
-              <uploadedBy>Beth Smith</uploadedBy>
-            </item>
-          </supportingDocuments>
-        </item>
-        <item>
-          <type>eap</type>
-          <otherName />
-          <score>94</score>
-          <completionDate>2015-02-05</completionDate>
-          <subScores />
-          <supportingDocuments />
-        </item>
-      </proficiencies>
-    </applicant>
-    <selections>
+      </item>
+    </casualNames>
+    <gender>female</gender>
+    <mailingAddress>
+      <street>083 Ismael Lock</street>
+      <apartment>4579</apartment>
+      <city>Sybletown</city>
+      <province />
+      <country>BS</country>
+      <postalCode>16178</postalCode>
+    </mailingAddress>
+    <currentAddress>
+      <street>35775 Jessica Street</street>
+      <apartment>59129</apartment>
+      <city>South Sandrine</city>
+      <province />
+      <country>TW</country>
+      <postalCode>97474</postalCode>
+    </currentAddress>
+    <phones>
       <item>
-        <term>
-          <applicationCycle>2018</applicationCycle>
-          <code>fall</code>
-          <startDate>2018-08-01</startDate>
-          <endDate>2018-11-30</endDate>
-        </term>
-        <program>
-          <code>TST1ESL1</code>
-          <title>ESL Program 1</title>
-          <credential>other</credential>
-          <internationalProgramType>Esl</internationalProgramType>
-        </program>
-        <preferredCampusCode />
-        <preferredIntakeId />
-        <choiceNumber>-1</choiceNumber>
+        <type>home</type>
+        <number>US+19083680301</number>
+        <ext />
       </item>
       <item>
-        <term>
-          <applicationCycle>2016</applicationCycle>
-          <code>fall</code>
-          <startDate>2016-08-01</startDate>
-          <endDate>2016-11-30</endDate>
-        </term>
-        <program>
-          <code>TST1O2</code>
-          <title>Other 2</title>
-          <credential>other</credential>
-          <internationalProgramType>Normal</internationalProgramType>
-        </program>
-        <preferredCampusCode />
-        <preferredIntakeId />
-        <choiceNumber>1</choiceNumber>
+        <type>mobile</type>
+        <number>US+15259228253</number>
+        <ext />
+      </item>
+    </phones>
+    <emails>
+      <item>Esperanza77@mailinator.com</item>
+      <item>Esperanza_Test77@mailinator.com</item>
+    </emails>
+    <emergencyContact>
+      <name>Lina Streich</name>
+      <phone>
+        <type>other</type>
+        <number>US+8899746991</number>
+        <ext />
+      </phone>
+      <email>Lina_Strom87@mailinator.com</email>
+      <relationship>suscipit</relationship>
+      <spokenLanguage>gv</spokenLanguage>
+    </emergencyContact>
+    <credentials>
+      <item>
+        <schoolType>university</schoolType>
+        <schoolName>quo-eaque-nemo</schoolName>
+        <country>VI</country>
+        <programName>velit</programName>
+        <status>NotCompleted</status>
+        <completionDate>2016-08-07</completionDate>
+        <credentialType>university-degree</credentialType>
+        <supportingDocuments>
+          <item>
+            <id>00000000-0000-00C0-0000-0000C0000001</id>
+            <link>https://somelinktodocument</link>
+            <name>my-university-proof.pdf</name>
+            <mimeType>application/pdf</mimeType>
+            <uploaded>2017-12-08T16:19:02.3269001Z</uploaded>
+            <uploadedBy>Beth Smith</uploadedBy>
+          </item>
+        </supportingDocuments>
       </item>
       <item>
-        <term>
-          <applicationCycle>2018</applicationCycle>
-          <code>fall</code>
-          <startDate>2018-08-01</startDate>
-          <endDate>2018-11-30</endDate>
-        </term>
-        <program>
-          <code>TST1DG1</code>
-          <title>Degree 1</title>
-          <credential>degree</credential>
-          <internationalProgramType>Normal</internationalProgramType>
-        </program>
-        <preferredCampusCode />
-        <preferredIntakeId />
-        <choiceNumber>2</choiceNumber>
+        <schoolType>college</schoolType>
+        <schoolName>sit-qui-omnis</schoolName>
+        <country>UZ</country>
+        <programName />
+        <status>InProgress</status>
+        <completionDate>2016-03-01</completionDate>
+        <credentialType>college-other</credentialType>
+        <supportingDocuments>
+          <item>
+            <id>00000000-0000-0F00-0000-000000000006</id>
+            <link>https://somelinktodocument</link>
+            <name>my-college-proof.pdf</name>
+            <mimeType>application/pdf</mimeType>
+            <uploaded>2017-12-08T16:19:02.3269001Z</uploaded>
+            <uploadedBy>Beth Smith</uploadedBy>
+          </item>
+        </supportingDocuments>
       </item>
-    </selections>
-    <screened />
-    <submitted>2017-12-09T11:19:46.6378594Z</submitted>
-    <created>2017-12-08T17:19:02.3269001Z</created>
-    <updated>2017-12-10T11:19:46.6378594Z</updated>
-    <by>Esperanza Abe Lexus Jeromy Edmond Kristian Alan Henry Medhurst</by>
-    <timestamp>2017-12-09T11:19:46.6378594Z</timestamp>
-  </data>
+      <item>
+        <schoolType>secondary</schoolType>
+        <schoolName>rerum-nihil-necessitatibus</schoolName>
+        <country>AD</country>
+        <programName>fuga</programName>
+        <status>InProgress</status>
+        <completionDate>2014-12-21</completionDate>
+        <credentialType>secondary-other</credentialType>
+        <supportingDocuments>
+          <item>
+            <id>00000C00-0000-0000-0000-000000000000</id>
+            <link>https://somelinktodocument</link>
+            <name>my-secondary-proof.pdf</name>
+            <mimeType>application/pdf</mimeType>
+            <uploaded>2017-12-08T16:19:02.3269001Z</uploaded>
+            <uploadedBy>Beth Smith</uploadedBy>
+          </item>
+        </supportingDocuments>
+      </item>
+    </credentials>
+    <proficiencies>
+      <item>
+        <type>eap</type>
+        <otherName />
+        <score>64</score>
+        <completionDate>2017-11-05</completionDate>
+        <subScores />
+        <supportingDocuments />
+      </item>
+      <item>
+        <type>ielts</type>
+        <otherName />
+        <score>71</score>
+        <completionDate>2017-10-19</completionDate>
+        <supportingDocuments>
+          <item>
+            <id>00000000-0000-0000-0000-000000000001</id>
+            <link>https://somelinktodocument</link>
+            <name>my-testscore-pg1.pdf</name>
+            <mimeType>application/pdf</mimeType>
+            <uploaded>2017-12-08T16:22:02.3269001Z</uploaded>
+            <uploadedBy>Beth Smith</uploadedBy>
+          </item>
+          <item>
+            <id>00000000-0000-0A00-0000-00000000000</id>
+            <link>https://somelinktodocument</link>
+            <name>my-testscore-pg2.pdf</name>
+            <mimeType>application/pdf</mimeType>
+            <uploaded>2017-12-08T16:22:32.3269001Z</uploaded>
+            <uploadedBy>Beth Smith</uploadedBy>
+          </item>
+        </supportingDocuments>
+      </item>
+      <item>
+        <type>eap</type>
+        <otherName />
+        <score>94</score>
+        <completionDate>2015-02-05</completionDate>
+        <subScores />
+        <supportingDocuments />
+      </item>
+    </proficiencies>
+  </applicant>
+  <selections>
+    <item>
+      <term>
+        <applicationCycle>2018</applicationCycle>
+        <code>fall</code>
+        <startDate>2018-08-01</startDate>
+        <endDate>2018-11-30</endDate>
+      </term>
+      <program>
+        <code>TST1ESL1</code>
+        <title>ESL Program 1</title>
+        <credential>other</credential>
+        <internationalProgramType>Esl</internationalProgramType>
+      </program>
+      <preferredCampusCode />
+      <preferredIntakeId />
+      <choiceNumber>-1</choiceNumber>
+    </item>
+    <item>
+      <term>
+        <applicationCycle>2016</applicationCycle>
+        <code>fall</code>
+        <startDate>2016-08-01</startDate>
+        <endDate>2016-11-30</endDate>
+      </term>
+      <program>
+        <code>TST1O2</code>
+        <title>Other 2</title>
+        <credential>other</credential>
+        <internationalProgramType>Normal</internationalProgramType>
+      </program>
+      <preferredCampusCode />
+      <preferredIntakeId />
+      <choiceNumber>1</choiceNumber>
+    </item>
+    <item>
+      <term>
+        <applicationCycle>2018</applicationCycle>
+        <code>fall</code>
+        <startDate>2018-08-01</startDate>
+        <endDate>2018-11-30</endDate>
+      </term>
+      <program>
+        <code>TST1DG1</code>
+        <title>Degree 1</title>
+        <credential>degree</credential>
+        <internationalProgramType>Normal</internationalProgramType>
+      </program>
+      <preferredCampusCode />
+      <preferredIntakeId />
+      <choiceNumber>2</choiceNumber>
+    </item>
+  </selections>
+  <screened />
+  <submitted>2017-12-09T11:19:46.6378594Z</submitted>
+  <created>2017-12-08T17:19:02.3269001Z</created>
+  <updated>2017-12-10T11:19:46.6378594Z</updated>
+  <by>Esperanza Abe Lexus Jeromy Edmond Kristian Alan Henry Medhurst</by>
+  <timestamp>2017-12-09T11:19:46.6378594Z</timestamp>
 </root>
 ```
 
@@ -2818,69 +2812,66 @@ Used by:
 
 ```JSON
 {
-  "action": "ProgramSelectionsUpdated",
-  "data": {
-    "id": "85aee8dc-3bdc-e711-8737-e4b318b38df4",
-    "number": "X1485152",
-    "selections": [
-      {
-        "term": {
-          "applicationCycle": 2018,
-          "code": "fall",
-          "startDate": "2018-08-01",
-          "endDate": "2018-11-30"
-        },
-        "program": {
-          "code": "TST1ESL1",
-          "title": "ESL Program 1",
-          "credential": "other",
-          "internationalProgramType": "Esl"
-        },
-        "preferredCampusCode": null,
-        "preferredIntakeId": null,
-        "choiceNumber": -1
+  "id": "85aee8dc-3bdc-e711-8737-e4b318b38df4",
+  "number": "X1485152",
+  "selections": [
+    {
+      "term": {
+        "applicationCycle": 2018,
+        "code": "fall",
+        "startDate": "2018-08-01",
+        "endDate": "2018-11-30"
       },
-      {
-        "term": {
-          "applicationCycle": 2016,
-          "code": "fall",
-          "startDate": "2016-08-01",
-          "endDate": "2016-11-30"
-        },
-        "program": {
-          "code": "TST1O2",
-          "title": "Other 2",
-          "credential": "other",
-          "internationalProgramType": "Normal"
-        },
-        "preferredCampusCode": null,
-        "preferredIntakeId": null,
-        "choiceNumber": 1
+      "program": {
+        "code": "TST1ESL1",
+        "title": "ESL Program 1",
+        "credential": "other",
+        "internationalProgramType": "Esl"
       },
-      {
-        "term": {
-          "applicationCycle": 2018,
-          "code": "fall",
-          "startDate": "2018-08-01",
-          "endDate": "2018-11-30"
-        },
-        "program": {
-          "code": "TST1DG1",
-          "title": "Degree 1",
-          "credential": "degree",
-          "internationalProgramType": "Normal"
-        },
-        "preferredCampusCode": null,
-        "preferredIntakeId": null,
-        "choiceNumber": 2
-      }
-    ],
-    "screened": null,
-    "submitted": "2017-12-09T11:19:46.6378594Z",
-    "created": "2017-12-08T17:19:02.3269001Z",
-    "by": "Esperanza Abe Lexus Jeromy Edmond Kristian Alan Henry Medhurst",
-    "timestamp": "2017-12-09T11:19:46.6378594Z"
-  }
+      "preferredCampusCode": null,
+      "preferredIntakeId": null,
+      "choiceNumber": -1
+    },
+    {
+      "term": {
+        "applicationCycle": 2016,
+        "code": "fall",
+        "startDate": "2016-08-01",
+        "endDate": "2016-11-30"
+      },
+      "program": {
+        "code": "TST1O2",
+        "title": "Other 2",
+        "credential": "other",
+        "internationalProgramType": "Normal"
+      },
+      "preferredCampusCode": null,
+      "preferredIntakeId": null,
+      "choiceNumber": 1
+    },
+    {
+      "term": {
+        "applicationCycle": 2018,
+        "code": "fall",
+        "startDate": "2018-08-01",
+        "endDate": "2018-11-30"
+      },
+      "program": {
+        "code": "TST1DG1",
+        "title": "Degree 1",
+        "credential": "degree",
+        "internationalProgramType": "Normal"
+      },
+      "preferredCampusCode": null,
+      "preferredIntakeId": null,
+      "choiceNumber": 2
+    }
+  ],
+  "screened": null,
+  "submitted": "2017-12-09T11:19:46.6378594Z",
+  "created": "2017-12-08T17:19:02.3269001Z",
+  "by": "Esperanza Abe Lexus Jeromy Edmond Kristian Alan Henry Medhurst",
+  "timestamp": "2017-12-09T11:19:46.6378594Z"
 }
 ```
 
@@ -2888,69 +2879,66 @@ Used by:
 
 ```XML
 <root>
-  <action>ProgramSelectionsUpdated</action>
-  <data>
-    <id>85aee8dc-3bdc-e711-8737-e4b318b38df4</id>
-    <number>X1485152</number>
-    <selections>
-      <item>
-        <term>
-          <applicationCycle>2018</applicationCycle>
-          <code>fall</code>
-          <startDate>2018-08-01</startDate>
-          <endDate>2018-11-30</endDate>
-        </term>
-        <program>
-          <code>TST1ESL1</code>
-          <title>ESL Program 1</title>
-          <credential>other</credential>
-          <internationalProgramType>Esl</internationalProgramType>
-        </program>
-        <preferredCampusCode />
-        <preferredIntakeId />
-        <choiceNumber>-1</choiceNumber>
-      </item>
-      <item>
-        <term>
-          <applicationCycle>2016</applicationCycle>
-          <code>fall</code>
-          <startDate>2016-08-01</startDate>
-          <endDate>2016-11-30</endDate>
-        </term>
-        <program>
-          <code>TST1O2</code>
-          <title>Other 2</title>
-          <credential>other</credential>
-          <internationalProgramType>Normal</internationalProgramType>
-        </program>
-        <preferredCampusCode />
-        <preferredIntakeId />
-        <choiceNumber>1</choiceNumber>
-      </item>
-      <item>
-        <term>
-          <applicationCycle>2018</applicationCycle>
-          <code>fall</code>
-          <startDate>2018-08-01</startDate>
-          <endDate>2018-11-30</endDate>
-        </term>
-        <program>
-          <code>TST1DG1</code>
-          <title>Degree 1</title>
-          <credential>degree</credential>
-          <internationalProgramType>Normal</internationalProgramType>
-        </program>
-        <preferredCampusCode />
-        <preferredIntakeId />
-        <choiceNumber>2</choiceNumber>
-      </item>
-    </selections>
-    <screened />
-    <submitted>2017-12-09T11:19:46.6378594Z</submitted>
-    <created>2017-12-08T17:19:02.3269001Z</created>
-    <by>Esperanza Abe Lexus Jeromy Edmond Kristian Alan Henry Medhurst</by>
-    <timestamp>2017-12-09T11:19:46.6378594Z</timestamp>
-  </data>
+  <id>85aee8dc-3bdc-e711-8737-e4b318b38df4</id>
+  <number>X1485152</number>
+  <selections>
+    <item>
+      <term>
+        <applicationCycle>2018</applicationCycle>
+        <code>fall</code>
+        <startDate>2018-08-01</startDate>
+        <endDate>2018-11-30</endDate>
+      </term>
+      <program>
+        <code>TST1ESL1</code>
+        <title>ESL Program 1</title>
+        <credential>other</credential>
+        <internationalProgramType>Esl</internationalProgramType>
+      </program>
+      <preferredCampusCode />
+      <preferredIntakeId />
+      <choiceNumber>-1</choiceNumber>
+    </item>
+    <item>
+      <term>
+        <applicationCycle>2016</applicationCycle>
+        <code>fall</code>
+        <startDate>2016-08-01</startDate>
+        <endDate>2016-11-30</endDate>
+      </term>
+      <program>
+        <code>TST1O2</code>
+        <title>Other 2</title>
+        <credential>other</credential>
+        <internationalProgramType>Normal</internationalProgramType>
+      </program>
+      <preferredCampusCode />
+      <preferredIntakeId />
+      <choiceNumber>1</choiceNumber>
+    </item>
+    <item>
+      <term>
+        <applicationCycle>2018</applicationCycle>
+        <code>fall</code>
+        <startDate>2018-08-01</startDate>
+        <endDate>2018-11-30</endDate>
+      </term>
+      <program>
+        <code>TST1DG1</code>
+        <title>Degree 1</title>
+        <credential>degree</credential>
+        <internationalProgramType>Normal</internationalProgramType>
+      </program>
+      <preferredCampusCode />
+      <preferredIntakeId />
+      <choiceNumber>2</choiceNumber>
+    </item>
+  </selections>
+  <screened />
+  <submitted>2017-12-09T11:19:46.6378594Z</submitted>
+  <created>2017-12-08T17:19:02.3269001Z</created>
+  <by>Esperanza Abe Lexus Jeromy Edmond Kristian Alan Henry Medhurst</by>
+  <timestamp>2017-12-09T11:19:46.6378594Z</timestamp>
 </root>
 ```
 
