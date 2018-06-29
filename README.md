@@ -39,11 +39,11 @@ Table of Contents
   - [International SISAPI](#international-sisapi)
     - [SIS Environments](#sis-environments)
     - [Endpoints](#endpoints)
-      - [PUT /api/v1/applicants/{number}/college-details](#put--api-v1-applicants-number-college-details)
-      - [POST /api/v1/events](#post--api-v1-events)
-      - [GET /api/v1/events/peek](#get--api-v1-events-peek)
-      - [PUT /api/v1/events/{id}/ack](#put--api-v1-events-id-ack)
-      - [PUT /api/v1/offers/pay-offer](#put--api-v1-offers-pay-offer)
+      - [PUT /api/v1/applicants/{number}/college-details](#put-apiv1applicantsnumbercollege-details)
+      - [POST /api/v1/events](#post-apiv1events)
+      - [GET /api/v1/events/peek](#get-apiv1eventspeek)
+      - [PUT /api/v1/events/{id}/ack](#put-apiv1eventsidack)
+      - [PUT /api/v1/offers/pay-offer](#put-apiv1offerspay-offer)
   - [Objects](#objects)
     - [Address](#address)
     - [Agency](#agency)
@@ -114,9 +114,9 @@ Table of Contents
     - [Database Connectivity](#database-connectivity)
     - [Sleep Interval](#sleep-interval)
     - [Logging Configuration](#logging-configuration)
-      - [serilog:using:RollingFileAlternate](#serilog-using-rollingfilealternate)
-      - [serilog:using:EventLog](#serilog-using-eventlog)
-      - [serilog:using:Console](#serilog-using-console)
+      - [serilog:using:RollingFileAlternate](#serilogusingrollingfilealternate)
+      - [serilog:using:EventLog](#serilogusingeventlog)
+      - [serilog:using:Console](#serilogusingconsole)
     - [Identity Configuration](#identity-configuration)
       - [Receiver Client](#receiver-client)
         - [Receiver Client Configuration](#receiver-client-configuration)
@@ -135,25 +135,25 @@ Table of Contents
   - [Authentication and Authorization](#authentication-and-authorization)
     - [How to Get a Bearer Token](#how-to-get-a-bearer-token)
   - [Appendix](#appendix)
-    - [Appendix: ApplicationFull](#appendix--applicationfull)
+    - [Appendix: ApplicationFull](#appendix-applicationfull)
       - [ApplicationFull Submitted JSON](#applicationfull-submitted-json)
       - [ApplicationFull Submitted XML](#applicationfull-submitted-xml)
-    - [Appendix: Application](#appendix--application)
+    - [Appendix: Application](#appendix-application)
       - [Application Submitted JSON](#application-submitted-json)
       - [Application XML](#application-xml)
-    - [Appendix: ApplicantCollegeDetails](#appendix--applicantcollegedetails)
+    - [Appendix: ApplicantCollegeDetails](#appendix-applicantcollegedetails)
       - [ApplicantCollegeDetails JSON](#applicantcollegedetails-json)
       - [ApplicantCollegeDetails XML](#applicantcollegedetails-xml)
-    - [Appendix: CreateOffer](#appendix--createoffer)
+    - [Appendix: CreateOffer](#appendix-createoffer)
       - [CreateOffer JSON](#createoffer-json)
       - [CreateOffer XML](#createoffer-xml)
-    - [Appendix: OfferCreated](#appendix--offercreated)
+    - [Appendix: OfferCreated](#appendix-offercreated)
       - [OfferCreated JSON](#offercreated-json)
       - [OfferCreated XML](#offercreated-xml)
-    - [Appendix: OfferPaymentReceipt](#appendix--offerpaymentreceipt)
+    - [Appendix: OfferPaymentReceipt](#appendix-offerpaymentreceipt)
       - [OfferPaymentReceipt JSON](#offerpaymentreceipt-json)
       - [OfferPaymentReceipt XML](#offerpaymentreceipt-xml)
-    - [Appendix: RevokeOffer](#appendix--revokeoffer)
+    - [Appendix: RevokeOffer](#appendix-revokeoffer)
       - [RevokeOffer JSON](#revokeoffer-json)
       - [RevokeOffer XML](#revokeoffer-xml)
 
@@ -547,7 +547,6 @@ Receive a list of all un-acked events (ordered by EventId).
 
 ```json
 [
-  // SisInboundEvent
   {
     "id": 1,
     "eventInfo":
@@ -556,7 +555,6 @@ Receive a list of all un-acked events (ordered by EventId).
       "data": { }
     }
   },
-  // SisInboundEvent
   {
     "id": 4,
     "eventInfo":
@@ -565,7 +563,6 @@ Receive a list of all un-acked events (ordered by EventId).
       "data": { }
     }
   },
-  // SisInboundEvent
   {
     "id": 5,
     "eventInfo":
@@ -1593,7 +1590,7 @@ Example: See [Appendix: ApplicationFull](#appendix-applicationfull)
 ```JSON
 {
   "action": "SomeEvent",
-  "data": { }         // Varies based on SisInboundEventType
+  "data": { }
 }
 ```
 
@@ -2186,8 +2183,8 @@ required to write and read events respectively.
 | Column Name | Column Type    | Purpose                       |
 | ----------- | -------------- | ----------------------------- |
 | id          | _bigint_       | Event Unique Primary Key      |
-| eventInfo   | _varchar(max)_ | Event Payload Data            |
-| eventFormat | _varchar(5)_   | Event Format Type (json, xml) |
+| eventInfo   | _nvarchar(max)_ | Event Payload Data            |
+| eventFormat | _nvarchar(5)_   | Event Format Type (json, xml) |
 | createdDate | _datetime2_    | Created Date                  |
 
 #### SisOutboundEvents Schema ####
@@ -2195,10 +2192,10 @@ required to write and read events respectively.
 | Column Name      | Column Type    | Purpose                             |
 | ---------------- | -------------- | ----------------------------------- |
 | id               | _bigint_       | Event Unique Primary Key            |
-| status           | _varchar(50)_  | Event Status (Default: Pending)     |
-| type             | _varchar(50)_  | [Event Type](#sisoutboundeventtype) |
-| eventInfo        | _varchar(max)_ | Event Payload Data                  |
-| eventFormat      | _varchar(5)_   | Event Format Type (json, xml)       |
+| status           | _nvarchar(50)_  | Event Status (Default: Pending)     |
+| type             | _nvarchar(50)_  | [Event Type](#sisoutboundeventtype) |
+| eventInfo        | _nvarchar(max)_ | Event Payload Data                  |
+| eventFormat      | _nvarchar(5)_   | Event Format Type (json, xml)       |
 | createdDate      | _datetime2_    | Created Date                        |
 | lastModifiedDate | _datetime2_    | Last Modified Date                  |
 
