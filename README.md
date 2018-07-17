@@ -8,6 +8,7 @@ Table of Contents
   - [Table of Contents](#table-of-contents)
   - [Document Revisions](#document-revisions)
     - [Change History](#change-history)
+      - [1.7.5](#175)
       - [1.7.4](#174)
       - [1.7.3](#173)
       - [1.7.2](#172)
@@ -41,11 +42,9 @@ Table of Contents
   - [International SISAPI](#international-sisapi)
     - [SIS Environments](#sis-environments)
     - [Endpoints](#endpoints)
-      - [PUT /api/v1/applicants/{number}/college-details](#put-apiv1applicantsnumbercollege-details)
       - [POST /api/v1/events](#post-apiv1events)
       - [GET /api/v1/events/peek](#get-apiv1eventspeek)
       - [PUT /api/v1/events/{id}/ack](#put-apiv1eventsidack)
-      - [PUT /api/v1/offers/pay-offer](#put-apiv1offerspay-offer)
   - [Objects](#objects)
     - [Address](#address)
     - [Agency](#agency)
@@ -166,6 +165,7 @@ Document Revisions
 
 | Version | Date         | Editor           |
 | ------- | ------------ | ---------------- |
+| 1.7.5   | Jul 17, 2018 | Michael Aldworth    |
 | 1.7.4   | Jul 16, 2018 | Jay Dobson       |
 | 1.7.3   | Jun 27, 2018 | Jay Dobson       |
 | 1.7.2   | May 29, 2018 | Michael Aldworth |
@@ -197,6 +197,10 @@ Document Revisions
 | 1.0.0   | Nov 24, 2017 | Michael Aldworth |
 
 ### Change History ###
+
+#### 1.7.5 ####
+
+- Add property passportNumber to [Applicant](#applicant) Object
 
 #### 1.7.4 ####
 
@@ -405,10 +409,8 @@ _Note that the SISAPI has a maximum request limit of 10MB._
 
 |                 | Method | Event Direction | Access    | Relative Path                                                                            |
 | --------------- | ------ | --------------- | --------- | ---------------------------------------------------------------------------------------- |
-| **Applicants**  | PUT    | Partner -> OCAS | Protected | [/api/v1/applicants/{number}/college-details](#put-apiv1applicantsnumbercollege-details) |
 | **Events**      | GET    | OCAS -> Partner | Protected | [/api/v1/events/peek](#get-apiv1eventspeek)                                              |
 |                 | PUT    | N/A             | Protected | [/api/v1/events/{id}/ack](#put-apiv1eventsidack)                                         |
-| **Offers**      | PUT    | Partner -> Ocas | Protected | [/api/v1/offers/pay-offer](#put-apiv1offerspay-offer)                                    |
 | **Diagnostics** | GET    | N/A             | Public    | /api/v1/diagnostics/servertime                                                           |
 |                 | GET    | N/A             | Public    | /api/v1/diagnostics/logging                                                              |
 |                 | GET    | N/A             | Public    | /api/v1/diagnostics/database                                                             |
@@ -432,62 +434,6 @@ endpoint. This is deliberate, as the payload will contain the event action type 
 payload. You can see [available events below](#sisinboundeventtype), which must
 be individually toggled on individually through configuration by OCAS in order to
 start receiving them.
-
-#### PUT /api/v1/applicants/{number}/college-details ####
-
-**_[DEPRECATED] - This endpoint has been replaced by the
-[POST /api/v1/events](#post-apiv1events) endpoint_**
-
-| Url Query Parameters | Value            |
-| -------------------- | ---------------- |
-| number               | applicant number |
-
-| Request Body | Value                                                           |
-| ------------ | --------------------------------------------------------------- |
-| model.id     | long (Unique for every event. Auto-incrementing ID recommended) |
-| model.data   | [applicant college details](#applicantcollegedetails)           |
-
-**_Example:_**
-
-```json
-{
-  "id": 18,
-  "data": {
-    "number": "X1185392",
-    "studentId": "CID-12345-SA"
-  }
-}
-```
-
-**_Example Request:_**
-   ```HTTP
-   PUT /api/v1/applicants/{number}/college-details HTTP/1.1
-   Host: <ocas-sis-api-environment>
-   Content-Type: application/json
-   Authorization: Bearer <token received from identity server>
-   Cache-Control: no-cache
-   ```
-
-**_Example Response:_**
-
-```HTTP
-200 (Success)
-{
-  "operationId": "00000000-0000-0000-0000-000000000000",
-  "errors": [
-    {
-      "code": "string",
-      "message": "string"
-    }
-  ],
-  "warnings": [
-    {
-      "code": "string",
-      "message": "string"
-    }
-  ]
-}
-```
 
 #### POST /api/v1/events ####
 
@@ -631,69 +577,6 @@ the specified event.
 }
 ```
 
-#### PUT /api/v1/offers/pay-offer ####
-
-**_[DEPRECATED] - This endpoint has been replaced by the
-[POST /api/v1/events](#post-apiv1events) endpoint_**
-
-| Request Body | Value                                                           |
-| ------------ | --------------------------------------------------------------- |
-| model        | [SisInboundEvent](#SisInboundEvent)                             |
-| model.id     | long (Unique for every event. Auto-incrementing ID recommended) |
-| model.data   | [PayOffer](#payoffer)                                           |
-
-**_Example:_**
-
-```json
-{
-  "id": 25,
-  "data": {
-    "applicationNumber": "X1484937",
-    "campusCode": "main",
-    "deliveryOption": "fulltime",
-    "programCode": "TSTA01",
-    "startDate": "2018-03-22",
-    "receipt": {
-      "data": "[base 64 encoded string]",
-      "filename": "filename.jpg",
-      "mimeType": "image/jpeg",
-      "length": 96041
-    }
-  }
-}
-```
-
-**_Example Request:_**
-
-   ```HTTP
-   PUT /api/v1/offers/pay-offer HTTP/1.1
-   Host: <ocas-sis-api-environment>
-   Content-Type: application/json
-   Authorization: Bearer <token received from identity server>
-   Cache-Control: no-cache
-   ```
-
-**_Example Response:_**
-
-```HTTP
-200 (Success)
-{
-  "operationId": "00000000-0000-0000-0000-000000000000",
-  "errors": [
-    {
-      "code": "string",
-      "message": "string"
-    }
-  ],
-  "warnings": [
-    {
-      "code": "string",
-      "message": "string"
-    }
-  ]
-}
-```
-
 Objects
 -------
 
@@ -776,6 +659,7 @@ And now to Deserialize or Serialize, please look at the example in [JsonConvert 
 | dateOfBirth               | _string_ date string in format `yyyy-MM-dd`                                 |
 | canadianStatus            | [CanadianStatus](#canadianstatus)                                           |
 | primaryCitizenshipCountry | _string_ ISO3166-1 alpha-2 [see mappings](#country-and-provinces)           |
+| passportNumber            | _string_ matches regular expression _[0-9A-Z]{1,9}_                         |
 | fullLegalName             | _string_ (min 1, max 450)                                                   |
 | casualNames               | Array[0..10] of [ApplicantName](#applicantname)                             |
 | gender                    | _string_ [Gender](#gender)                                                  |
@@ -1306,7 +1190,6 @@ otherwise the IAS will generate an offer letter on your behalf.
 
 XML Example: See [Appendix: OfferCreated](#appendix-offercreated)
 
-
 ### OfferCondition ###
 
 | Property           | Type                                                          |
@@ -1316,16 +1199,16 @@ XML Example: See [Appendix: OfferCreated](#appendix-offercreated)
 
 ### OfferDeclined ###
 
-| Property          | Type                                                              |
-| ----------------- | ----------------------------------------------------------------- |
-| applicationNumber | _string_ (min 1, max 20)                                          |
-| campusCode        | _string_ (min 1, max 4)                                           |
-| deliveryOption    | _string_ ([Lookup](#intakedeliveryoption))                        |
-| programCode       | _string_ (min 1, max 10)                                          |
-| startDate         | _string_ date string in format `yyyy-MM-dd`                       |
-| intakeId          | _string_ guid                                                     |
-| timestamp         | _string_ ISO 8601 Date Formatted String                           |
-| by                | _string_ (min 1, max 255)                                         |
+| Property          | Type                                        |
+| ----------------- | ------------------------------------------- |
+| applicationNumber | _string_ (min 1, max 20)                    |
+| campusCode        | _string_ (min 1, max 4)                     |
+| deliveryOption    | _string_ ([Lookup](#intakedeliveryoption))  |
+| programCode       | _string_ (min 1, max 10)                    |
+| startDate         | _string_ date string in format `yyyy-MM-dd` |
+| intakeId          | _string_ guid                               |
+| timestamp         | _string_ ISO 8601 Date Formatted String     |
+| by                | _string_ (min 1, max 255)                   |
 
 **_Example:_**
 
@@ -1344,16 +1227,16 @@ XML Example: See [Appendix: OfferCreated](#appendix-offercreated)
 
 ### OfferPreRegistered ###
 
-| Property          | Type                                                              |
-| ----------------- | ----------------------------------------------------------------- |
-| applicationNumber | _string_ (min 1, max 20)                                          |
-| campusCode        | _string_ (min 1, max 4)                                           |
-| deliveryOption    | _string_ ([Lookup](#intakedeliveryoption))                        |
-| programCode       | _string_ (min 1, max 10)                                          |
-| startDate         | _string_ date string in format `yyyy-MM-dd`                       |
-| intakeId          | _string_ guid                                                     |
-| timestamp         | _string_ ISO 8601 Date Formatted String                           |
-| by                | _string_ (min 1, max 255)                                         |
+| Property          | Type                                        |
+| ----------------- | ------------------------------------------- |
+| applicationNumber | _string_ (min 1, max 20)                    |
+| campusCode        | _string_ (min 1, max 4)                     |
+| deliveryOption    | _string_ ([Lookup](#intakedeliveryoption))  |
+| programCode       | _string_ (min 1, max 10)                    |
+| startDate         | _string_ date string in format `yyyy-MM-dd` |
+| intakeId          | _string_ guid                               |
+| timestamp         | _string_ ISO 8601 Date Formatted String     |
+| by                | _string_ (min 1, max 255)                   |
 
 **_Example:_**
 
@@ -1372,18 +1255,18 @@ XML Example: See [Appendix: OfferCreated](#appendix-offercreated)
 
 ### OfferRevoked ###
 
-| Property          | Type                                                              |
-| ----------------- | ----------------------------------------------------------------- |
-| applicationNumber | _string_ (min 1, max 20)                                          |
-| campusCode        | _string_ (min 1, max 4)                                           |
-| deliveryOption    | _string_ ([Lookup](#intakedeliveryoption))                        |
-| programCode       | _string_ (min 1, max 10)                                          |
-| startDate         | _string_ date string in format `yyyy-MM-dd`                       |
-| intakeId          | _string_ guid                                                     |
-| timestamp         | _string_ ISO 8601 Date Formatted String                           |
-| by                | _string_ (min 1, max 255)                                         |
-| revokeType        | _string_ ([Lookup](#offerrevoketype))                             |
-| otherReason       | _[nullable] string_ (min 1, max 100)                              |
+| Property          | Type                                        |
+| ----------------- | ------------------------------------------- |
+| applicationNumber | _string_ (min 1, max 20)                    |
+| campusCode        | _string_ (min 1, max 4)                     |
+| deliveryOption    | _string_ ([Lookup](#intakedeliveryoption))  |
+| programCode       | _string_ (min 1, max 10)                    |
+| startDate         | _string_ date string in format `yyyy-MM-dd` |
+| intakeId          | _string_ guid                               |
+| timestamp         | _string_ ISO 8601 Date Formatted String     |
+| by                | _string_ (min 1, max 255)                   |
+| revokeType        | _string_ ([Lookup](#offerrevoketype))       |
+| otherReason       | _[nullable] string_ (min 1, max 100)        |
 
 **_Example:_**
 
@@ -2391,6 +2274,7 @@ Note: Empty JSON collections are not represented within the XML.
     "dateOfBirth": "1908-03-02",
     "canadianStatus": "none",
     "primaryCitizenshipCountry": "ET",
+    "passportNumber": "AB1234567",
     "fullLegalName": "Esperanza Abe Lexus Jeromy Edmond Kristian Alan Henry Medhurst",
     "casualNames": [
       {
@@ -2643,6 +2527,7 @@ Note: Empty JSON collections are not represented within the XML.
     <dateOfBirth>1908-03-02</dateOfBirth>
     <canadianStatus>none</canadianStatus>
     <primaryCitizenshipCountry>ET</primaryCitizenshipCountry>
+    <passportNumber>AB1234567</passportNumber>
     <fullLegalName>Esperanza Abe Lexus Jeromy Edmond Kristian Alan Henry Medhurst</fullLegalName>
     <casualNames>
       <item>
