@@ -8,6 +8,7 @@ Table of Contents
   - [Table of Contents](#table-of-contents)
   - [Document Revisions](#document-revisions)
     - [Change History](#change-history)
+      - [1.7.4](#174)
       - [1.7.3](#173)
       - [1.7.2](#172)
       - [1.7.1](#171)
@@ -60,6 +61,7 @@ Table of Contents
     - [BinaryDocument](#binarydocument)
     - [DeclineProgramSelection](#declineprogramselection)
     - [EmergencyContact](#emergencycontact)
+    - [ExchangePartner](#exchangepartner)
     - [Intake](#intake)
     - [NewBinaryDocumentInfo](#newbinarydocumentinfo)
     - [NewOfferInfo](#newofferinfo)
@@ -77,6 +79,7 @@ Table of Contents
     - [Program](#program)
     - [ProgramSelection](#programselection)
     - [ProgramSelectionDeclined](#programselectiondeclined)
+    - [Referrals](#referrals)
     - [RevokeOffer](#revokeoffer)
     - [SisEvent](#sisevent)
     - [SisInboundEvent](#sisinboundevent)
@@ -163,6 +166,7 @@ Document Revisions
 
 | Version | Date         | Editor           |
 | ------- | ------------ | ---------------- |
+| 1.7.4   | Jul 16, 2018 | Jay Dobson       |
 | 1.7.3   | Jun 27, 2018 | Jay Dobson       |
 | 1.7.2   | May 29, 2018 | Michael Aldworth |
 | 1.7.1   | May 14, 2018 | Jaime Valencia   |
@@ -193,6 +197,11 @@ Document Revisions
 | 1.0.0   | Nov 24, 2017 | Michael Aldworth |
 
 ### Change History ###
+
+#### 1.7.4 ####
+
+- Add new inbound ApplicationUpdated event
+- Mark inbound ProgramSelectionsUpdated event deprecated
 
 #### 1.7.3 ####
 
@@ -386,8 +395,8 @@ Accessing the Swagger URL mentioned in the previous section will present you wit
 a user friendly grouping of REST API Functionality:
 
 1. Applicants
-1. Diagnostics
-1. Events
+2. Diagnostics
+3. Events
 
 The table below lists the actions that can be made from each controller and their access
 limitation.
@@ -915,6 +924,8 @@ Example: See [Appendix: ApplicationFull](#appendix-applicationfull)
 | ---------- | -------------------------------------------------- |
 | id         | _string_ guid                                      |
 | number     | _string_ (min 1, max 20) the Application Number    |
+| agency     | [Agency](#agency)                                  |
+| referrals  | [Referrals](#referrals)                            |
 | created    | _string_ ISO 8601 Date Formatted String            |
 | updated    | _string_ ISO 8601 Date Formatted String            |
 | submitted  | _string_ ISO 8601 Date Formatted String            |
@@ -935,6 +946,7 @@ Example: See [Appendix: Application](#appendix-application)
 | applicant  | [Applicant](#applicant)                            |
 | selections | Array of [ProgramSelection](#programselection)     |
 | screened   | _[nullable] string_ ISO 8601 Date Formatted String |
+| referrals  | [Referrals](#referrals)                            |
 | submitted  | _string_ ISO 8601 Date Formatted String            |
 | created    | _string_ ISO 8601 Date Formatted String            |
 | updated    | _string_ ISO 8601 Date Formatted String            |
@@ -1009,6 +1021,22 @@ Example: See [Appendix: ApplicationFull](#appendix-applicationfull)
   "email" : "beth@example.com",
   "relationship" : "Mother",
   "spokenLanguage" : "en"
+}
+```
+
+### ExchangePartner ###
+
+| Property      | Type                                  |
+| ------------- | ------------------------------------- |
+| name          | _string_ (min 1, max 255)             |
+| sisIdentifier | _string_ (min 1, max 100)             |
+
+**_Example:_**
+
+```JSON
+{
+  "name": "Test College 1",
+  "sisIdentifier": "TST1"
 }
 ```
 
@@ -1556,6 +1584,23 @@ Example: See [Appendix: ApplicationFull](#appendix-applicationfull)
 }
 ```
 
+### Referrals ###
+
+| Property        | Type                                  |
+| --------------- | ------------------------------------- |
+| exchangePartner | [ExchangePartner](#exchangepartner)   |
+
+**_Example:_**
+
+```JSON
+{
+  "exchangePartner": {
+      "name": "Test College 1",
+      "sisIdentifier": "TST1"
+    }
+}
+```
+
 ### RevokeOffer ###
 
 | Property          | Type                                                                                                       |
@@ -1931,21 +1976,22 @@ Lookups
 
 ### SisInboundEventType ###
 
-| Key                      | Data Object Type                                      | Parent Event(s)                             |
-| ------------------------ | ----------------------------------------------------- | ------------------------------------------- |
-| ApplicantProfileUpdated  | [Applicant](#applicant)                               | ApplicationScreened or ApplicationSubmitted |
-| ApplicationScreened      | [ApplicationFull](#applicationfull)                   |                                             |
-| ApplicationSubmitted     | [ApplicationFull](#applicationfull)                   |                                             |
-| PreAdmitOfferAccepted    | [PreAdmitOfferAccepted](#preadmitofferaccepted)       |                                             |
-| OfferAccepted            | [OfferAccepted](#offeraccepted)                       |                                             |
-| OfferCreated             | [OfferDetails](#offerdetails)                         |                                             |
-| OfferDeclined            | [OfferDeclined](#offerdeclined)                       |                                             |
-| OfferUpdated             | [OfferDetails](#offerdetails)                         |                                             |
-| OfferRevoked             | [OfferRevoked](#offerrevoked)                         |                                             |
-| OfferWithdrawn           | [OfferWithdrawn](#offerwithdrawn)                     |                                             |
-| OfferPreRegistered       | [OfferPreRegistered](#offerpreregistered)             |                                             |
-| ProgramSelectionsUpdated | [Application](#application)                           | ApplicationScreened or ApplicationSubmitted |
-| ProgramSelectionDeclined | [ProgramSelectionDeclined](#programselectiondeclined) | ApplicationScreened or ApplicationSubmitted |
+| Key                                       | Data Object Type                                      | Parent Event(s)                             |
+| ----------------------------------------- | ----------------------------------------------------- | ------------------------------------------- |
+| ApplicantProfileUpdated                   | [Applicant](#applicant)                               | ApplicationScreened or ApplicationSubmitted |
+| ApplicationScreened                       | [ApplicationFull](#applicationfull)                   |                                             |
+| ApplicationSubmitted                      | [ApplicationFull](#applicationfull)                   |                                             |
+| ApplicationUpdated                        | [Application](#application)                           |                                             |
+| PreAdmitOfferAccepted                     | [PreAdmitOfferAccepted](#preadmitofferaccepted)       |                                             |
+| OfferAccepted                             | [OfferAccepted](#offeraccepted)                       |                                             |
+| OfferCreated                              | [OfferDetails](#offerdetails)                         |                                             |
+| OfferDeclined                             | [OfferDeclined](#offerdeclined)                       |                                             |
+| OfferUpdated                              | [OfferDetails](#offerdetails)                         |                                             |
+| OfferRevoked                              | [OfferRevoked](#offerrevoked)                         |                                             |
+| OfferWithdrawn                            | [OfferWithdrawn](#offerwithdrawn)                     |                                             |
+| OfferPreRegistered                        | [OfferPreRegistered](#offerpreregistered)             |                                             |
+| ~~ProgramSelectionsUpdated~~ (deprecated) | [Application](#application)                           | ApplicationScreened or ApplicationSubmitted |
+| ProgramSelectionDeclined                  | [ProgramSelectionDeclined](#programselectiondeclined) | ApplicationScreened or ApplicationSubmitted |
 
 _*Special Note for Parent Event(s):*_ These two events are dependent on being subscribed
 to the parent event. This means you have to be subscribed to at least one of the
@@ -2554,6 +2600,12 @@ Note: Empty JSON collections are not represented within the XML.
       "choiceNumber": 2
     }
   ],
+  "referrals": {
+    "exchangePartner": {
+      "name": "Test College 1",
+      "sisIdentifier": "TST1"
+    }
+  },  
   "screened": null,
   "submitted": "2017-12-09T11:19:46.6378594Z",
   "created": "2017-12-08T17:19:02.3269001Z",
@@ -2801,6 +2853,12 @@ Note: Empty JSON collections are not represented within the XML.
     </item>
   </selections>
   <screened />
+  <referrals>
+    <exchangePartner>
+      <name>Test College 1</name>
+      <sisIdentifier>TST1</sisIdentifier>
+    </exchangePartner>
+  </referrals>  
   <submitted>2017-12-09T11:19:46.6378594Z</submitted>
   <created>2017-12-08T17:19:02.3269001Z</created>
   <updated>2017-12-10T11:19:46.6378594Z</updated>
@@ -2812,7 +2870,8 @@ Note: Empty JSON collections are not represented within the XML.
 ### Appendix: Application ###
 
 Used by:
-- SisInboundEventType.ProgramSelectionsUpdated
+- SisInboundEventType.ApplicationUpdated
+- ~~SisInboundEventType.ProgramSelectionsUpdated~~ (deprecated)
 
 #### Application Submitted JSON ####
 
@@ -2820,6 +2879,10 @@ Used by:
 {
   "id": "85aee8dc-3bdc-e711-8737-e4b318b38df4",
   "number": "X1485152",
+  "agency": {
+    "name": "Agency Test",
+    "sisIdentifier": "ABC123"
+  },  
   "selections": [
     {
       "term": {
@@ -2873,6 +2936,12 @@ Used by:
       "choiceNumber": 2
     }
   ],
+  "referrals": {
+    "exchangePartner": {
+      "name": "Test College 1",
+      "sisIdentifier": "TST1"
+    }
+  },  
   "screened": null,
   "submitted": "2017-12-09T11:19:46.6378594Z",
   "created": "2017-12-08T17:19:02.3269001Z",
@@ -2887,6 +2956,10 @@ Used by:
 <root>
   <id>85aee8dc-3bdc-e711-8737-e4b318b38df4</id>
   <number>X1485152</number>
+  <agency>
+    <name>Agency Test</name>
+    <sisIdentifier>ABC123</sisIdentifier>
+  </agency>  
   <selections>
     <item>
       <term>
@@ -2941,6 +3014,12 @@ Used by:
     </item>
   </selections>
   <screened />
+  <referrals>
+    <exchangePartner>
+      <name>Test College 1</name>
+      <sisIdentifier>TST1</sisIdentifier>
+    </exchangePartner>
+  </referrals>  
   <submitted>2017-12-09T11:19:46.6378594Z</submitted>
   <created>2017-12-08T17:19:02.3269001Z</created>
   <by>Esperanza Abe Lexus Jeromy Edmond Kristian Alan Henry Medhurst</by>
