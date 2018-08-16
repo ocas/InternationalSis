@@ -1909,6 +1909,10 @@ you might receive during the screening process.
 | credential-secondary  | diploma                |
 | credential-secondary  | incompletetranscript   |
 | credential-secondary  | transcript             |
+| credential-secondary  | seniorexamcertificate  |
+| credential-secondary  | gcsecertificate        |
+| credential-secondary  | necoexamcertificate    |
+| credential-secondary  | necoscratchcardinfo    |
 | credential-university | degree                 |
 | credential-university | provisionalcertificate |
 | credential-university | transcript             |
