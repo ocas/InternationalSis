@@ -8,6 +8,7 @@ Table of Contents
   - [Table of Contents](#table-of-contents)
   - [Document Revisions](#document-revisions)
     - [Change History](#change-history)
+      - [1.7.6](#176)
       - [1.7.5](#175)
       - [1.7.4](#174)
       - [1.7.3](#173)
@@ -165,7 +166,8 @@ Document Revisions
 
 | Version | Date         | Editor           |
 | ------- | ------------ | ---------------- |
-| 1.7.5   | Jul 17, 2018 | Michael Aldworth    |
+| 1.7.6   | Aug 20, 2018 | Jaime Valencia   |
+| 1.7.5   | Jul 17, 2018 | Michael Aldworth |
 | 1.7.4   | Jul 16, 2018 | Jay Dobson       |
 | 1.7.3   | Jun 27, 2018 | Jay Dobson       |
 | 1.7.2   | May 29, 2018 | Michael Aldworth |
@@ -197,6 +199,10 @@ Document Revisions
 | 1.0.0   | Nov 24, 2017 | Michael Aldworth |
 
 ### Change History ###
+
+#### 1.7.6 ####
+
+- Add observation futureintake cannot have an english program
 
 #### 1.7.5 ####
 
@@ -995,7 +1001,7 @@ Example: See [Appendix: ApplicationFull](#appendix-applicationfull)
 | financialAidDescription | string_ (min 1, max 100) ([required] if hasFinancialAid == `true`)                                         |
 | conditions              | Array[0..5] of [OfferCondition](#offercondition)                                                           |
 | customOfferLetter       | _[nullable]_ [NewBinaryDocumentInfo](#newbinarydocumentinfo)                                               |
-| futureIntake            | _[nullable]_ [Intake](#intake)                                                                             |
+| futureIntake            | _[nullable]_ [Intake](#intake) (Can not include an english Program.)                                       |
 
 **_Example:_**
 
@@ -1142,7 +1148,7 @@ otherwise the IAS will generate an offer letter on your behalf.
 | offerLetter             | [BinaryDocument](#binarydocument)                                                                          |
 | timestamp               | _string_ ISO 8601 Date Formatted String                                                                    |
 | by                      | _string_ (min 1, max 255)                                                                                  |
-| futureIntake            | _[nullable]_ [Intake](#intake)                                                                             |
+| futureIntake            | _[nullable]_ [Intake](#intake) (Can not include an english Program.)                                       |
 
 **_Example:_**
 
@@ -1592,7 +1598,7 @@ Example: See [Appendix: ApplicationFull](#appendix-applicationfull)
 | financialAidDescription | string_ (min 1, max 100) ([required] if hasFinancialAid == `true`)                                         |
 | conditions              | Array[0..5] of [OfferCondition](#offercondition)                                                           |
 | customOfferLetter       | _[nullable]_ [NewBinaryDocumentInfo](#newbinarydocumentinfo)                                               |
-| futureIntake            | _[nullable]_ [Intake](#intake)                                                                             |
+| futureIntake            | _[nullable]_ [Intake](#intake) (Can not include an english Program.)                                       |
 
 **_Example:_**
 
