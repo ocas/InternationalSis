@@ -8,6 +8,7 @@ Table of Contents
   - [Table of Contents](#table-of-contents)
   - [Document Revisions](#document-revisions)
     - [Change History](#change-history)
+      - [1.8.1](#181)
       - [1.8.0](#180)
       - [1.7.6](#176)
       - [1.7.5](#175)
@@ -81,6 +82,7 @@ Table of Contents
 	- [ProgramDecision](#programdecision)
     - [ProgramSelection](#programselection)
     - [ProgramSelectionDeclined](#programselectiondeclined)
+    - [ProgramSelectionDecisionUpdated](#programselectiondecisionupdated)
     - [Referrals](#referrals)
     - [RevokeOffer](#revokeoffer)
     - [SisEvent](#sisevent)
@@ -106,6 +108,7 @@ Table of Contents
     - [OfferState](#offerstate)
     - [PhoneType](#phonetype)
     - [ProgramCredentialType](#programcredentialtype)
+    - [ProgramDecisionState](#programdecisionstate)
     - [ProgramDeclineReason](#programdeclinereason)
     - [ReceiptType](#receipttype)
     - [SchoolType](#schooltype)
@@ -168,6 +171,7 @@ Document Revisions
 
 | Version | Date         | Editor           |
 | ------- | ------------ | ---------------- |
+| 1.8.1   | Aug 30, 2018 | Jaime Valencia   |
 | 1.8.0   | Aug 28, 2018 | Jay Dobson       |
 | 1.7.6   | Aug 20, 2018 | Jaime Valencia   |
 | 1.7.5   | Jul 17, 2018 | Michael Aldworth |
@@ -202,6 +206,11 @@ Document Revisions
 | 1.0.0   | Nov 24, 2017 | Michael Aldworth |
 
 ### Change History ###
+
+#### 1.8.1 ####
+
+- Add new inbound ProgramSelectionDecisionUpdated event
+- Mark inbound ProgramSelectionDeclined event deprecated
 
 #### 1.8.0 ####
 
@@ -1463,6 +1472,36 @@ Example: See [Appendix: ApplicationFull](#appendix-applicationfull)
 
 Example: See [Appendix: ApplicationFull](#appendix-applicationfull)
 
+### ProgramSelectionDecisionUpdated ###
+
+| Property           | Type                                       |
+| ------------------ | ------------------------------------------ |
+| applicationNumber  | _string_ (min 1, max 20)                   |
+| applicationCycle   | _number_ ([Lookup](#applicationcycle))     |
+| programCode        | _string_ (min 1, max 10)                   |
+| term               | _string_ ([Lookup](#termcode))             |
+| state              | _string_ ([Lookup](#programdecisionstate)) |
+| declineReasonCode  | _string_ ([Lookup](#programdeclinereason)) |
+| declineReasonOther | _[nullable] string_ (min 1, max 100)       |
+| timestamp          | _string_ ISO 8601 Date Formatted String    |
+| by                 | _string_ (min 1, max 255)                  |
+
+**_Example:_**
+
+```JSON
+{
+  "applicationNumber" : "X1484934",
+  "applicationCycle" : 2017,
+  "by" : "John Doe",
+  "term" : "spring",
+  "state" : "None",
+  "programCode" : "TST1DG5",
+  "declineReasonCode" : "other",
+  "declineReasonOther" : "Unspecified",
+  "timestamp" : "2017-12-08T17:19:02.3269001Z"
+}
+```
+
 ### ProgramSelectionDeclined ###
 
 | Property           | Type                                       |
@@ -1854,6 +1893,14 @@ Lookups
 | graduatecertificate |
 | other               |
 
+### ProgramDecisionState ###
+
+| Code             |
+| ---------------- |
+| None             |
+| Waitlisted       |
+| Declined         |
+
 ### ProgramDeclineReason ###
 
 | Code                 |
@@ -1883,23 +1930,24 @@ Lookups
 
 ### SisInboundEventType ###
 
-| Key                                       | Data Object Type                                      | Parent Event(s)                             |
-| ----------------------------------------- | ----------------------------------------------------- | ------------------------------------------- |
-| ApplicantProfileUpdated                   | [Applicant](#applicant)                               | ApplicationScreened or ApplicationSubmitted |
-| ApplicationScreened                       | [ApplicationFull](#applicationfull)                   |                                             |
-| ApplicationSubmitted                      | [ApplicationFull](#applicationfull)                   |                                             |
-| ApplicationUpdated                        | [Application](#application)                           |                                             |
-| ApplicationClosed                         | [ApplicationFull](#applicationfull)                   |                                             |
-| PreAdmitOfferAccepted                     | [PreAdmitOfferAccepted](#preadmitofferaccepted)       |                                             |
-| OfferAccepted                             | [OfferAccepted](#offeraccepted)                       |                                             |
-| OfferCreated                              | [OfferDetails](#offerdetails)                         |                                             |
-| OfferDeclined                             | [OfferDeclined](#offerdeclined)                       |                                             |
-| OfferUpdated                              | [OfferDetails](#offerdetails)                         |                                             |
-| OfferRevoked                              | [OfferRevoked](#offerrevoked)                         |                                             |
-| OfferWithdrawn                            | [OfferWithdrawn](#offerwithdrawn)                     |                                             |
-| OfferPreRegistered                        | [OfferPreRegistered](#offerpreregistered)             |                                             |
-| ~~ProgramSelectionsUpdated~~ (deprecated) | [Application](#application)                           | ApplicationScreened or ApplicationSubmitted |
-| ProgramSelectionDeclined                  | [ProgramSelectionDeclined](#programselectiondeclined) | ApplicationScreened or ApplicationSubmitted |
+| Key                                       | Data Object Type                                                    | Parent Event(s)                             |
+| ----------------------------------------- | ------------------------------------------------------------------- | ------------------------------------------- |
+| ApplicantProfileUpdated                   | [Applicant](#applicant)                                             | ApplicationScreened or ApplicationSubmitted |
+| ApplicationScreened                       | [ApplicationFull](#applicationfull)                                 |                                             |
+| ApplicationSubmitted                      | [ApplicationFull](#applicationfull)                                 |                                             |
+| ApplicationUpdated                        | [Application](#application)                                         |                                             |
+| ApplicationClosed                         | [ApplicationFull](#applicationfull)                                 |                                             |
+| PreAdmitOfferAccepted                     | [PreAdmitOfferAccepted](#preadmitofferaccepted)                     |                                             |
+| OfferAccepted                             | [OfferAccepted](#offeraccepted)                                     |                                             |
+| OfferCreated                              | [OfferDetails](#offerdetails)                                       |                                             |
+| OfferDeclined                             | [OfferDeclined](#offerdeclined)                                     |                                             |
+| OfferUpdated                              | [OfferDetails](#offerdetails)                                       |                                             |
+| OfferRevoked                              | [OfferRevoked](#offerrevoked)                                       |                                             |
+| OfferWithdrawn                            | [OfferWithdrawn](#offerwithdrawn)                                   |                                             |
+| OfferPreRegistered                        | [OfferPreRegistered](#offerpreregistered)                           |                                             |
+| ~~ProgramSelectionsUpdated~~ (deprecated) | [Application](#application)                                         | ApplicationScreened or ApplicationSubmitted |
+| ~~ProgramSelectionDeclined~~ (deprecated) | [ProgramSelectionDeclined](#programselectiondeclined)               | ApplicationScreened or ApplicationSubmitted |
+| ProgramSelectionDecisionUpdated           | [ProgramSelectionDecisionUpdated](#programselectiondecisionupdated) | ApplicationScreened or ApplicationSubmitted |
 
 _*Special Note for Parent Event(s):*_ These two events are dependent on being subscribed
 to the parent event. This means you have to be subscribed to at least one of the
