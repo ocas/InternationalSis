@@ -8,6 +8,7 @@ Table of Contents
   - [Table of Contents](#table-of-contents)
   - [Document Revisions](#document-revisions)
     - [Change History](#change-history)
+      - [1.8.0](#180)
       - [1.7.6](#176)
       - [1.7.5](#175)
       - [1.7.4](#174)
@@ -77,6 +78,7 @@ Table of Contents
     - [Phone](#phone)
     - [PreAdmitOfferAccepted](#preadmitofferaccepted)
     - [Program](#program)
+	- [ProgramDecision](#programdecision)
     - [ProgramSelection](#programselection)
     - [ProgramSelectionDeclined](#programselectiondeclined)
     - [Referrals](#referrals)
@@ -166,6 +168,7 @@ Document Revisions
 
 | Version | Date         | Editor           |
 | ------- | ------------ | ---------------- |
+| 1.8.0   | Aug 28, 2018 | Jay Dobson       |
 | 1.7.6   | Aug 20, 2018 | Jaime Valencia   |
 | 1.7.5   | Jul 17, 2018 | Michael Aldworth |
 | 1.7.4   | Jul 16, 2018 | Jay Dobson       |
@@ -199,6 +202,11 @@ Document Revisions
 | 1.0.0   | Nov 24, 2017 | Michael Aldworth |
 
 ### Change History ###
+
+#### 1.8.0 ####
+
+- Add new inbound ApplicationClosed event
+- Add new ProgramDecision to [ProgramSelection](#programselection) Object
 
 #### 1.7.6 ####
 
@@ -1433,6 +1441,15 @@ XML Example: See [Appendix: OfferPaymentReceipt](#appendix-offerpaymentreceipt)
 }
 ```
 
+### ProgramDecision ###
+
+| Property            | Type                                                                         |
+| ------------------- | ---------------------------------------------------------------------------- |
+| state               | _string_ (min 1, max 50)                                                     |
+| declineReasonCode   | _[nullable] string_ (min 1, max 50) (college assigned decline reason code)   |
+| declineReasonOther  | _[nullable] string_ (min 1, max 255) (college assigned other decline reason) |
+
+Example: See [Appendix: ApplicationFull](#appendix-applicationfull)
 ### ProgramSelection ###
 
 | Property            | Type                                                                      |
@@ -1442,6 +1459,7 @@ XML Example: See [Appendix: OfferPaymentReceipt](#appendix-offerpaymentreceipt)
 | preferredCampusCode | _[nullable] string_ (min 1, max 4) (college assigned Campus Code)         |
 | preferredIntakeId   | _[nullable] string_ Intake selected                                       |
 | choiceNumber        | _number_ (less than 0 = EAP/ESL Program, greater than 0 = Normal Program) |
+| decision            | [ProgramDecision](#programdecision)                                       |
 
 Example: See [Appendix: ApplicationFull](#appendix-applicationfull)
 
@@ -1871,6 +1889,7 @@ Lookups
 | ApplicationScreened                       | [ApplicationFull](#applicationfull)                   |                                             |
 | ApplicationSubmitted                      | [ApplicationFull](#applicationfull)                   |                                             |
 | ApplicationUpdated                        | [Application](#application)                           |                                             |
+| ApplicationClosed                         | [ApplicationFull](#applicationfull)                   |                                             |
 | PreAdmitOfferAccepted                     | [PreAdmitOfferAccepted](#preadmitofferaccepted)       |                                             |
 | OfferAccepted                             | [OfferAccepted](#offeraccepted)                       |                                             |
 | OfferCreated                              | [OfferDetails](#offerdetails)                         |                                             |
@@ -2252,6 +2271,7 @@ The appendix includes models and examples too large for the above document.
 Used by:
 - SisInboundEventType.ApplicationSubmitted
 - SisInboundEventType.ApplicationScreened
+- SisInboundEventType.ApplicationClosed
 
 The ApplicationFull object includes a variety of Applicant and Application data.
 Note: Empty JSON collections are not represented within the XML.
@@ -2457,7 +2477,12 @@ Note: Empty JSON collections are not represented within the XML.
       },
       "preferredCampusCode": null,
       "preferredIntakeId": null,
-      "choiceNumber": -1
+      "choiceNumber": -1,
+	  "decision": {
+		"state": "declined",
+		"declineReasonCode": "alternateoffer",
+		"declineReasonOther": null
+	  }	  
     },
     {
       "term": {
@@ -2474,7 +2499,8 @@ Note: Empty JSON collections are not represented within the XML.
       },
       "preferredCampusCode": null,
       "preferredIntakeId": null,
-      "choiceNumber": 1
+      "choiceNumber": 1,
+	  "decision": null
     },
     {
       "term": {
@@ -2491,7 +2517,8 @@ Note: Empty JSON collections are not represented within the XML.
       },
       "preferredCampusCode": null,
       "preferredIntakeId": null,
-      "choiceNumber": 2
+      "choiceNumber": 2,
+	  "decision": null
     }
   ],
   "referrals": {
@@ -2711,6 +2738,11 @@ Note: Empty JSON collections are not represented within the XML.
       <preferredCampusCode />
       <preferredIntakeId />
       <choiceNumber>-1</choiceNumber>
+	  <decision>
+		<state>declined</state>
+		<declineReasonCode>alternateoffer</declineReasonCode>
+		<declineReasonOther />
+	  </decision>	  
     </item>
     <item>
       <term>
@@ -2728,6 +2760,7 @@ Note: Empty JSON collections are not represented within the XML.
       <preferredCampusCode />
       <preferredIntakeId />
       <choiceNumber>1</choiceNumber>
+	  <decision />
     </item>
     <item>
       <term>
@@ -2745,6 +2778,7 @@ Note: Empty JSON collections are not represented within the XML.
       <preferredCampusCode />
       <preferredIntakeId />
       <choiceNumber>2</choiceNumber>
+	  <decision />
     </item>
   </selections>
   <screened />
@@ -2794,7 +2828,12 @@ Used by:
       },
       "preferredCampusCode": null,
       "preferredIntakeId": null,
-      "choiceNumber": -1
+      "choiceNumber": -1,
+	  "decision": {
+		"state": "declined",
+		"declineReasonCode": "alternateoffer",
+		"declineReasonOther": null
+	  }
     },
     {
       "term": {
@@ -2811,7 +2850,8 @@ Used by:
       },
       "preferredCampusCode": null,
       "preferredIntakeId": null,
-      "choiceNumber": 1
+      "choiceNumber": 1,
+	  "decision": null
     },
     {
       "term": {
@@ -2828,7 +2868,8 @@ Used by:
       },
       "preferredCampusCode": null,
       "preferredIntakeId": null,
-      "choiceNumber": 2
+      "choiceNumber": 2,
+	  "decision": null
     }
   ],
   "referrals": {
@@ -2872,6 +2913,11 @@ Used by:
       <preferredCampusCode />
       <preferredIntakeId />
       <choiceNumber>-1</choiceNumber>
+	  <decision>
+		<state>declined</state>
+		<declineReasonCode>alternateoffer</declineReasonCode>
+		<declineReasonOther />
+	  </decision>
     </item>
     <item>
       <term>
@@ -2889,6 +2935,7 @@ Used by:
       <preferredCampusCode />
       <preferredIntakeId />
       <choiceNumber>1</choiceNumber>
+	  <decision />
     </item>
     <item>
       <term>
@@ -2906,6 +2953,7 @@ Used by:
       <preferredCampusCode />
       <preferredIntakeId />
       <choiceNumber>2</choiceNumber>
+	  <decision />
     </item>
   </selections>
   <screened />
