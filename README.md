@@ -1454,11 +1454,12 @@ XML Example: See [Appendix: OfferPaymentReceipt](#appendix-offerpaymentreceipt)
 
 | Property            | Type                                                                         |
 | ------------------- | ---------------------------------------------------------------------------- |
-| state               | _string_ (min 1, max 50)                                                     |
-| declineReasonCode   | _[nullable] string_ (min 1, max 50) (college assigned decline reason code)   |
-| declineReasonOther  | _[nullable] string_ (min 1, max 255) (college assigned other decline reason) |
+| state               | _string_ ([Lookup](#programdecisionstate))                                   |
+| declineReasonCode   | _string_ ([Lookup](#programdeclinereason))                                   |
+| declineReasonOther  | _[nullable] string_ (min 1, max 100)                                         |
 
 Example: See [Appendix: ApplicationFull](#appendix-applicationfull)
+
 ### ProgramSelection ###
 
 | Property            | Type                                                                      |
@@ -1897,9 +1898,12 @@ Lookups
 
 | Code             |
 | ---------------- |
-| None             |
-| Waitlisted       |
 | Declined         |
+| None             |
+| Offer            |
+| PreAdmitted      |
+| Waitlisted       |
+
 
 ### ProgramDeclineReason ###
 
