@@ -1452,11 +1452,11 @@ XML Example: See [Appendix: OfferPaymentReceipt](#appendix-offerpaymentreceipt)
 
 ### ProgramDecision ###
 
-| Property            | Type                                                                         |
-| ------------------- | ---------------------------------------------------------------------------- |
-| state               | _string_ ([Lookup](#programdecisionstate))                                   |
-| declineReasonCode   | _string_ ([Lookup](#programdeclinereason))                                   |
-| declineReasonOther  | _[nullable] string_ (min 1, max 100)                                         |
+| Property            | Type                                                                      |
+| ------------------- | ------------------------------------------------------------------------- |
+| state               | _string_ ([Lookup](#programdecisionstate))                                |
+| declineReasonCode   | _[nullable] string_ ([Lookup](#programdeclinereason))                     |
+| declineReasonOther  | _[nullable] string_ (min 1, max 100)                                      |
 
 Example: See [Appendix: ApplicationFull](#appendix-applicationfull)
 
@@ -1469,23 +1469,23 @@ Example: See [Appendix: ApplicationFull](#appendix-applicationfull)
 | preferredCampusCode | _[nullable] string_ (min 1, max 4) (college assigned Campus Code)         |
 | preferredIntakeId   | _[nullable] string_ Intake selected                                       |
 | choiceNumber        | _number_ (less than 0 = EAP/ESL Program, greater than 0 = Normal Program) |
-| decision            | [ProgramDecision](#programdecision)                                       |
+| decision            | _[nullable]_ [ProgramDecision](#programdecision)                          |
 
 Example: See [Appendix: ApplicationFull](#appendix-applicationfull)
 
 ### ProgramSelectionDecisionUpdated ###
 
-| Property           | Type                                       |
-| ------------------ | ------------------------------------------ |
-| applicationNumber  | _string_ (min 1, max 20)                   |
-| applicationCycle   | _number_ ([Lookup](#applicationcycle))     |
-| programCode        | _string_ (min 1, max 10)                   |
-| term               | _string_ ([Lookup](#termcode))             |
-| state              | _string_ ([Lookup](#programdecisionstate)) |
-| declineReasonCode  | _string_ ([Lookup](#programdeclinereason)) |
-| declineReasonOther | _[nullable] string_ (min 1, max 100)       |
-| timestamp          | _string_ ISO 8601 Date Formatted String    |
-| by                 | _string_ (min 1, max 255)                  |
+| Property           | Type                                                  |
+| ------------------ | ----------------------------------------------------- |
+| applicationNumber  | _string_ (min 1, max 20)                              |
+| applicationCycle   | _number_ ([Lookup](#applicationcycle))                |
+| programCode        | _string_ (min 1, max 10)                              |
+| term               | _string_ ([Lookup](#termcode))                        |
+| state              | _string_ ([Lookup](#programdecisionstate))            |
+| declineReasonCode  | _[nullable] string_ ([Lookup](#programdeclinereason)) |
+| declineReasonOther | _[nullable] string_ (min 1, max 100)                  |
+| timestamp          | _string_ ISO 8601 Date Formatted String               |
+| by                 | _string_ (min 1, max 255)                             |
 
 **_Example:_**
 
@@ -1495,7 +1495,7 @@ Example: See [Appendix: ApplicationFull](#appendix-applicationfull)
   "applicationCycle" : 2017,
   "by" : "John Doe",
   "term" : "spring",
-  "state" : "None",
+  "state" : "Declined",
   "programCode" : "TST1DG5",
   "declineReasonCode" : "other",
   "declineReasonOther" : "Unspecified",
