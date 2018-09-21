@@ -1951,7 +1951,7 @@ Lookups
 | OfferPreRegistered                        | [OfferPreRegistered](#offerpreregistered)                           |                                             |
 | ~~ProgramSelectionsUpdated~~ (deprecated) | [Application](#application)                                         | ApplicationScreened or ApplicationSubmitted |
 | ~~ProgramSelectionDeclined~~ (deprecated) | [ProgramSelectionDeclined](#programselectiondeclined)               | ApplicationScreened or ApplicationSubmitted |
-| ProgramSelectionDecisionUpdated           | [ProgramSelectionDecisionUpdated](#programselectiondecisionupdated) | ApplicationScreened or ApplicationSubmitted |
+| ProgramDecisionUpdated                    | [ProgramSelectionDecisionUpdated](#programselectiondecisionupdated) | ApplicationScreened or ApplicationSubmitted |
 
 _*Special Note for Parent Event(s):*_ These two events are dependent on being subscribed
 to the parent event. This means you have to be subscribed to at least one of the
