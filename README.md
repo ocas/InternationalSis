@@ -2000,6 +2000,7 @@ you might receive during the screening process.
 | identification        | pr                     |
 | other                 | portfolio              |
 | other                 | resume                 |
+| other                 | depositproof           |
 | proficiency           | testresults            |
 | visa                  | approvalletter         |
 | visa                  | coopworkpermit         |
