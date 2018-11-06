@@ -8,6 +8,7 @@ Table of Contents
   - [Table of Contents](#table-of-contents)
   - [Document Revisions](#document-revisions)
     - [Change History](#change-history)
+      - [1.8.2](#182)
       - [1.8.1](#181)
       - [1.8.0](#180)
       - [1.7.6](#176)
@@ -171,6 +172,7 @@ Document Revisions
 
 | Version | Date         | Editor           |
 | ------- | ------------ | ---------------- |
+| 1.8.2   | Oct 05, 2018 | Jay Dobson       |
 | 1.8.1   | Aug 30, 2018 | Jaime Valencia   |
 | 1.8.0   | Aug 28, 2018 | Jay Dobson       |
 | 1.7.6   | Aug 20, 2018 | Jaime Valencia   |
@@ -206,6 +208,11 @@ Document Revisions
 | 1.0.0   | Nov 24, 2017 | Michael Aldworth |
 
 ### Change History ###
+
+#### 1.8.2 ####
+
+- Add CountryOfBirth and PrimaryLanguage to Applicant
+- Add PSIS codes to LanguageMappings.csv
 
 #### 1.8.1 ####
 
@@ -679,9 +686,11 @@ And now to Deserialize or Serialize, please look at the example in [JsonConvert 
 | created                   | _string_ ISO 8601 Date Formatted String                                     |
 | updated                   | _string_ ISO 8601 Date Formatted String                                     |
 | legalName                 | [ApplicantName](#applicantname)                                             |
-| dateOfBirth               | _string_ date string in format `yyyy-MM-dd`                                 |
+| dateOfBirth               | _string_ date string in format `yyyy-MM-dd`                                |
 | canadianStatus            | [CanadianStatus](#canadianstatus)                                           |
 | primaryCitizenshipCountry | _string_ ISO3166-1 alpha-2 [see mappings](#country-and-provinces)           |
+| countryOfBirth            | _string_ ISO3166-1 alpha-2 [see mappings](#country-and-provinces)           |
+| primaryLanguage           | _string_ ISO639-1 alpha-2 [see mappings](#languages)                        |
 | passportNumber            | _string_ matches regular expression _[0-9A-Z]{1,9}_                         |
 | fullLegalName             | _string_ (min 1, max 450)                                                   |
 | casualNames               | Array[0..10] of [ApplicantName](#applicantname)                             |
@@ -2357,6 +2366,8 @@ Note: Empty JSON collections are not represented within the XML.
     "dateOfBirth": "1908-03-02",
     "canadianStatus": "none",
     "primaryCitizenshipCountry": "ET",
+    "countryOfBirth": "ET",
+    "primaryLanguage": "EN",
     "passportNumber": "AB1234567",
     "fullLegalName": "Esperanza Abe Lexus Jeromy Edmond Kristian Alan Henry Medhurst",
     "casualNames": [
@@ -2617,6 +2628,8 @@ Note: Empty JSON collections are not represented within the XML.
     <dateOfBirth>1908-03-02</dateOfBirth>
     <canadianStatus>none</canadianStatus>
     <primaryCitizenshipCountry>ET</primaryCitizenshipCountry>
+    <countryOfBirth>ET</countryOfBirth>
+    <primaryLanguage>EN</primaryLanguage>
     <passportNumber>AB1234567</passportNumber>
     <fullLegalName>Esperanza Abe Lexus Jeromy Edmond Kristian Alan Henry Medhurst</fullLegalName>
     <casualNames>
