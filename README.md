@@ -5,6 +5,7 @@ Table of Contents
 -----------------
 
 - [Change History](#change-history)
+  - [1.8.3](#183)
   - [1.8.2](#182)
   - [1.8.1](#181)
   - [1.8.0](#180)
@@ -134,6 +135,7 @@ Table of Contents
 - [Error and Warning Codes](#error-and-warning-codes)
   - [Error Codes](#error-codes)
   - [Warning Codes](#warning-codes)
+- [Maintenance Error Message](#maintenance-error-message)
 - [How to Get a Bearer Token](#how-to-get-a-bearer-token)
 - [Appendix: ApplicationFull](#appendix-applicationfull)
   - [ApplicationFull Submitted JSON](#applicationfull-submitted-json)
@@ -162,6 +164,7 @@ Document Revisions
 
 | Version | Date         | Editor           |
 | ------- | ------------ | ---------------- |
+| 1.8.3   | Nov 16, 2018 | Jaime Valencia   |
 | 1.8.2   | Oct 05, 2018 | Jay Dobson       |
 | 1.8.1   | Aug 30, 2018 | Jaime Valencia   |
 | 1.8.0   | Aug 28, 2018 | Jay Dobson       |
@@ -198,6 +201,10 @@ Document Revisions
 | 1.0.0   | Nov 24, 2017 | Michael Aldworth |
 
 ### Change History ###
+
+#### 1.8.3 ####
+
+- Adding new Maintenance Error Message
 
 #### 1.8.2 ####
 
@@ -2266,6 +2273,10 @@ We've done the work for you!
 
 You can get a Bearer Token through making an HTTP POST to our OCAS Identity Server
 (OIDS). We will provide you the OIDS in a separate e-mail.
+
+### Maintenance Error Message ###
+
+API calls when the system is in Maintenance are going to be responded with a 503 - ServiceUnavailable also the response is going to have the same message the portal is displaying. 
 
 ### How to Get a Bearer Token ###
 
