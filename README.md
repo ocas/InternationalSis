@@ -663,13 +663,15 @@ And now to Deserialize or Serialize, please look at the example in [JsonConvert 
 | ------------- | ------------------------------------ |
 | name          | _string_ (min 1, max 255)            |
 | sisIdentifier | _[nullable] string_ (min 1, max 100) |
+| id            | _string_ guid                        |
 
 **_Example:_**
 
 ```JSON
 {
   "name": "Agency Test",
-  "sisIdentifier": "ABC123"
+  "sisIdentifier": "ABC123",
+  "id": "083d06b1-4224-4003-919a-fd9fedff428a"
 }
 ```
 
@@ -2354,7 +2356,8 @@ Note: Empty JSON collections are not represented within the XML.
   "number": "X1485152",
   "agency": {
     "name": "Agency Test",
-    "sisIdentifier": "ABC123"
+    "sisIdentifier": "ABC123",
+    "id": "083d06b1-4224-4003-919a-fd9fedff428a"
   },
   "applicant": {
     "id": "7036e524-305c-4fb6-b45c-61a9f828f35c",
@@ -2617,6 +2620,7 @@ Note: Empty JSON collections are not represented within the XML.
   <agency>
     <name>Agency Test</name>
     <sisIdentifier>ABC123</sisIdentifier>
+    <id>083d06b1-4224-4003-919a-fd9fedff428a</id>
   </agency>
   <applicant>
     <id>7036e524-305c-4fb6-b45c-61a9f828f35c</id>
@@ -2884,7 +2888,8 @@ Used by:
   "number": "X1485152",
   "agency": {
     "name": "Agency Test",
-    "sisIdentifier": "ABC123"
+    "sisIdentifier": "ABC123",
+    "id": "083d06b1-4224-4003-919a-fd9fedff428a"
   },  
   "selections": [
     {
@@ -2969,6 +2974,7 @@ Used by:
   <agency>
     <name>Agency Test</name>
     <sisIdentifier>ABC123</sisIdentifier>
+    <id>083d06b1-4224-4003-919a-fd9fedff428a</id>
   </agency>  
   <selections>
     <item>
