@@ -437,6 +437,7 @@ _Note that the SISAPI has a maximum request limit of 10MB._
 |                 | Method | Event Direction | Access    | Relative Path                                                                            |
 | --------------- | ------ | --------------- | --------- | ---------------------------------------------------------------------------------------- |
 | **Events**      | GET    | OCAS -> Partner | Protected | [/api/v1/events/peek](#get-apiv1eventspeek)                                              |
+                  | GET    | OCAS -> Partner | Protected | [/api/v1/binary-documents/{id}](#get-apiv1binarydocument)                |
 |                 | PUT    | N/A             | Protected | [/api/v1/events/{id}/ack](#put-apiv1eventsidack)                                         |
 | **Diagnostics** | GET    | N/A             | Public    | /api/v1/diagnostics/servertime                                                           |
 |                 | GET    | N/A             | Public    | /api/v1/diagnostics/logging                                                              |
@@ -602,6 +603,32 @@ the specified event.
     }
   ]
 }
+```
+
+#### GET /api/v1/binary-documents/{id} ####
+
+The binary documents endpoint is intended to acknowledge the successful retrieval of
+the specified binary document.
+
+| Url Query Parameters | Value                                   |
+| -------------------- | --------------------------------------- |
+| id                   | the id of the specific binary document. |
+
+**_Example Request:_**
+
+   ```HTTP
+   GET /api/v1/binary-documents/{id} HTTP/1.1
+   Host: <ocas-sis-api-environment>
+   Content-Type: application/json
+   Authorization: Bearer <token received from identity server>
+   Cache-Control: no-cache
+   ```
+
+**_Example Response:_**
+
+```HTTP
+200 (Success)
+Download Test_File.pdf
 ```
 
 Objects
