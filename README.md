@@ -2278,7 +2278,7 @@ You can get a Bearer Token through making an HTTP POST to our OCAS Identity Serv
 
 ### Maintenance Error Message ###
 
-API calls when the system is in Maintenance are going to be responded with a 503 - ServiceUnavailable also the response is going to have the same message the portal is displaying. 
+When the system is under maintenance, API calls will respond with a 503 - Service Unavailable HTTP status code.  As well, the response will contain the same message that the college portal is displaying.
 
 ### How to Get a Bearer Token ###
 
