@@ -5,6 +5,7 @@ Table of Contents
 -----------------
 
 - [Change History](#change-history)
+  - [1.8.4](#184)
   - [1.8.3](#183)
   - [1.8.2](#182)
   - [1.8.1](#181)
@@ -107,6 +108,7 @@ Table of Contents
 - [ProgramDeclineReason](#programdeclinereason)
 - [ReceiptType](#receipttype)
 - [SchoolType](#schooltype)
+- [ScreeningStatus](#screeningStatus)
 - [SisInboundEventType](#sisinboundeventtype)
 - [SisOutboundEventType](#sisoutboundeventtype)
 - [SupportingDocumentType](#supportingdocumenttype)
@@ -164,6 +166,7 @@ Document Revisions
 
 | Version | Date         | Editor           |
 | ------- | ------------ | ---------------- |
+| 1.8.4   | Dec 07, 2018 | Jay Dobson       |
 | 1.8.3   | Nov 16, 2018 | Jaime Valencia   |
 | 1.8.2   | Oct 05, 2018 | Jay Dobson       |
 | 1.8.1   | Aug 30, 2018 | Jaime Valencia   |
@@ -201,6 +204,10 @@ Document Revisions
 | 1.0.0   | Nov 24, 2017 | Michael Aldworth |
 
 ### Change History ###
+
+#### 1.8.4 ####
+
+- Add ScreenedStatus to Application and ApplicationFull objects
 
 #### 1.8.3 ####
 
@@ -869,38 +876,40 @@ character which indicates the applicant does not have a first or last name.
 
 ### Application ###
 
-| Property   | Type                                               |
-| ---------- | -------------------------------------------------- |
-| id         | _string_ guid                                      |
-| number     | _string_ (min 1, max 20) the Application Number    |
-| agency     | [Agency](#agency)                                  |
-| referrals  | [Referrals](#referrals)                            |
-| created    | _string_ ISO 8601 Date Formatted String            |
-| updated    | _string_ ISO 8601 Date Formatted String            |
-| submitted  | _string_ ISO 8601 Date Formatted String            |
-| screened   | _[nullable] string_ ISO 8601 Date Formatted String |
-| selections | Array of [ProgramSelection](#programselection)     |
-| timestamp  | _string_ ISO 8601 Date Formatted String            |
-| by         | _string_ (min 1, max 255)                          |
+| Property        | Type                                               |
+| --------------- | -------------------------------------------------- |
+| id              | _string_ guid                                      |
+| number          | _string_ (min 1, max 20) the Application Number    |
+| agency          | [Agency](#agency)                                  |
+| referrals       | [Referrals](#referrals)                            |
+| created         | _string_ ISO 8601 Date Formatted String            |
+| updated         | _string_ ISO 8601 Date Formatted String            |
+| submitted       | _string_ ISO 8601 Date Formatted String            |
+| screeningStatus | _string_      ([Lookup](#screeningStatus))         |
+| screened        | _[nullable] string_ ISO 8601 Date Formatted String |
+| selections      | Array of [ProgramSelection](#programselection)     |
+| timestamp       | _string_ ISO 8601 Date Formatted String            |
+| by              | _string_ (min 1, max 255)                          |
 
 Example: See [Appendix: Application](#appendix-application)
 
 ### ApplicationFull ###
 
-| Property   | Type                                               |
-| ---------- | -------------------------------------------------- |
-| id         | _string_ guid                                      |
-| number     | _string_ (min 1, max 20) the Application Number    |
-| agency     | [Agency](#agency)                                  |
-| applicant  | [Applicant](#applicant)                            |
-| selections | Array of [ProgramSelection](#programselection)     |
-| screened   | _[nullable] string_ ISO 8601 Date Formatted String |
-| referrals  | [Referrals](#referrals)                            |
-| submitted  | _string_ ISO 8601 Date Formatted String            |
-| created    | _string_ ISO 8601 Date Formatted String            |
-| updated    | _string_ ISO 8601 Date Formatted String            |
-| timestamp  | _string_ ISO 8601 Date Formatted String            |
-| by         | _string_ (min 1, max 255)                          |
+| Property        | Type                                               |
+| --------------- | -------------------------------------------------- |
+| id              | _string_ guid                                      |
+| number          | _string_ (min 1, max 20) the Application Number    |
+| agency          | [Agency](#agency)                                  |
+| applicant       | [Applicant](#applicant)                            |
+| selections      | Array of [ProgramSelection](#programselection)     |
+| screeningStatus | _string_      ([Lookup](#screeningStatus))         |
+| screened        | _[nullable] string_ ISO 8601 Date Formatted String |
+| referrals       | [Referrals](#referrals)                            |
+| submitted       | _string_ ISO 8601 Date Formatted String            |
+| created         | _string_ ISO 8601 Date Formatted String            |
+| updated         | _string_ ISO 8601 Date Formatted String            |
+| timestamp       | _string_ ISO 8601 Date Formatted String            |
+| by              | _string_ (min 1, max 255)                          |
 
 Example: See [Appendix: ApplicationFull](#appendix-applicationfull)
 
@@ -1974,6 +1983,20 @@ Lookups
 | college    |
 | university |
 
+### ScreeningStatus ###
+
+| Code                         |
+| ------                       |
+| NotScreened                  |
+| InitialScreeningComplete *   |
+| SecondaryScreeningComplete * |
+| Screened                     |
+| ScreeningFailed              |
+
+_*Note:*_ InitialScreeningComplete and SecondaryScreening complete are only available when 
+the multiLevelScreening feature is turned on for your college.  Screened (date) is only supplied
+when ScreeningStatus == Screened
+
 ### SisInboundEventType ###
 
 | Key                                       | Data Object Type                                                    | Parent Event(s)                             |
@@ -2629,6 +2652,7 @@ Note: Empty JSON collections are not represented within the XML.
       "sisIdentifier": "TST1"
     }
   },  
+  "screeningStatus": "Screened",
   "screened": null,
   "submitted": "2017-12-09T11:19:46.6378594Z",
   "created": "2017-12-08T17:19:02.3269001Z",
@@ -2886,6 +2910,7 @@ Note: Empty JSON collections are not represented within the XML.
 	  <decision />
     </item>
   </selections>
+  <screeningStatus>Screened</screeningStatus>
   <screened />
   <referrals>
     <exchangePartner>
@@ -2984,6 +3009,7 @@ Used by:
       "sisIdentifier": "TST1"
     }
   },  
+  "screeningStatus": "screened",
   "screened": null,
   "submitted": "2017-12-09T11:19:46.6378594Z",
   "created": "2017-12-08T17:19:02.3269001Z",
@@ -3063,6 +3089,7 @@ Used by:
 	  <decision />
     </item>
   </selections>
+  <screeningStatus>Screened</screeningStatus>
   <screened />
   <referrals>
     <exchangePartner>
