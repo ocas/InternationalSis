@@ -5,6 +5,7 @@ Table of Contents
 -----------------
 
 - [Change History](#change-history)
+  - [1.8.5](#185)
   - [1.8.4](#184)
   - [1.8.3](#183)
   - [1.8.2](#182)
@@ -45,6 +46,7 @@ Table of Contents
 - [Endpoints](#endpoints)
   - [POST /api/v1/events](#post-apiv1events)
   - [GET /api/v1/events/peek](#get-apiv1eventspeek)
+  - [GET /api/v1/binary-documents/{id}](#get-apiv1binarydocument)
   - [PUT /api/v1/events/{id}/ack](#put-apiv1eventsidack)
 - [Address](#address)
 - [Agency](#agency)
@@ -166,6 +168,7 @@ Document Revisions
 
 | Version | Date         | Editor           |
 | ------- | ------------ | ---------------- |
+| 1.8.5   | Dec 10, 2018 | Parth Mishra     |
 | 1.8.4   | Dec 07, 2018 | Jay Dobson       |
 | 1.8.3   | Nov 16, 2018 | Jaime Valencia   |
 | 1.8.2   | Oct 05, 2018 | Jay Dobson       |
@@ -204,6 +207,10 @@ Document Revisions
 | 1.0.0   | Nov 24, 2017 | Michael Aldworth |
 
 ### Change History ###
+
+#### 1.8.5 ####
+
+- Add Binary documents endpoint
 
 #### 1.8.4 ####
 
@@ -435,6 +442,7 @@ a user friendly grouping of REST API Functionality:
 1. Applicants
 2. Diagnostics
 3. Events
+4. BinaryDocuments
 
 The table below lists the actions that can be made from each controller and their access
 limitation.
@@ -444,7 +452,7 @@ _Note that the SISAPI has a maximum request limit of 10MB._
 |                 | Method | Event Direction | Access    | Relative Path                                                                            |
 | --------------- | ------ | --------------- | --------- | ---------------------------------------------------------------------------------------- |
 | **Events**      | GET    | OCAS -> Partner | Protected | [/api/v1/events/peek](#get-apiv1eventspeek)                                              |
-                  | GET    | OCAS -> Partner | Protected | [/api/v1/binary-documents/{id}](#get-apiv1binarydocument)                |
+                  | GET    | OCAS -> Partner | Protected | [/api/v1/binary-documents/{id}](#get-apiv1binarydocument)                                |
 |                 | PUT    | N/A             | Protected | [/api/v1/events/{id}/ack](#put-apiv1eventsidack)                                         |
 | **Diagnostics** | GET    | N/A             | Public    | /api/v1/diagnostics/servertime                                                           |
 |                 | GET    | N/A             | Public    | /api/v1/diagnostics/logging                                                              |
@@ -614,7 +622,7 @@ the specified event.
 
 #### GET /api/v1/binary-documents/{id} ####
 
-The binary documents endpoint is intended to acknowledge the successful retrieval of
+The binary documents endpoint is intended for successful retrieval of
 the specified binary document.
 
 | Url Query Parameters | Value                                   |
@@ -2295,6 +2303,7 @@ Below is a table of error codes that may be returned from the SisApi
 | 404.13 | Request content size too large            |
 | E0001  | Unknown Middleware Exception              |
 | E0030  | Not Found Error                           |
+| E0050  | Unauthorized Error                        | 
 | E0056  | Invalid Feature Configuration             |
 | E0070  | Error In State Machine                    |
 | E0071  | Invalid state transition                  |
