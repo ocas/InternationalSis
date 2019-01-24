@@ -5,6 +5,7 @@ Table of Contents
 -----------------
 
 - [Change History](#change-history)
+  - [1.8.6](#186)
   - [1.8.5](#185)
   - [1.8.4](#184)
   - [1.8.3](#183)
@@ -168,6 +169,7 @@ Document Revisions
 
 | Version | Date         | Editor           |
 | ------- | ------------ | ---------------- |
+| 1.8.6   | Jan 24, 2018 | Parth Mishra     |
 | 1.8.5   | Dec 10, 2018 | Parth Mishra     |
 | 1.8.4   | Dec 07, 2018 | Jay Dobson       |
 | 1.8.3   | Nov 16, 2018 | Jaime Valencia   |
@@ -207,6 +209,10 @@ Document Revisions
 | 1.0.0   | Nov 24, 2017 | Michael Aldworth |
 
 ### Change History ###
+
+#### 1.8.6 ####
+
+- Add new internship types
 
 #### 1.8.5 ####
 
@@ -1856,12 +1862,15 @@ Lookups
 
 ### InternshipType ###
 
-| Code            |
-| --------------- |
-| required        |
-| optional        |
-| notavailable    |
-| unpaidplacement |
+| Code               |
+| ------------------ |
+| required           |
+| optional           |
+| notavailable       |
+| unpaidplacement    |
+| requiredinternship |
+| industryplacement  |
+| fieldplacement     |
 
 ### Languages ###
 
