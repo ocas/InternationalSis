@@ -5,6 +5,7 @@ Table of Contents
 -----------------
 
 - [Change History](#change-history)
+  - [1.8.9](#189)
   - [1.8.8](#188)
   - [1.8.7](#187)
   - [1.8.6](#186)
@@ -96,6 +97,7 @@ Table of Contents
 - [Country and Provinces](#country-and-provinces)
 - [EducationCredentialStatus](#educationcredentialstatus)
 - [EducationCredentialType](#educationcredentialtype)
+- [ApplicationEnglishProficiency](#applicationEnglishProficiency)
 - [EntryLevelType](#entryleveltype)
 - [Gender](#gender)
 - [IntakeDeliveryOption](#intakedeliveryoption)
@@ -171,7 +173,8 @@ Document Revisions
 
 | Version | Date         | Editor           |
 | ------- | ------------ | ---------------- |
-| 1.8.8   | Feb 4, 2018  | Parth Mishra     |
+| 1.8.9   | Feb 13, 2019 | Parth Mishra     |
+| 1.8.8   | Feb 04, 2018 | Jay Dobson       |
 | 1.8.7   | Jan 29, 2018 | Parth Mishra     |
 | 1.8.6   | Jan 24, 2018 | Parth Mishra     |
 | 1.8.5   | Dec 10, 2018 | Parth Mishra     |
@@ -213,6 +216,10 @@ Document Revisions
 | 1.0.0   | Nov 24, 2017 | Michael Aldworth |
 
 ### Change History ###
+
+#### 1.8.9 ####
+
+- Add ApplicationEnglishProficiency and ApplicationUrl to Application and ApplicationFull objects
 
 #### 1.8.8 ####
 
@@ -902,40 +909,44 @@ character which indicates the applicant does not have a first or last name.
 
 ### Application ###
 
-| Property        | Type                                               |
-| --------------- | -------------------------------------------------- |
-| id              | _string_ guid                                      |
-| number          | _string_ (min 1, max 20) the Application Number    |
-| agency          | [Agency](#agency)                                  |
-| referrals       | [Referrals](#referrals)                            |
-| created         | _string_ ISO 8601 Date Formatted String            |
-| updated         | _string_ ISO 8601 Date Formatted String            |
-| submitted       | _string_ ISO 8601 Date Formatted String            |
-| screeningStatus | _string_      ([Lookup](#screeningStatus))         |
-| screened        | _[nullable] string_ ISO 8601 Date Formatted String |
-| selections      | Array of [ProgramSelection](#programselection)     |
-| timestamp       | _string_ ISO 8601 Date Formatted String            |
-| by              | _string_ (min 1, max 255)                          |
+| Property                      | Type                                                    |
+| ----------------------------- | ------------------------------------------------------- |
+| id                            | _string_ guid                                           |
+| number                        | _string_ (min 1, max 20) the Application Number         |
+| agency                        | [Agency](#agency)                                       |
+| referrals                     | [Referrals](#referrals)                                 |
+| created                       | _string_ ISO 8601 Date Formatted String                 |
+| updated                       | _string_ ISO 8601 Date Formatted String                 |
+| submitted                     | _string_ ISO 8601 Date Formatted String                 |
+| screeningStatus               | _string_      ([Lookup](#screeningStatus))              |
+| screened                      | _[nullable] string_ ISO 8601 Date Formatted String      |
+| selections                    | Array of [ProgramSelection](#programselection)          |
+| timestamp                     | _string_ ISO 8601 Date Formatted String                 |
+| by                            | _string_ (min 1, max 255)                               |
+| applicationEnglishProficiency | _string_     ([Lookup](#applicationEnglishProficiency)) |
+| applicationUrl                | _string_                                                |
 
 Example: See [Appendix: Application](#appendix-application)
 
 ### ApplicationFull ###
 
-| Property        | Type                                               |
-| --------------- | -------------------------------------------------- |
-| id              | _string_ guid                                      |
-| number          | _string_ (min 1, max 20) the Application Number    |
-| agency          | [Agency](#agency)                                  |
-| applicant       | [Applicant](#applicant)                            |
-| selections      | Array of [ProgramSelection](#programselection)     |
-| screeningStatus | _string_      ([Lookup](#screeningStatus))         |
-| screened        | _[nullable] string_ ISO 8601 Date Formatted String |
-| referrals       | [Referrals](#referrals)                            |
-| submitted       | _string_ ISO 8601 Date Formatted String            |
-| created         | _string_ ISO 8601 Date Formatted String            |
-| updated         | _string_ ISO 8601 Date Formatted String            |
-| timestamp       | _string_ ISO 8601 Date Formatted String            |
-| by              | _string_ (min 1, max 255)                          |
+| Property                      | Type                                                    |
+| ----------------------------- | ------------------------------------------------------- |
+| id                            | _string_ guid                                           |
+| number                        | _string_ (min 1, max 20) the Application Number         |
+| agency                        | [Agency](#agency)                                       |
+| applicant                     | [Applicant](#applicant)                                 |
+| selections                    | Array of [ProgramSelection](#programselection)          |
+| screeningStatus               | _string_      ([Lookup](#screeningStatus))              |
+| screened                      | _[nullable] string_ ISO 8601 Date Formatted String      |
+| referrals                     | [Referrals](#referrals)                                 |
+| submitted                     | _string_ ISO 8601 Date Formatted String                 |
+| created                       | _string_ ISO 8601 Date Formatted String                 |
+| updated                       | _string_ ISO 8601 Date Formatted String                 |
+| timestamp                     | _string_ ISO 8601 Date Formatted String                 |
+| by                            | _string_ (min 1, max 255)                               |
+| applicationEnglishProficiency | _string_     ([Lookup](#applicationEnglishProficiency)) |
+| applicationUrl                | _string_                                                |
 
 Example: See [Appendix: ApplicationFull](#appendix-applicationfull)
 
@@ -1830,6 +1841,17 @@ Lookups
 | college-diploma   |
 | college-other     |
 
+### ApplicationEnglishProficiency ###
+
+| Code                   |
+| ---------------------- |
+| Completed              |
+| InProgressTest         |
+| InProgressStudyProgram |
+| EnrollEnglishPlus      |
+| EnrollEnglishOnly      |
+| EnglishFirstLanguage   |
+
 ### EntryLevelType ###
 
 | Code |
@@ -2684,7 +2706,9 @@ Note: Empty JSON collections are not represented within the XML.
       "name": "Test College 1",
       "sisIdentifier": "TST1"
     }
-  },  
+  }, 
+  "applicationUrl": "https://international.ocas.ca/college/c/c921f1c6-ce09-43d1-a3ed-12dda3cbc706/applications/2cdc89de-3160-e811-80c3-0003ffb4c403",
+  "applicationEnglishProficiency": "EnglishFirstLanguage",  
   "screeningStatus": "Screened",
   "screened": null,
   "submitted": "2017-12-09T11:19:46.6378594Z",
@@ -2943,6 +2967,8 @@ Note: Empty JSON collections are not represented within the XML.
 	  <decision />
     </item>
   </selections>
+  <applicationUrl>https://international.ocas.ca/college/c/c921f1c6-ce09-43d1-a3ed-12dda3cbc706/applications/2cdc89de-3160-e811-80c3-0003ffb4c403</applicationUrl>
+  <applicationEnglishProficiency>EnglishFirstLanguage</applicationEnglishProficiency>
   <screeningStatus>Screened</screeningStatus>
   <screened />
   <referrals>
@@ -2953,7 +2979,7 @@ Note: Empty JSON collections are not represented within the XML.
   </referrals>  
   <submitted>2017-12-09T11:19:46.6378594Z</submitted>
   <created>2017-12-08T17:19:02.3269001Z</created>
-  <updated>2017-12-10T11:19:46.6378594Z</updated>
+  <updated>2017-12-10T11:19:46.6378594Z</updated>  
   <by>Esperanza Abe Lexus Jeromy Edmond Kristian Alan Henry Medhurst</by>
   <timestamp>2017-12-09T11:19:46.6378594Z</timestamp>
 </root>
@@ -3041,7 +3067,9 @@ Used by:
       "name": "Test College 1",
       "sisIdentifier": "TST1"
     }
-  },  
+  }, 
+  "applicationUrl": "https://international.ocas.ca/college/c/c921f1c6-ce09-43d1-a3ed-12dda3cbc706/applications/2cdc89de-3160-e811-80c3-0003ffb4c403,
+  "applicationEnglishProficiency": "applicationEnglishFirstLanguage",  
   "screeningStatus": "screened",
   "screened": null,
   "submitted": "2017-12-09T11:19:46.6378594Z",
@@ -3122,6 +3150,8 @@ Used by:
 	  <decision />
     </item>
   </selections>
+  <applicationUrl>https://international.ocas.ca/college/c/c921f1c6-ce09-43d1-a3ed-12dda3cbc706/applications/2cdc89de-3160-e811-80c3-0003ffb4c403</applicationUrl>
+  <applicationEnglishProficiency>EnglishFirstLanguage</applicationEnglishProficiency>
   <screeningStatus>Screened</screeningStatus>
   <screened />
   <referrals>
