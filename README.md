@@ -5,6 +5,7 @@ Table of Contents
 -----------------
 
 - [Change History](#change-history)
+  - [1.8.10](#1810)
   - [1.8.9](#189)
   - [1.8.8](#188)
   - [1.8.7](#187)
@@ -173,6 +174,7 @@ Document Revisions
 
 | Version | Date         | Editor           |
 | ------- | ------------ | ---------------- |
+| 1.8.10  | Mar 18, 2019 | Jaime Valencia   |
 | 1.8.9   | Feb 13, 2019 | Parth Mishra     |
 | 1.8.8   | Feb 04, 2018 | Jay Dobson       |
 | 1.8.7   | Jan 29, 2018 | Parth Mishra     |
@@ -216,6 +218,10 @@ Document Revisions
 | 1.0.0   | Nov 24, 2017 | Michael Aldworth |
 
 ### Change History ###
+
+#### 1.8.10 ####
+
+- Change property PassportNumber length from 9 to 20 
 
 #### 1.8.9 ####
 
@@ -752,12 +758,12 @@ And now to Deserialize or Serialize, please look at the example in [JsonConvert 
 | created                   | _string_ ISO 8601 Date Formatted String                                     |
 | updated                   | _string_ ISO 8601 Date Formatted String                                     |
 | legalName                 | [ApplicantName](#applicantname)                                             |
-| dateOfBirth               | _string_ date string in format `yyyy-MM-dd`                                |
+| dateOfBirth               | _string_ date string in format `yyyy-MM-dd`                                 |
 | canadianStatus            | [CanadianStatus](#canadianstatus)                                           |
 | primaryCitizenshipCountry | _string_ ISO3166-1 alpha-2 [see mappings](#country-and-provinces)           |
 | countryOfBirth            | _string_ ISO3166-1 alpha-2 [see mappings](#country-and-provinces)           |
 | primaryLanguage           | _string_ ISO639-1 alpha-2 [see mappings](#languages)                        |
-| passportNumber            | _string_ matches regular expression _[0-9A-Z]{1,9}_                         |
+| passportNumber            | _string_ matches regular expression _[0-9A-Z]{1,20}_                        |
 | fullLegalName             | _string_ (min 1, max 450)                                                   |
 | casualNames               | Array[0..10] of [ApplicantName](#applicantname)                             |
 | gender                    | _string_ [Gender](#gender)                                                  |
