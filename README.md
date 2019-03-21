@@ -5,6 +5,7 @@ Table of Contents
 -----------------
 
 - [Change History](#change-history)
+  - [1.8.11](#1811)
   - [1.8.10](#1810)
   - [1.8.9](#189)
   - [1.8.8](#188)
@@ -174,6 +175,7 @@ Document Revisions
 
 | Version | Date         | Editor           |
 | ------- | ------------ | ---------------- |
+| 1.8.11  | Mar 19, 2019 | Jaime Valencia   |
 | 1.8.10  | Mar 18, 2019 | Jaime Valencia   |
 | 1.8.9   | Feb 13, 2019 | Parth Mishra     |
 | 1.8.8   | Feb 04, 2018 | Jay Dobson       |
@@ -218,6 +220,10 @@ Document Revisions
 | 1.0.0   | Nov 24, 2017 | Michael Aldworth |
 
 ### Change History ###
+
+#### 1.8.11 ####
+
+- Removing Canadian Statuses 
 
 #### 1.8.10 ####
 
@@ -1815,14 +1821,10 @@ Lookups
 | Code              |
 | ----------------- |
 | none              |
-| aboriginal        |
-| conventionrefugee |
-| offshoreschool    |
-| pr                |
 | refugee           |
 | study             |
 | visa              |
-| other             |
+| other (Deprecated)|
 
 ### Country and Provinces ###
 
