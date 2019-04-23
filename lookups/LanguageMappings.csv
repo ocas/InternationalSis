@@ -1,185 +1,185 @@
 Iso6392_1,PsisCode,Iso6392_2,Language
-"ab","999",abk,"Abkhazian"
-"aa","999",aar,"Afar"
-"af","999",afr,"Afrikaans"
-"ak","999",aka,"Akan"
-"sq","999",sqi,"Albanian"
-"am","073",amh,"Amharic"
-"ar","069",ara,"Arabic"
-"an","999",arg,"Aragonese"
-"hy","019",hye,"Armenian"
-"as","999",asm,"Assamese"
-"av","999",ava,"Avaric"
-"ae","999",ave,"Avestan"
-"ay","999",aym,"Aymara"
-"az","999",aze,"Azerbaijani"
-"bm","999",bam,"Bambara"
-"ba","999",bak,"Bashkir"
-"eu","999",eus,"Basque"
-"be","999",bel,"Belarusian"
-"bn","048",ben,"Bengali"
-"bh","999",ber,"Bihari languages"
-"bi","999",bis,"Bislama"
-"nb","999",nob,"BokmÜl"
-"bs","999",bos,"Bosnian"
-"br","999",bre,"Breton"
-"bg","027",bul,"Bulgarian"
-"my","999",mya,"Burmese"
-"ca","999",cat,"Catalan; Valencian"
-"km","999",khm,"Central Khmer"
-"ch","999",cha,"Chamorro"
-"ce","999",che,"Chechen"
-"ny","999",nya,"Chichewa; Chewa; Nyanja"
-"zh","060",zho,"Chinese"
-"cu","999",chu,"Church Slavic; Old Slavonic; Church Slavonic; Old Bulgarian; Old Church Slavonic"
-"cv","999",chv,"Chuvash"
-"kw","999",cor,"Cornish"
-"co","999",cos,"Corsican"
-"cr","087",cre,"Cree"
-"hr","029",hrv,"Croatian"
-"cs","032",ces,"Czech"
-"da","006",dan,"Danish"
-"dv","999",div,"Divehi; Dhivehi; Maldivian"
-"nl","999",nld,"Dutch; Flemish"
-"dz","999",dzo,"Dzongkha"
-"en","001",eng,"English"
-"eo","999",epo,"Esperanto"
-"et","079",est,"Estonian"
-"ee","999",ewe,"Ewe"
-"fo","999",fao,"Faroese"
-"fj","999",fij,"Fijian"
-"fi","080",fin,"Finnish"
-"fr","002",fra,"French"
-"ff","999",ful,"Fulah"
-"gd","020",gla,"Gaelic; Scottish Gaelic"
-"gl","999",glg,"Galician"
-"lg","999",lug,"Ganda"
-"ka","999",kat,"Georgian"
-"de","011",deu,"German"
-"el","018",ell,"Greek"
-"gn","999",grn,"Guarani"
-"gu","042",guj,"Gujarati"
-"ht","999",hat,"Haitian; Haitian Creole"
-"ha","999",hau,"Hausa"
-"he","070",heb,"Hebrew"
-"hz","999",her,"Herero"
-"hi","046",hin,"Hindi"
-"ho","999",hmo,"Hiri Motu"
-"hu","081",hun,"Hungarian"
-"is","007",isl,"Icelandic"
-"io","999",ido,"Ido"
-"ig","999",ibo,"Igbo"
-"id","999",ind,"Indonesian"
-"ia","999",ina,"Interlingua (International Auxiliary Language Association)"
-"ie","999",ile,"Interlingue; Occidental"
-"iu","117",iku,"Inuktitut"
-"ik","999",ipk,"Inupiaq"
-"ga","999",gle,"Irish"
-"it","016",ita,"Italian"
-"ja","056",jpn,"Japanese"
-"jv","999",jav,"Javanese"
-"kl","999",kal,"Kalaallisut; Greenlandic"
-"kn","054",kan,"Kannada"
-"kr","999",kau,"Kanuri"
-"ks","999",kas,"Kashmiri"
-"kk","999",kaz,"Kazakh"
-"ki","999",kik,"Kikuyu; Gikuyu"
-"rw","999",kin,"Kinyarwanda"
-"ky","999",kir,"Kirghiz; Kyrgyz"
-"kv","999",kom,"Komi"
-"kg","999",kon,"Kongo"
-"ko","057",kor,"Korean"
-"kj","999",kua,"Kuanyama; Kwanyama"
-"ku","038",kur,"Kurdish"
-"lo","059",lao,"Lao"
-"la","999",lat,"Latin"
-"lv","023",lav,"Latvian"
-"li","999",lim,"Limburgan; Limburger; Limburgish"
-"ln","999",lin,"Lingala"
-"lt","024",lit,"Lithuanian"
-"lu","999",lub,"Luba-Katanga"
-"lb","999",ltz,"Luxembourgish; Letzeburgesch"
-"mk","033",mkd,"Macedonian"
-"mg","999",mlg,"Malagasy"
-"ms","999",msa,"Malay"
-"ml","051",mal,"Malayalam"
-"mt","071",mlt,"Maltese"
-"gv","999",glv,"Manx"
-"mi","999",mri,"Maori"
-"mr","043",mar,"Marathi"
-"mh","999",mah,"Marshallese"
-"mn","999",mon,"Mongolian"
-"na","999",nau,"Nauru"
-"nv","999",nav,"Navajo; Navaho"
-"nd","999",nde,"Ndebele"
-"nr","999",nbl,"Ndebele"
-"ng","999",ndo,"Ndonga"
-"ne","999",nep,"Nepali"
-"se","999",sme,"Northern Sami"
-"no","008",nor,"Norwegian"
-"nn","999",nno,"Norwegian Nynorsk; Nynorsk"
-"oc","999",oci,"Occitan (post 1500); Provenáal"
-"oj","088",oji,"Ojibwa"
-"or","999",ori,"Oriya"
-"om","999",orm,"Oromo"
-"os","999",oss,"Ossetian; Ossetic"
-"pi","999",pli,"Pali"
-"pa","999",pan,"Panjabi; Punjabi"
-"fa","039",fas,"Persian"
-"pl","034",pol,"Polish"
-"pt","013",por,"Portuguese"
-"ps","999",pus,"Pushto; Pashto"
-"qu","999",que,"Quechua"
-"ro","015",ron,"Romanian; Moldavian; Moldovan"
-"rm","999",roh,"Romansh"
-"rn","999",run,"Rundi"
-"ru","025",rus,"Russian"
-"sm","999",smo,"Samoan"
-"sg","999",sag,"Sango"
-"sa","999",san,"Sanskrit"
-"sc","999",srd,"Sardinian"
-"sr","030",srp,"Serbian"
-"sn","999",sna,"Shona"
-"ii","999",iii,"Sichuan Yi; Nuosu"
-"sd","041",snd,"Sindhi"
-"si","999",sin,"Sinhala; Sinhalese"
-"sk","036",slk,"Slovak"
-"sl","031",slv,"Slovenian"
-"so","074",som,"Somali"
-"st","999",sot,"Sotho"
-"es","014",spa,"Spanish; Castilian"
-"su","999",sun,"Sundanese"
-"sw","082",swa,"Swahili"
-"ss","999",ssw,"Swati"
-"sv","009",swe,"Swedish"
-"tl","067",tgl,"Tagalog"
-"ty","999",tah,"Tahitian"
-"tg","999",tgk,"Tajik"
-"ta","052",tam,"Tamil"
-"tt","999",tat,"Tatar"
-"te","053",tel,"Telugu"
-"th","058",tha,"Thai"
-"bo","061",bod,"Tibetan"
-"ti","999",tir,"Tigrinya"
-"to","999",ton,"Tonga (Tonga Islands)"
-"ts","999",tso,"Tsonga"
-"tn","999",tsn,"Tswana"
-"tr","077",tur,"Turkish"
-"tk","999",tuk,"Turkmen"
-"tw","086",twi,"Twi"
-"ug","999",uig,"Uighur; Uyghur"
-"uk","035",ukr,"Ukrainian"
-"ur","047",urd,"Urdu"
-"uz","999",uzb,"Uzbek"
-"ve","999",ven,"Venda"
-"vi","062",vie,"Vietnamese"
-"vo","999",vol,"VolapÅk"
-"wa","999",wln,"Walloon"
-"cy","021",cym,"Welsh"
-"fy","999",fry,"Western Frisian"
-"wo","999",wol,"Wolof"
-"xh","999",xho,"Xhosa"
-"yi","010",yid,"Yiddish"
-"yo","999",yor,"Yoruba"
-"za","999",zha,"Zhuang; Chuang"
-"zu","999",zul,"Zulu"
+ab,999,abk,Abkhazian
+aa,999,aar,Afar
+af,999,afr,Afrikaans
+ak,999,aka,Akan
+sq,999,sqi,Albanian
+am,73,amh,Amharic
+ar,69,ara,Arabic
+an,999,arg,Aragonese
+hy,19,hye,Armenian
+as,999,asm,Assamese
+av,999,ava,Avaric
+ae,999,ave,Avestan
+ay,999,aym,Aymara
+az,999,aze,Azerbaijani
+bm,999,bam,Bambara
+ba,999,bak,Bashkir
+eu,999,eus,Basque
+be,26,bel,Belarusian
+bn,48,ben,Bengali
+bh,999,ber,Bihari languages
+bi,999,bis,Bislama
+nb,999,nob,BokmÜl
+bs,999,bos,Bosnian
+br,999,bre,Breton
+bg,27,bul,Bulgarian
+my,999,mya,Burmese
+ca,999,cat,Catalan; Valencian
+km,63,khm,Central Khmer
+ch,999,cha,Chamorro
+ce,999,che,Chechen
+ny,999,nya,Chichewa; Chewa; Nyanja
+zh,60,zho,Chinese
+cu,999,chu,Church Slavic; Old Slavonic; Church Slavonic; Old Bulgarian; Old Church Slavonic
+cv,999,chv,Chuvash
+kw,999,cor,Cornish
+co,999,cos,Corsican
+cr,87,cre,Cree
+hr,29,hrv,Croatian
+cs,32,ces,Czech
+da,6,dan,Danish
+dv,999,div,Divehi; Dhivehi; Maldivian
+nl,3,nld,Dutch; Flemish
+dz,999,dzo,Dzongkha
+en,1,eng,English
+eo,999,epo,Esperanto
+et,79,est,Estonian
+ee,999,ewe,Ewe
+fo,999,fao,Faroese
+fj,999,fij,Fijian
+fi,80,fin,Finnish
+fr,2,fra,French
+ff,999,ful,Fulah
+gd,20,gla,Gaelic; Scottish Gaelic
+gl,999,glg,Galician
+lg,999,lug,Ganda
+ka,999,kat,Georgian
+de,11,deu,German
+el,18,ell,Greek
+gn,999,grn,Guarani
+gu,42,guj,Gujarati
+ht,999,hat,Haitian; Haitian Creole
+ha,999,hau,Hausa
+he,70,heb,Hebrew
+hz,999,her,Herero
+hi,46,hin,Hindi
+ho,999,hmo,Hiri Motu
+hu,81,hun,Hungarian
+is,7,isl,Icelandic
+io,999,ido,Ido
+ig,999,ibo,Igbo
+id,999,ind,Indonesian
+ia,999,ina,Interlingua (International Auxiliary Language Association)
+ie,999,ile,Interlingue; Occidental
+iu,117,iku,Inuktitut
+ik,999,ipk,Inupiaq
+ga,999,gle,Irish
+it,16,ita,Italian
+ja,56,jpn,Japanese
+jv,999,jav,Javanese
+kl,999,kal,Kalaallisut; Greenlandic
+kn,54,kan,Kannada
+kr,999,kau,Kanuri
+ks,999,kas,Kashmiri
+kk,999,kaz,Kazakh
+ki,999,kik,Kikuyu; Gikuyu
+rw,999,kin,Kinyarwanda
+ky,999,kir,Kirghiz; Kyrgyz
+kv,999,kom,Komi
+kg,999,kon,Kongo
+ko,57,kor,Korean
+kj,999,kua,Kuanyama; Kwanyama
+ku,38,kur,Kurdish
+lo,59,lao,Lao
+la,999,lat,Latin
+lv,23,lav,Latvian
+li,999,lim,Limburgan; Limburger; Limburgish
+ln,999,lin,Lingala
+lt,24,lit,Lithuanian
+lu,999,lub,Luba-Katanga
+lb,999,ltz,Luxembourgish; Letzeburgesch
+mk,33,mkd,Macedonian
+mg,999,mlg,Malagasy
+ms,66,msa,Malay
+ml,51,mal,Malayalam
+mt,71,mlt,Maltese
+gv,999,glv,Manx
+mi,999,mri,Maori
+mr,43,mar,Marathi
+mh,999,mah,Marshallese
+mn,999,mon,Mongolian
+na,999,nau,Nauru
+nv,999,nav,Navajo; Navaho
+nd,999,nde,Ndebele
+nr,999,nbl,Ndebele
+ng,999,ndo,Ndonga
+ne,999,nep,Nepali
+se,999,sme,Northern Sami
+no,8,nor,Norwegian
+nn,999,nno,Norwegian Nynorsk; Nynorsk
+oc,999,oci,Occitan (post 1500); Provenáal
+oj,88,oji,Ojibwa
+or,999,ori,Oriya
+om,999,orm,Oromo
+os,999,oss,Ossetian; Ossetic
+pi,999,pli,Pali
+pa,40,pan,Panjabi; Punjabi
+fa,39,fas,Persian
+pl,34,pol,Polish
+pt,13,por,Portuguese
+ps,49,pus,Pushto; Pashto
+qu,999,que,Quechua
+ro,15,ron,Romanian; Moldavian; Moldovan
+rm,999,roh,Romansh
+rn,999,run,Rundi
+ru,25,rus,Russian
+sm,999,smo,Samoan
+sg,999,sag,Sango
+sa,999,san,Sanskrit
+sc,999,srd,Sardinian
+sr,30,srp,Serbian
+sn,999,sna,Shona
+ii,999,iii,Sichuan Yi; Nuosu
+sd,41,snd,Sindhi
+si,45,sin,Sinhala; Sinhalese
+sk,36,slk,Slovak
+sl,31,slv,Slovenian
+so,74,som,Somali
+st,999,sot,Sotho
+es,14,spa,Spanish; Castilian
+su,999,sun,Sundanese
+sw,82,swa,Swahili
+ss,999,ssw,Swati
+sv,9,swe,Swedish
+tl,67,tgl,Tagalog
+ty,999,tah,Tahitian
+tg,999,tgk,Tajik
+ta,52,tam,Tamil
+tt,999,tat,Tatar
+te,53,tel,Telugu
+th,58,tha,Thai
+bo,61,bod,Tibetan
+ti,75,tir,Tigrinya
+to,999,ton,Tonga (Tonga Islands)
+ts,999,tso,Tsonga
+tn,999,tsn,Tswana
+tr,77,tur,Turkish
+tk,999,tuk,Turkmen
+tw,86,twi,Twi
+ug,999,uig,Uighur; Uyghur
+uk,35,ukr,Ukrainian
+ur,47,urd,Urdu
+uz,999,uzb,Uzbek
+ve,999,ven,Venda
+vi,62,vie,Vietnamese
+vo,999,vol,VolapÅk
+wa,999,wln,Walloon
+cy,21,cym,Welsh
+fy,5,fry,Western Frisian
+wo,999,wol,Wolof
+xh,999,xho,Xhosa
+yi,10,yid,Yiddish
+yo,999,yor,Yoruba
+za,999,zha,Zhuang; Chuang
+zu,999,zul,Zulu
