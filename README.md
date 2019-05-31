@@ -8,6 +8,7 @@ Table of Contents
   - [Table of Contents](#table-of-contents)
   - [Document Revisions](#document-revisions)
     - [Change History](#change-history)
+      - [1.8.14](#1814)
       - [1.8.13](#1813)
       - [1.8.12](#1812)
       - [1.8.11](#1811)
@@ -187,6 +188,8 @@ Document Revisions
 
 | Version | Date         | Editor           |
 | ------- | ------------ | ---------------- |
+| 1.8.14  | May 30, 2019 | Jaime Valencia   |
+| 1.8.13  | May 17, 2019 | Michael Aldworth |
 | 1.8.12  | Apr 24, 2019 | Parth Mishra     |
 | 1.8.11  | Mar 19, 2019 | Jaime Valencia   |
 | 1.8.10  | Mar 18, 2019 | Jaime Valencia   |
@@ -233,6 +236,10 @@ Document Revisions
 | 1.0.0   | Nov 24, 2017 | Michael Aldworth |
 
 ### Change History ###
+
+#### 1.8.14 ####
+
+- Add new screening statuses
 
 #### 1.8.13 ####
 
@@ -2074,12 +2081,14 @@ Lookups
 | NotScreened                  |
 | InitialScreeningComplete *   |
 | SecondaryScreeningComplete * |
+| ThirdScreeningComplete *     |
+| FourthScreeningComplete *    |
 | Screened                     |
 | ScreeningFailed              |
 
-_*Note:*_ InitialScreeningComplete and SecondaryScreening complete are only available when 
-the multiLevelScreening feature is turned on for your college.  Screened (date) is only supplied
-when ScreeningStatus == Screened
+_*Note:*_ InitialScreeningComplete, SecondaryScreening, ThirdScreeningComplete and FourthScreeningComplete 
+complete are only available when the multiLevelScreening feature is turned on for your college.  
+Screened (date) is only supplied when ScreeningStatus == Screened
 
 ### SisInboundEventType ###
 
