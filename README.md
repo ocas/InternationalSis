@@ -8,6 +8,7 @@ Table of Contents
   - [Table of Contents](#table-of-contents)
   - [Document Revisions](#document-revisions)
     - [Change History](#change-history)
+      - [1.8.15](#1815)
       - [1.8.14](#1814)
       - [1.8.13](#1813)
       - [1.8.12](#1812)
@@ -103,6 +104,7 @@ Table of Contents
     - [SisInboundEvent](#sisinboundevent)
     - [Term](#term)
     - [UpdateOffer](#updateoffer)
+    - [WaitlistProgramSelection](#waitlistprogramselection)
   - [Lookups](#lookups)
     - [ApplicationCycle](#applicationcycle)
     - [CanadianStatus](#canadianstatus)
@@ -188,6 +190,7 @@ Document Revisions
 
 | Version | Date         | Editor           |
 | ------- | ------------ | ---------------- |
+| 1.8.15  | May 31, 2019 | Parth Mishra     |
 | 1.8.14  | May 30, 2019 | Jaime Valencia   |
 | 1.8.13  | May 17, 2019 | Michael Aldworth |
 | 1.8.12  | Apr 24, 2019 | Parth Mishra     |
@@ -236,6 +239,10 @@ Document Revisions
 | 1.0.0   | Nov 24, 2017 | Michael Aldworth |
 
 ### Change History ###
+
+#### 1.8.15 ####
+
+- Add new WaitlistProgramSelection Outbound Event
 
 #### 1.8.14 ####
 
@@ -1820,6 +1827,26 @@ Example: See [Appendix: ApplicationFull](#appendix-applicationfull)
 }
 ```
 
+### WaitlistProgramSelection ###
+
+| Property           | Type                                       |
+| ------------------ | ------------------------------------------ |
+| applicationNumber  | _string_ (min 1, max 20)                   |
+| applicationCycle   | _number_ ([Lookup](#applicationcycle))     |
+| programCode        | _string_ (min 1, max 10)                   |
+| term               | _string_ ([Lookup](#termcode))             |
+
+**_Example:_**
+
+```JSON
+{
+  "applicationNumber" : "X1484934",
+  "applicationCycle" : 2017,
+  "term" : "spring",
+  "programCode" : "TST1DG5",
+}
+```
+
 **_Notes:_**
 
 Many of the fields on the [UpdateOffer](#updateoffer) model can be left
@@ -2123,15 +2150,16 @@ you might receive during the screening process.
 
 ### SisOutboundEventType ###
 
-| Key                           | Data Object Type                                    |
-| ----------------------------- | --------------------------------------------------- |
-| CreateOffer                   | [NewOfferInfo](#newofferinfo)                       |
-| UpdateOffer                   | [UpdateOffer](#updateoffer)                         |
-| DeclineProgramSelection       | [DeclineProgramSelection](#declineprogramselection) |
-| PayOffer                      | [OfferPaymentReceipt](#offerpaymentreceipt)         |
-| AddOfferPaymentReceipt        | [OfferPaymentReceipt](#offerpaymentreceipt)         |
-| RevokeOffer                   | [RevokeOffer](#revokeoffer)                         |
-| UpdateApplicantCollegeDetails | [ApplicantCollegeDetails](#applicantcollegedetails) |
+| Key                           | Data Object Type                                      |
+| ----------------------------- | ------------------------------------------------------|
+| CreateOffer                   | [NewOfferInfo](#newofferinfo)                         |
+| UpdateOffer                   | [UpdateOffer](#updateoffer)                           |
+| DeclineProgramSelection       | [DeclineProgramSelection](#declineprogramselection)   |
+| WaitlistProgramSelection      | [WaitlistProgramSelection](#waitlistprogramselection) |
+| PayOffer                      | [OfferPaymentReceipt](#offerpaymentreceipt)           |
+| AddOfferPaymentReceipt        | [OfferPaymentReceipt](#offerpaymentreceipt)           |
+| RevokeOffer                   | [RevokeOffer](#revokeoffer)                           |
+| UpdateApplicantCollegeDetails | [ApplicantCollegeDetails](#applicantcollegedetails)   |
 
 ### SupportingDocumentType ###
 
