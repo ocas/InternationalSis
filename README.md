@@ -2113,8 +2113,8 @@ Lookups
 | Screened                     |
 | ScreeningFailed              |
 
-_*Note:*_ InitialScreeningComplete, SecondaryScreening, ThirdScreeningComplete and FourthScreeningComplete 
-complete are only available when the multiLevelScreening feature is turned on for your college.  
+_*Note:*_ InitialScreeningComplete, SecondaryScreeningComplete, ThirdScreeningComplete and FourthScreeningComplete 
+are only available when the multiLevelScreening feature is turned on for your college.  
 Screened (date) is only supplied when ScreeningStatus == Screened
 
 ### SisInboundEventType ###
