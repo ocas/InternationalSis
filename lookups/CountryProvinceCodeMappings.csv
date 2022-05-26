@@ -4006,23 +4006,23 @@ SC,SYC,32690,Seychelles,SC-22,Saint Louis
 SC,SYC,32690,Seychelles,SC-23,Takamaka
 SC,SYC,32690,Seychelles,SC-24,Lemamel
 SC,SYC,32690,Seychelles,SC-25,Roche Caïman
-SD,SDN,33729,Sudan,SD-DC,Central Darfur
-SD,SDN,33729,Sudan,SD-DE,East Darfur
-SD,SDN,33729,Sudan,SD-DN,North Darfur
-SD,SDN,33729,Sudan,SD-DS,Janūb Dārfūr
-SD,SDN,33729,Sudan,SD-DW,Gharb Dārfūr
-SD,SDN,33729,Sudan,SD-GD,Al Qaḑārif
-SD,SDN,33729,Sudan,SD-GZ,Al Jazīrah
-SD,SDN,33729,Sudan,SD-KA,Kassala
-SD,SDN,33729,Sudan,SD-KH,Al Kharţūm
-SD,SDN,33729,Sudan,SD-KN,North Kordofan
-SD,SDN,33729,Sudan,SD-KS,Janūb Kurdufān
-SD,SDN,33729,Sudan,SD-NB,An Nīl al Azraq
-SD,SDN,33729,Sudan,SD-NO,Ash Shamālīyah
-SD,SDN,33729,Sudan,SD-NR,An Nīl
-SD,SDN,33729,Sudan,SD-NW,An Nīl al Abyaḑ
-SD,SDN,33729,Sudan,SD-RS,Al Baḩr al Aḩmar
-SD,SDN,33729,Sudan,SD-SI,Sennar
+SD,SDN,33736,Sudan,SD-DC,Central Darfur
+SD,SDN,33736,Sudan,SD-DE,East Darfur
+SD,SDN,33736,Sudan,SD-DN,North Darfur
+SD,SDN,33736,Sudan,SD-DS,Janūb Dārfūr
+SD,SDN,33736,Sudan,SD-DW,Gharb Dārfūr
+SD,SDN,33736,Sudan,SD-GD,Al Qaḑārif
+SD,SDN,33736,Sudan,SD-GZ,Al Jazīrah
+SD,SDN,33736,Sudan,SD-KA,Kassala
+SD,SDN,33736,Sudan,SD-KH,Al Kharţūm
+SD,SDN,33736,Sudan,SD-KN,North Kordofan
+SD,SDN,33736,Sudan,SD-KS,Janūb Kurdufān
+SD,SDN,33736,Sudan,SD-NB,An Nīl al Azraq
+SD,SDN,33736,Sudan,SD-NO,Ash Shamālīyah
+SD,SDN,33736,Sudan,SD-NR,An Nīl
+SD,SDN,33736,Sudan,SD-NW,An Nīl al Abyaḑ
+SD,SDN,33736,Sudan,SD-RS,Al Baḩr al Aḩmar
+SD,SDN,33736,Sudan,SD-SI,Sennar
 SE,SWE,23752,Sweden,SE-AB,Stockholms län
 SE,SWE,23752,Sweden,SE-AC,Västerbottens län
 SE,SWE,23752,Sweden,SE-BD,Norrbottens län
@@ -4353,7 +4353,7 @@ SV,SLV,12222,El Salvador,SV-SS,San Salvador
 SV,SLV,12222,El Salvador,SV-SV,San Vicente
 SV,SLV,12222,El Salvador,SV-UN,La Unión
 SV,SLV,12222,El Salvador,SV-US,Usulután
-SX,SXM,,Sint Maarten,SX-SX,St. Maarten
+SX,SXM,13534,Sint Maarten,SX-SX,St. Maarten
 SY,SYR,41760,Syrian Arab Republic,SY-DI,Dimashq
 SY,SYR,41760,Syrian Arab Republic,SY-DR,Dar'ā
 SY,SYR,41760,Syrian Arab Republic,SY-DY,Dayr az Zawr
