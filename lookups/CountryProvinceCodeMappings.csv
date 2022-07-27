@@ -1686,7 +1686,6 @@ GE,GEO,41268,Georgia,GE-SZ,Samegrelo-Zemo Svaneti
 GE,GEO,41268,Georgia,GE-TB,Tbilisi
 GF,GUF,14254,French Guiana,GF-GF,French Guiana
 GG,GGY,23831,Guernsey,GG-GG,Guernsey
-GH,GHA,31288,\,GH-AA,Greater Accra
 GH,GHA,31288,Ghana,GH-AF,Ahafo
 GH,GHA,31288,Ghana,GH-AH,Ashanti
 GH,GHA,31288,Ghana,GH-BO,Bono
@@ -1694,6 +1693,7 @@ GH,GHA,31288,Ghana,GH-BE,Bono East
 GH,GHA,31288,Ghana,GH-BA,Brong-Ahafo
 GH,GHA,31288,Ghana,GH-CP,Central
 GH,GHA,31288,Ghana,GH-EP,Eastern
+GH,GHA,31288,Ghana,GH-AA,Greater Accra
 GH,GHA,31288,Ghana,GH-NE,North East
 GH,GHA,31288,Ghana,GH-NP,Northern
 GH,GHA,31288,Ghana,GH-OT,Oti
