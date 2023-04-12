@@ -3,7 +3,7 @@
 International (IAS) SIS Integration Guide
 ========================================
 
-Documentation has been moved to the [wiki](https://github.com/ocas/InternationalSis/wiki)
+Documentation has been moved to the [Ocas Developer Docs](https://developer.ocas.ca/international-sis/)
 
 For more information about the OCAS International Application Service please visit
 [https://www.ocas.ca/what-we-do/international](https://www.ocas.ca/what-we-do/international)
